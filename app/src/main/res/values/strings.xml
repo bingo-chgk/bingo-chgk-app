@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BingoCHGK</string>
+    <string name="title_activity_question">QuestionActivity</string>
+    <string name="title_activity_collections">CollectionsActivity</string>
+</resources>
