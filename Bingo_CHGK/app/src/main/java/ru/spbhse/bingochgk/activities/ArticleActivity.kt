@@ -11,48 +11,24 @@ import ru.spbhse.bingochgk.R
 class ArticleActivity : AppCompatActivity() {
 
     private val testText = """
-        Thou’s welcome, Wean! Mishanter fa’ me,
-        If thoughts o’ thee, or yet thy Mamie,
-        Shall ever daunton me or awe me,
-        My sweet, wee lady;
-        Or if I blush when thou shalt ca’ me
-        Tyta, or Daddie. —
-
-        Tho’ now they ca’ me Fornicator,
-        An’ tease my name in kintra clatter,
-        The mair they talk, I’m kend the better;
-        E’en let them clash!
-        An auld wife’s tongue’s a feckless matter
-        To gie ane fash. —
-
-        Welcome! My bonie, sweet, wee Dochter!
-        Tho’ ye come here a wee unsought for;
-        And tho’ your comin I hae fought for,
-        Baith Kirk and Queir;
-        Yet by my faith, ye’re no unwrought for,
-        That I shall swear!
-
-        Wee image o’ my bonie Betty,
-        As fatherly I kiss and daut thee,
-        As dear and near my heart I set thee, long long long long long long line
-        Wi’ as gude will,
-        As a’ the Priests had seen me get thee
-        That’s out o’ Hell. —
-
-        Sweet fruit o’ monie a merry dint,
-        My funny toil is no a’ tint;
-        Tho’ thou cam to the warld asklent,
-        Which fools may scoff at,
-        In my last plack thy part’s be in’t,
-        The better half o’t.
-
-        Tho’ I should be the waur bestead,
-        Thou’s be as braw and bienly clad,
-        And thy young years as nicely bred
-        Wi’ education,
-        As onie brat o’ Wedlock’s bed
-        In a’ thy station.
-    """.trimIndent()
+        Амброз Бирс (1842–1914) — американский писатель, журналист, участник Гражданской войны в США.
+        
+        Амброз Бирс известен как автор сатирических рассказов и новелл в жанре хоррор. Он реалистично писал об ужасных вещах, которые видел на войне. В произведении «Случай на мосту через Совиный ручей» описаны предсмертные видения повешенного, которому кажется, что петля оборвалась, и он прожил ещё один день. В оригинале рассказа Бирс несколько раз повторяет глагол seem — «кажется». Так автор предупреждает читателя о том, что происходит с героем на самом деле.
+        
+        В конце жизни писатель отправился в Мексику и стал обозревателем в повстанческой армии. В своём последнем письме Бирс пишет, что он отправляется в неизвестном направлении. После этого письма никаких новостей о писателе не было, а его исчезновение стало одним из самых загадочных в истории США.
+        
+        Ассоциации:
+        
+        известные исчезновения — Амундсен, Караваджо и другие
+        
+        Гражданская война в США — Бирс воевал на стороне Севера
+        
+        басни — Амброз писал собственные версии известных сюжетов
+        
+        «Словарь Сатаны» (1906) — сатирический сборник афоризмов писателя
+        
+        «Случай на мосту через Совиный ручей» (1890) — самый известный рассказ Амброза Бирса
+        """.trimIndent()
 
     private var articleIsRead = false
 
@@ -60,9 +36,9 @@ class ArticleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        toolbar.title = "My very long title"
+        article_toolbar.title = "My very long title"
 
-        toolbar.setNavigationOnClickListener {
+        article_toolbar.setNavigationOnClickListener {
 
             val popupMenu = PopupMenu(this, it)
             popupMenu.inflate(R.menu.menu_article)
