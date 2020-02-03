@@ -77,7 +77,7 @@ class ArticleActivity : AppCompatActivity() {
             article_text.text = Html.fromHtml(testText)
         }
 
-        article_text.movementMethod = LinkMovementMethod.getInstance();
+        article_text.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun changeArticleStatus() {
