@@ -35,9 +35,9 @@ class ArticleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        article_toolbar.title = "Амброз Бирс"
+        toolbar.title = "Амброз Бирс"
 
-        article_toolbar.setNavigationOnClickListener {
+        toolbar.setNavigationOnClickListener {
 
             val popupMenu = PopupMenu(this, it)
             popupMenu.inflate(R.menu.menu_article)
@@ -54,7 +54,7 @@ class ArticleActivity : AppCompatActivity() {
             popupMenu.show()
         }
 
-        arrow_article.setOnClickListener {
+        to_next_article_button_up.setOnClickListener {
             Toast.makeText(this, "hello arrow!", Toast.LENGTH_LONG).show()
         }
 
@@ -62,9 +62,8 @@ class ArticleActivity : AppCompatActivity() {
             changeArticleStatus()
         }
 
-        article_scroll.viewTreeObserver.addOnScrollChangedListener {
-            if (article_scroll.getChildAt(0).bottom
-                <= article_scroll.height + article_scroll.scrollY) {
+        scroll.viewTreeObserver.addOnScrollChangedListener {
+            if (scroll.getChildAt(0).bottom <= scroll.height + scroll.scrollY) {
                 if (!articleIsRead) {
                     changeArticleStatus()
                 }

@@ -33,7 +33,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
         val topicAdapter = TopicAdapter(this, initTopics, this)
         topics_list.adapter = topicAdapter
 
-        all_topics_toolbar.title = "Все темы"
+        toolbar.title = "Все темы"
 
         add_topic_button.setOnClickListener {
             Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()

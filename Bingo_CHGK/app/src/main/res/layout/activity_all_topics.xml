@@ -7,7 +7,7 @@
     tools:context=".activities.AllTopicsActivity">
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/all_topics_scroll"
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -17,7 +17,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/all_topics_toolbar"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -28,7 +28,7 @@
                     android:theme="?attr/actionBarTheme" />
 
                 <EditText
-                    android:id="@+id/all_topics_search"
+                    android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

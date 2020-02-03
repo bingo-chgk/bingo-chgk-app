@@ -33,7 +33,7 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         val topicAdapter = TopicAdapter(this, initTopics, this)
         topics_list.adapter = topicAdapter
 
-        all_topics_toolbar.title = "Подборка 42"
+        toolbar.title = "Подборка 42"
 
         add_topic_button.setOnClickListener {
             Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()
