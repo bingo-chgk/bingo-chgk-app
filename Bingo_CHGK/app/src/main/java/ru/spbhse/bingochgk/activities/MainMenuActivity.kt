@@ -13,7 +13,7 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_menu)
 
         // For testing Concretecollection
-        startActivity(Intent(this, ConcreteCollectionActivity::class.java))
+        //startActivity(Intent(this, ConcreteCollectionActivity::class.java))
 
         all_topics_button.setOnClickListener {
             startActivity(Intent(this, AllTopicsActivity::class.java))
