@@ -12,10 +12,8 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
-        /*
-        // For testing ArticleActivity
-        startActivity(Intent(this, ArticleActivity::class.java))
-        */
+        // For testing Concretecollection
+        startActivity(Intent(this, ConcreteCollectionActivity::class.java))
 
         all_topics_button.setOnClickListener {
             startActivity(Intent(this, AllTopicsActivity::class.java))
