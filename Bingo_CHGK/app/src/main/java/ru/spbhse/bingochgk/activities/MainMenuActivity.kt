@@ -18,5 +18,10 @@ class MainMenuActivity : AppCompatActivity() {
         all_topics_button.setOnClickListener {
             startActivity(Intent(this, AllTopicsActivity::class.java))
         }
+
+        random_question_button.setOnClickListener {
+            val intent = Intent(this, RandomQuestionActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
