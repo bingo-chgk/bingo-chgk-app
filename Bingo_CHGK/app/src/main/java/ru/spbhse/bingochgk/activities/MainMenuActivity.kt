@@ -18,5 +18,22 @@ class MainMenuActivity : AppCompatActivity() {
         all_topics_button.setOnClickListener {
             startActivity(Intent(this, AllTopicsActivity::class.java))
         }
+
+        random_question_button.setOnClickListener {
+            startActivity(Intent(this, RandomQuestionActivity::class.java))
+        }
+
+
+        all_collections_button.setOnClickListener {
+            startActivity(Intent(this, CollectionsActivity::class.java))
+        }
+
+        saved_questions_button.setOnClickListener {
+            startActivity(Intent(this, SavedQuestionsActivity::class.java))
+        }
+
+        info_button.setOnClickListener {
+            startActivity(Intent(this, ReferenceActivity::class.java))
+        }
     }
 }
