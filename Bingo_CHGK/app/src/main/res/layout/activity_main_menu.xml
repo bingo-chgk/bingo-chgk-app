@@ -17,5 +17,38 @@
         android:id="@+id/random_question_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Случайный вопрос" />
+
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/main_menu_cat_gif"
+        android:layout_width="match_parent"
+        android:layout_height="312dp"
+        android:layout_weight="1"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:src="@drawable/space_cat" />
+
+
+    <Button
+        android:id="@+id/all_collections_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Все подборки" />
+
+    <Button
+        android:id="@+id/saved_questions_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Сохраненные вопросы" />
+
+    <Button
+        android:id="@+id/info_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Справка" />
 </LinearLayout>
