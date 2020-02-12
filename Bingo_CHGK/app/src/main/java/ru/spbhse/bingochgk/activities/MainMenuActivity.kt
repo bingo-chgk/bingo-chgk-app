@@ -20,8 +20,20 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         random_question_button.setOnClickListener {
-            val intent = Intent(this, RandomQuestionActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RandomQuestionActivity::class.java))
+        }
+
+
+        all_collections_button.setOnClickListener {
+            startActivity(Intent(this, CollectionsActivity::class.java))
+        }
+
+        saved_questions_button.setOnClickListener {
+            startActivity(Intent(this, SavedQuestionsActivity::class.java))
+        }
+
+        info_button.setOnClickListener {
+            startActivity(Intent(this, ReferenceActivity::class.java))
         }
     }
 }
