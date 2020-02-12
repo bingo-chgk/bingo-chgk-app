@@ -24,6 +24,7 @@
         <activity android:name=".activities.QuestionActivity" />
         <activity android:name=".activities.ConcreteCollectionActivity" />
         <activity android:name=".activities.CollectionsActivity" />
+        <activity android:name=".activities.TopicsChoiceActivity"/>
         <activity android:name=".activities.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

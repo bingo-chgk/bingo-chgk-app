@@ -36,7 +36,8 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         toolbar.title = "Подборка 42"
 
         add_topic_button.setOnClickListener {
-            Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, TopicsChoiceActivity::class.java))
         }
     }
 
