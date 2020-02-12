@@ -1,5 +1,6 @@
 package ru.spbhse.bingochgk.activities
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -52,6 +53,11 @@ class ArticleActivity : AppCompatActivity() {
             }
 
             popupMenu.show()
+        }
+
+        to_questions_by_article_button.setOnClickListener {
+            val intent = Intent(this, TopicQuestionActivity::class.java)
+            startActivity(intent)
         }
 
         to_next_article_button_up.setOnClickListener {

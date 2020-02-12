@@ -50,6 +50,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     override fun onQuestionButtonClick(position: Int) {
-        Toast.makeText(this, initTopics[position].name, Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, initTopics[position].name, Toast.LENGTH_LONG).show()
+        startActivity(Intent(this, TopicQuestionActivity::class.java))
     }
 }
