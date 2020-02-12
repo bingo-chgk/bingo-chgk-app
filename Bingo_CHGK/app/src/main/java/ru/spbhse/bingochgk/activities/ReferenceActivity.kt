@@ -23,7 +23,7 @@ class ReferenceActivity : AppCompatActivity() {
 
         referenceText.text = getTextFromHtml(license)
 
-        referenceText.movementMethod = android.text.method.LinkMovementMethod.getInstance();
+        referenceText.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
         licenseButton.setOnClickListener {
             referenceText.text = licenseText
