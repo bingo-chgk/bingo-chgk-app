@@ -36,7 +36,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
         toolbar.title = "Все темы"
 
         add_topic_button.setOnClickListener {
-            Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, CreateArticleActivity::class.java))
         }
     }
 

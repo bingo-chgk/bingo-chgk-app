@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreateArticleActivity">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="5dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/new_topic_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название темы"
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/new_topic_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Гиперссылка"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/new_topic_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="Ссылка на источник" />
+
+    <EditText
+        android:id="@+id/new_topic_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="https://en.wikipedia.org/wiki/Hyperlink"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/create_topic_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Создать тему" />
+
+    <CheckBox
+        android:id="@+id/load_checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Загрузить вопросы" />
+
+</LinearLayout>
