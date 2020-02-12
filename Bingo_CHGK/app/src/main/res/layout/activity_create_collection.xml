@@ -41,6 +41,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Название"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:inputType="textPersonName" />
 
 <!--            <EditText-->

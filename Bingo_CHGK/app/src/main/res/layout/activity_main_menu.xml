@@ -11,6 +11,7 @@
         android:id="@+id/all_topics_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Все темы" />
 
     <Button
@@ -36,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Все подборки" />
+        android:text="Мои подборки" />
 
     <Button
         android:id="@+id/saved_questions_button"

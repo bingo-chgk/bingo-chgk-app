@@ -13,6 +13,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
     private val collectionsListTitles =
         mutableListOf("Прочитанные", "TODO", "InTeReStInG", "Сашина подборки", "Шишкин лес")
 
+    private val adapter = CollectionsListAdapter(collectionsListTitles, this, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +22,6 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
             startActivity(Intent(this, CreateCollectionActivity::class.java))
         }
 
-        val adapter = CollectionsListAdapter(collectionsListTitles, this, this)
         collections_list.adapter = adapter
 
         collections_search.addTextChangedListener(object : TextWatcher {
@@ -45,6 +45,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
 
     override fun onItemLongClick(position: Int): Boolean {
         collectionsListTitles.removeAt(position)
+        adapter.notifyDataSetChanged()
         return true
     }
 
