@@ -33,6 +33,10 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
         val adapter = NewCollectionAdapter(availableTopics, this, this)
         article_to_choose_list.adapter = adapter
 
+        create_collection_button.setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun onItemClick(position: Int) {}

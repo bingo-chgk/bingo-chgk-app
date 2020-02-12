@@ -61,4 +61,12 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/create_collection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Готово" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
