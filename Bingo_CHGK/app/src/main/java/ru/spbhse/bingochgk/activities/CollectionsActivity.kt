@@ -49,13 +49,21 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
     override fun onItemLongClick(position: Int): Boolean {
         val popupMenu = PopupMenu(this, collections_list[position])
         popupMenu.menu.add("Удалить подборку")
+        popupMenu.setOnMenuItemClickListener {
+            // TODO: switch
+            collectionsListTitles.removeAt(position)
+            adapter.notifyDataSetChanged()
+            Toast.makeText(
+                this, "Подборка удалена",
+                Toast.LENGTH_LONG
+            ).show()
+            true
+        }
         popupMenu.show()
-        Toast.makeText(this, "long click ${collectionsListTitles[position]}", Toast.LENGTH_LONG).show()
         return true
     }
 
     override fun onQuestionButtonClick(position: Int) {
         startActivity(Intent(this, CollectionQuestionActivity::class.java))
     }
-
 }

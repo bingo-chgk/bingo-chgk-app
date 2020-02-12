@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.view.get
-import kotlinx.android.synthetic.main.activity_concrete_collection.add_topic_button
-import kotlinx.android.synthetic.main.activity_concrete_collection.toolbar
-import kotlinx.android.synthetic.main.activity_concrete_collection.topics_list
+import kotlinx.android.synthetic.main.activity_concrete_collection.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Topic
 
@@ -43,6 +41,10 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
 //            Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()
             startActivity(Intent(this, TopicsChoiceActivity::class.java))
         }
+
+        to_question_by_collection_button.setOnClickListener {
+            startActivity(Intent(this, TopicQuestionActivity::class.java))
+        }
     }
 
     override fun onItemClick(position: Int) {
@@ -59,7 +61,7 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     override fun onQuestionButtonClick(position: Int) {
-        Toast.makeText(this, initTopics[position].name, Toast.LENGTH_LONG).show()
+        startActivity(Intent(this, TopicQuestionActivity::class.java))
     }
 }
 

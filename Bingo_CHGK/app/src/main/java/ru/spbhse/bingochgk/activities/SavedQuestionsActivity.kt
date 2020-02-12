@@ -3,11 +3,11 @@ package ru.spbhse.bingochgk.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.widget.PopupMenu
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_all_topics.*
+import androidx.core.view.get
+import kotlinx.android.synthetic.main.activity_collections.*
 import kotlinx.android.synthetic.main.activity_saved_questions.*
-import kotlinx.android.synthetic.main.saved_question_item.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Question
 
@@ -46,10 +46,19 @@ class SavedQuestionsActivity : AppCompatActivity(), SavedQuestionActionsProvider
     }
 
     override fun onItemLongClick(position: Int): Boolean {
-        defaultQuestionsText.removeAt(position)
-        questionAdapter.notifyDataSetChanged()
-        Toast.makeText(this, "Вопрос удалён",
-            Toast.LENGTH_LONG).show()
+        val popupMenu = PopupMenu(this, questionsList[position])
+        popupMenu.menu.add("Удалить подборку")
+        popupMenu.setOnMenuItemClickListener {
+            // TODO: switch
+            defaultQuestionsText.removeAt(position)
+            questionAdapter.notifyDataSetChanged()
+            Toast.makeText(
+                this, "Вопрос удалён",
+                Toast.LENGTH_LONG
+            ).show()
+            true
+        }
+        popupMenu.show()
         return true
     }
 }
