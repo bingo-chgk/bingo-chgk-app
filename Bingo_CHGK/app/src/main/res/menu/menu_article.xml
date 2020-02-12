@@ -5,6 +5,6 @@
         android:id="@+id/upload_questions"
         android:title="Подгрузить вопросы" />
     <item
-        android:id="@+id/theme_statistics"
+        android:id="@+id/topic_statistics"
         android:title="Статистика по теме" />
 </menu>
