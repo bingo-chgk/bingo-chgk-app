@@ -37,6 +37,7 @@ class TopicQuestionActivity : QuestionActivity() {
             val userAnswer = answerInputField.text.toString()
             userAnswerText.text = "Ваш ответ: $userAnswer"
             goToArticleButton.text = "Перейти к статье ($defaultTopicTitle)"
+            inputAnswerLayout.visibility = View.GONE
             answerLayout.visibility = View.VISIBLE
             commentText.visibility = View.VISIBLE
 
