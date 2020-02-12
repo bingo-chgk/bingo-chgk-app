@@ -15,15 +15,16 @@
         <activity android:name=".activities.TopicQuestionActivity"></activity>
         <activity android:name=".activities.CollectionQuestionActivity" />
         <activity android:name=".activities.RandomQuestionActivity" />
-        <activity android:name=".activities.AllTopicsActivity" />
-        <activity android:name=".activities.CreateCollectionActivity" />
+        <activity android:windowSoftInputMode="stateHidden" android:name=".activities.AllTopicsActivity" />
+        <activity android:windowSoftInputMode="stateHidden" android:name=".activities.CreateCollectionActivity" />
         <activity android:name=".activities.ArticleActivity" />
         <activity android:name=".activities.ReferenceActivity" />
         <activity android:name=".activities.CreateArticleActivity" />
         <activity android:name=".activities.SavedQuestionsActivity" />
         <activity android:name=".activities.QuestionActivity" />
         <activity android:name=".activities.ConcreteCollectionActivity" />
-        <activity android:name=".activities.CollectionsActivity" />
+        <activity android:windowSoftInputMode="stateHidden" android:name=".activities.CollectionsActivity" />
+        <activity android:windowSoftInputMode="stateHidden" android:name=".activities.TopicsChoiceActivity"/>
         <activity android:name=".activities.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

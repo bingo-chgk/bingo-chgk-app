@@ -51,6 +51,8 @@ class RandomQuestionActivity : QuestionActivity() {
             answerLayout.visibility = View.VISIBLE
             commentText.visibility = View.VISIBLE
 
+            commentText.movementMethod = android.text.method.LinkMovementMethod.getInstance()
+
             if (userAnswer == correctAnswerDefaultText) {
                 markAnswerCorrect()
             } else {
