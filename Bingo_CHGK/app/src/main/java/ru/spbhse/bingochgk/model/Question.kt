@@ -1,4 +1,3 @@
 package ru.spbhse.bingochgk.model
 
-class Question {
-}
+class Question(val text: String)

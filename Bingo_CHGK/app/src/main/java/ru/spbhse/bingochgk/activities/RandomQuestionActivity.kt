@@ -60,12 +60,12 @@ class RandomQuestionActivity : QuestionActivity() {
             }
         }
 
-        goToArticleButton.setOnClickListener {
-            val intent = Intent(this, ArticleActivity::class.java)
+        toNextQuestionButton.setOnClickListener {
+            val intent = Intent(this, RandomQuestionActivity::class.java)
             startActivity(intent)
         }
 
-        toNextQuestionButton.setOnClickListener {
+        to_next_question_button_up.setOnClickListener {
             val intent = Intent(this, RandomQuestionActivity::class.java)
             startActivity(intent)
         }

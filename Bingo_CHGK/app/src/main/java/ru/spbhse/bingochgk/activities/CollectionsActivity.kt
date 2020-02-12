@@ -16,6 +16,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
     private val collectionsListTitles =
         mutableListOf("Прочитанные", "TODO", "InTeReStInG", "Сашина подборки", "Шишкин лес")
 
+    private val adapter = CollectionsListAdapter(collectionsListTitles, this, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,6 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
             startActivity(Intent(this, CreateCollectionActivity::class.java))
         }
 
-        val adapter = CollectionsListAdapter(collectionsListTitles, this, this)
         collections_list.adapter = adapter
 
         collections_search.addTextChangedListener(object : TextWatcher {
@@ -49,13 +49,21 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
     override fun onItemLongClick(position: Int): Boolean {
         val popupMenu = PopupMenu(this, collections_list[position])
         popupMenu.menu.add("Удалить подборку")
+        popupMenu.setOnMenuItemClickListener {
+            // TODO: switch
+            collectionsListTitles.removeAt(position)
+            adapter.notifyDataSetChanged()
+            Toast.makeText(
+                this, "Подборка удалена",
+                Toast.LENGTH_LONG
+            ).show()
+            true
+        }
         popupMenu.show()
-        Toast.makeText(this, "long click ${collectionsListTitles[position]}", Toast.LENGTH_LONG).show()
         return true
     }
 
     override fun onQuestionButtonClick(position: Int) {
         startActivity(Intent(this, CollectionQuestionActivity::class.java))
     }
-
 }
