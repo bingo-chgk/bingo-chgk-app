@@ -34,6 +34,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Поиск"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
                     android:inputType="textPersonName" />
 
                 <androidx.recyclerview.widget.RecyclerView
