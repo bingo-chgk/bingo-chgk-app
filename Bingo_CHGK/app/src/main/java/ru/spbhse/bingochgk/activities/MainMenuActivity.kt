@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main_menu.*
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 
 class MainMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Database.init(this)
+
         setContentView(R.layout.activity_main_menu)
 
         // For testing Concretecollection

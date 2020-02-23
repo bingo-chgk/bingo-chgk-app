@@ -10,33 +10,23 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_article.*
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.utils.articleToHTML
 
 
 class ArticleActivity : AppCompatActivity() {
 
-    private val testText = """
-        <p><b>Амброз Бирс</b> (1842–1914) — американский писатель, журналист, участник Гражданской войны в США.</p>
-        <p>Амброз Бирс известен как автор сатирических рассказов и новелл в жанре хоррор. Он реалистично писал об ужасных вещах, которые видел на войне. В произведении «Случай на мосту через Совиный ручей» описаны предсмертные видения повешенного, которому кажется, что петля оборвалась, и он прожил ещё один день. В оригинале рассказа Бирс несколько раз повторяет глагол seem — «кажется». Так автор предупреждает читателя о том, что происходит с героем на самом деле.<br>
-        В конце жизни писатель отправился в Мексику и стал обозревателем в повстанческой армии. В своём последнем письме Бирс пишет, что он отправляется в неизвестном направлении. После этого письма никаких новостей о писателе не было, а его исчезновение стало одним из самых загадочных в истории США.<br>
-        <p><b>Ассоциации:</b>
-        <ul>
-        <li> известные исчезновения — Амундсен, Караваджо и другие</li>
-        <li> Гражданская война в США — Бирс воевал на стороне Севера</li>
-        <li> басни — Амброз писал собственные версии известных сюжетов</li>
-        <li> «Словарь Сатаны» (1906) — сатирический сборник афоризмов писателя</li>
-        <li> «Случай на мосту через Совиный ручей» (1890) — самый известный рассказ Амброза Бирса</li>
-        </ul>
-        </p>
-        <p>Источник: <a href="https://vk.com/bingopark">дикая собака бинго</a></p> 
-        """.trimIndent()
-
     private var articleIsRead = false
+    private lateinit var topic: Topic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        toolbar.title = "Амброз Бирс"
+        topic = intent.getSerializableExtra("topic") as Topic
+
+        toolbar.title = topic.name
+        progress_bar.progress = topic.progress
 
         toolbar.setNavigationOnClickListener {
 
@@ -77,9 +67,9 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            article_text.text = Html.fromHtml(testText, Html.FROM_HTML_MODE_LEGACY)
+            article_text.text = Html.fromHtml(articleToHTML(topic.text), Html.FROM_HTML_MODE_LEGACY)
         } else {
-            article_text.text = Html.fromHtml(testText)
+            article_text.text = Html.fromHtml(articleToHTML(topic.text))
         }
 
         article_text.movementMethod = LinkMovementMethod.getInstance()
