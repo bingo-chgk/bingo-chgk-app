@@ -9,21 +9,7 @@ import ru.spbhse.bingochgk.model.Topic
 
 class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsProvider {
 
-    private val availableTopics = listOf(
-        Topic("Шагреневая кожа", 10),
-        Topic("Амброз Бирс", 20),
-        Topic("Большая Берта", 50),
-        Topic("Батори", 75),
-        Topic("Рука Бога", 99),
-        Topic("Бергкамп", 0),
-        Topic("Гус", 88),
-        Topic("Кристи", 100),
-        Topic("Hello, world!", 100),
-        Topic("Deus ex machine", 20),
-        Topic("Гибли", 30),
-        Topic("Ллойд", 25),
-        Topic("Папесса Иоанна", 44)
-    )
+    private val availableTopics = listOf<Topic>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
