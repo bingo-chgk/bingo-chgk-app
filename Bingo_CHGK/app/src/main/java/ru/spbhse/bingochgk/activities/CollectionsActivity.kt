@@ -43,7 +43,8 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
     }
 
     override fun onItemClick(position: Int) {
-        startActivity(Intent(this, ConcreteCollectionActivity::class.java))
+        val intent = Intent(this, ConcreteCollectionActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onItemLongClick(position: Int): Boolean {
@@ -64,6 +65,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
     }
 
     override fun onQuestionButtonClick(position: Int) {
-        startActivity(Intent(this, CollectionQuestionActivity::class.java))
+        val intent = Intent(this, CollectionQuestionActivity::class.java)
+        startActivity(intent)
     }
 }
