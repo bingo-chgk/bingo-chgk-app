@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import ru.spbhse.bingochgk.utils.Logger
+import ru.spbhse.bingochgk.utils.TopicsDownloader
 import java.io.File
 import java.io.FileOutputStream
 
@@ -40,6 +41,8 @@ class DatabaseManager(private val context: Context)
     }
 
     private fun populateTopics(db: SQLiteDatabase) {
+        val topicsDownloader = TopicsDownloader
+        val topicTexts = topicsDownloader.downloadTopics()
         TODO("not implemented")
     }
 
