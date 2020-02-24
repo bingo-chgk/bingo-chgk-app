@@ -1,7 +1,9 @@
 package ru.spbhse.bingochgk.model.dbaccesslayer
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Topic
 
 object Database {
@@ -16,7 +18,7 @@ object Database {
     fun getTopicText(topic: Topic): String {
         val cursor = database.rawQuery(
             "SELECT text FROM Topic where id = ?",
-            Array(1) {"${topic.databaseId}"}
+            arrayOf("${topic.databaseId}")
         )
         return if (cursor.count == 0) {
             "Not found"
@@ -26,30 +28,115 @@ object Database {
         }.also { cursor.close() }
     }
 
+    fun setTopicReadStatus(topic: Topic) {
+        database.execSQL(
+            """UPDATE Topic
+                |SET read = ?
+                |WHERE id = ?
+                |""".trimMargin(),
+            arrayOf(if (topic.isRead) "1" else "0", topic.databaseId.toString())
+        )
+    }
+
     fun getAllTopics(): List<Topic> {
         val cursor = database.rawQuery(
-            """SELECT Topic.name, 
-                |CAST (100.0 * 
-                |       (SUM
-                |         (CASE WHEN SeenQuestion.answered_right = 1 THEN 1 ELSE 0 END)
-                |        ) /
-                |        MAX(1, COUNT(Question.id)) 
-                |      AS INTEGER),
-                |Topic.id,
-                |Topic.read 
-                |FROM Topic 
-                |LEFT JOIN Question ON Topic.id = Question.topic_id
-                |LEFT JOIN SeenQuestion ON Question.id = SeenQuestion.question_id 
-                |GROUP BY Topic.id, Topic.name, Topic.read
-                |ORDER BY Topic.name
+            """SELECT name, percentage, id, read
+                |FROM TopicPercentage
+                |ORDER BY name
                 |""".trimMargin(),
             null
         )
 
-        val list = mutableListOf<Topic>()
+        val topics = collectTopicsFromCursor(cursor)
+
+        cursor.close()
+
+        return topics
+    }
+
+    // NOT TESTED AT ALL
+    fun getAllAlreadyReadTopics(): List<Topic> {
+        val cursor = database.rawQuery(
+            """SELECT name, percentage, id, read
+                |FROM TopicPercentage
+                |WHERE read = 1
+                |ORDER BY name
+                |""".trimMargin(),
+            null
+        )
+
+        val topics = collectTopicsFromCursor(cursor)
+
+        cursor.close()
+
+        return topics
+    }
+
+    // NOT TESTED AT ALL
+    fun getTopicPercentage(topic: Topic): Int {
+        val cursor = database.rawQuery(
+            """SELECT percentage
+                |FROM TopicPercentage
+                |WHERE id = ?
+                |""".trimMargin(),
+            arrayOf("${topic.databaseId}" )
+        )
+
+        // TODO: Throw something if no such element found
+        cursor.moveToFirst()
+
+        return cursor.getInt(0).also { cursor.close() }
+    }
+
+    // NOT TESTED AT ALL
+    fun getAllDatabaseStoredCollections(): List<Collection> {
+        val cursor = database.rawQuery(
+            """SELECT name, id 
+                |FROM Collection
+                |ORDER BY name
+                |""".trimMargin(),
+            null
+        )
+
+        val collections = mutableListOf<Collection>()
 
         while (cursor.moveToNext()) {
-            list.add(
+            collections.add(
+                Collection(
+                    cursor.getString(0),
+                    cursor.getInt(1)
+                )
+            )
+        }
+
+        cursor.close()
+        return collections
+    }
+
+    // NOT TESTED AT ALL
+    fun getTopicsByDatabaseStoredCollection(collection: Collection): List<Topic> {
+        val cursor = database.rawQuery(
+            """SELECT name, percentage, id, read
+                |FROM TopicPercentage
+                |JOIN CollectionTopic ON CollectionTopic.topic_id = TopicPercentage.id
+                |WHERE CollectionTopic.collection_id = ?
+                |ORDER BY name
+                |""".trimMargin(),
+            arrayOf("${collection.databaseId}")
+        )
+
+        val topics = collectTopicsFromCursor(cursor)
+
+        cursor.close()
+
+        return topics
+    }
+
+    private fun collectTopicsFromCursor(cursor: Cursor): List<Topic> {
+        val topics = mutableListOf<Topic>()
+
+        while (cursor.moveToNext()) {
+            topics.add(
                 Topic(
                     cursor.getString(0),
                     cursor.getInt(1),
@@ -58,10 +145,7 @@ object Database {
                 )
             )
         }
-        cursor.close()
 
-        return list
+        return topics
     }
-
-
 }

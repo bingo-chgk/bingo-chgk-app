@@ -9,25 +9,36 @@ import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_all_topics.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
+import ru.spbhse.bingochgk.model.Topic
 
 
 class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
 
-    private val controller = AllTopicsController()
-    private val topics = controller.getAllTopics()
+    private lateinit var controller: AllTopicsController
+    private lateinit var topics: List<Topic>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_topics)
-
-        val topicAdapter = TopicAdapter(this, topics, this)
-        topics_list.adapter = topicAdapter
 
         toolbar.title = "Все темы"
 
         add_topic_button.setOnClickListener {
             startActivity(Intent(this, CreateArticleActivity::class.java))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        controller = AllTopicsController(this)
+        controller.requestTopics()
+    }
+
+    fun onTopicsAreLoaded(topics: List<Topic>) {
+        this.topics = topics
+
+        val topicAdapter = TopicAdapter(this, this.topics, this)
+        topics_list.adapter = topicAdapter
     }
 
     override fun onItemClick(position: Int) {

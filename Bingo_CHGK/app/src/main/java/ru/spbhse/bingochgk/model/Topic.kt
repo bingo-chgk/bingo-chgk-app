@@ -7,8 +7,10 @@ class Topic(
     val name: String,
     val progress: Int,
     val databaseId: Int,
-    val isRead: Boolean
+    var isRead: Boolean
 ) : Serializable {
-    val text: String
-        get() = Database.getTopicText(this)
+    // Should be called inside of async task
+    fun loadText(): String {
+        return Database.getTopicText(this)
+    }
 }

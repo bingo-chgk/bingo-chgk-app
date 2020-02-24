@@ -34,7 +34,8 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        startActivity(Intent(this, ArticleActivity::class.java))
+        val intent = Intent(this, ArticleActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onItemLongClick(position: Int): Boolean {
@@ -47,7 +48,8 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     override fun onQuestionButtonClick(position: Int) {
-        startActivity(Intent(this, TopicQuestionActivity::class.java))
+        val intent = Intent(this, TopicQuestionActivity::class.java)
+        startActivity(intent)
     }
 }
 

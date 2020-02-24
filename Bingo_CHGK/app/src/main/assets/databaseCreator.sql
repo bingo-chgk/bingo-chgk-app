@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS TopicPercentage;
 DROP TABLE IF EXISTS SavedQuestion;
 DROP TABLE IF EXISTS CollectionTopic;
 DROP TABLE IF EXISTS Collection;
@@ -58,4 +59,15 @@ CREATE TABLE CollectionTopic(
 CREATE TABLE SavedQuestion(
 	question_id INTEGER PRIMARY KEY REFERENCES Question(id)
 );
+
+CREATE VIEW TopicPercentage 
+AS
+	SELECT Topic.name AS name, 
+		CAST (100.0 * (SUM(CASE WHEN SeenQuestion.answered_right = 1 THEN 1 ELSE 0 END)) / MAX(1, COUNT(Question.id)) AS INTEGER) AS Percentage,
+                Topic.id AS id,
+                Topic.read AS read 
+	FROM Topic
+	LEFT JOIN Question ON Topic.id = Question.topic_id
+	LEFT JOIN SeenQuestion ON Question.id = SeenQuestion.question_id 
+	GROUP BY Topic.id, Topic.name, Topic.read;
 
