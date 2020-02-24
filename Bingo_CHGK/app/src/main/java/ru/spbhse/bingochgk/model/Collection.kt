@@ -1,9 +1,3 @@
 package ru.spbhse.bingochgk.model
 
-sealed class Collection {
-
-}
-
-
-class AlreadyReadArticles : Collection() {
-}
+class Collection(val name: String, val databaseId: Int)
