@@ -28,20 +28,9 @@ object Database {
 
     fun getAllTopics(): List<Topic> {
         val cursor = database.rawQuery(
-            """SELECT Topic.name, 
-                |CAST (100.0 * 
-                |       (SUM
-                |         (CASE WHEN SeenQuestion.answered_right = 1 THEN 1 ELSE 0 END)
-                |        ) /
-                |        MAX(1, COUNT(Question.id)) 
-                |      AS INTEGER),
-                |Topic.id,
-                |Topic.read 
-                |FROM Topic 
-                |LEFT JOIN Question ON Topic.id = Question.topic_id
-                |LEFT JOIN SeenQuestion ON Question.id = SeenQuestion.question_id 
-                |GROUP BY Topic.id, Topic.name, Topic.read
-                |ORDER BY Topic.name
+            """SELECT name, percentage, id, read
+                |FROM TopicPercentage
+                |ORDER BY name
                 |""".trimMargin(),
             null
         )
@@ -62,6 +51,4 @@ object Database {
 
         return list
     }
-
-
 }
