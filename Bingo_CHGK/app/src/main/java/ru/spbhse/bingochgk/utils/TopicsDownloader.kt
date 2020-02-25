@@ -8,7 +8,7 @@ object TopicsDownloader {
         val wallTexts = doc.getElementsByClass("wall_post_text")
         val topics: MutableList<String> = mutableListOf()
         for (wallText in wallTexts) {
-            val originText = wallTexts[0].html()
+            val originText = wallText.html()
             val resultText = originText.replace(Regex("<a.*a>"), "")
                 .replace("Показать полностью…", "")
                 .replaceFirst("<br>", "")
