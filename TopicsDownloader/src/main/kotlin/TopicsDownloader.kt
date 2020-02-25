@@ -45,9 +45,14 @@ object TopicsDownloader {
 
     private fun postToTopic(post: String): Topic {
         val lines = post.lines()
+            .asSequence()
             .filter { it.isNotBlank() }
+            .map { it.trim() }
             .filterNot { it.startsWith("#бинго") }
-            .filterNot { it.matches(Regex(".*Бинго ЧГК.*")) }
+            .filterNot { it.startsWith("Бинго ЧГК") }
+            .toMutableList()
+
+        lines.add("Источник: <a href=\"https://vk.com/bingopark\">дикая собака бинго</a>")
 
         return Topic(lines[0], lines.subList(1, lines.size).joinToString(separator = "\n"))
     }
