@@ -4,7 +4,6 @@ import com.vk.api.sdk.client.actors.UserActor
 import com.vk.api.sdk.httpclient.HttpTransportClient
 import java.io.File
 import java.io.FileReader
-import java.lang.IllegalArgumentException
 
 data class Topic(val name: String, val text: String)
 
@@ -41,14 +40,12 @@ object TopicsDownloader {
             }
         }
 
-        val topics = posts.map { postToTopic(it) }
-
-        return topics
+        return posts.map { postToTopic(it) }
     }
 
     private fun postToTopic(post: String): Topic {
         val lines = post.lines()
-            .filter { it.isNotEmpty() }
+            .filter { it.isNotBlank() }
             .filterNot { it.startsWith("#бинго") }
             .filterNot { it.matches(Regex(".*Бинго ЧГК.*")) }
 
@@ -62,5 +59,9 @@ object TopicsDownloader {
 }
 
 fun main() {
-    println(TopicsDownloader.downloadTopics())
+    val topics = TopicsDownloader.downloadTopics()
+    Database.connect()
+    for (topicId in 0..topics.lastIndex) {
+        Database.insertTopic(topics[topicId], topicId)
+    }
 }

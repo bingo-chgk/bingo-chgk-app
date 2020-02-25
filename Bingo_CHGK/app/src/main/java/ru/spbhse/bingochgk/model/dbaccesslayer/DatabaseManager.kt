@@ -18,7 +18,7 @@ class DatabaseManager(private val context: Context)
 
     // For testing
     init {
-        this.writableDatabase
+        this.writableDatabase.disableWriteAheadLogging()
         copyDatabaseFromAssets()
     }
 
