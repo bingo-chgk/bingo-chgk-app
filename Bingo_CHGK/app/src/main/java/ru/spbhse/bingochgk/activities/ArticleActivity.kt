@@ -1,7 +1,6 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -16,7 +15,6 @@ import ru.spbhse.bingochgk.controller.articlecontroller.ArticleController
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.utils.Logger
 import ru.spbhse.bingochgk.utils.articleToHTML
-import java.lang.ref.WeakReference
 
 
 class ArticleActivity : AppCompatActivity() {
@@ -30,7 +28,7 @@ class ArticleActivity : AppCompatActivity() {
 
         controller = ArticleController(this)
 
-        topic = controller.topic
+        topic = controller.currentTopic
 
         toolbar.title = topic.name
         progress_bar.progress = topic.progress

@@ -5,7 +5,7 @@ import ru.spbhse.bingochgk.model.TopicNavigator
 
 class ArticleController(private val activity: ArticleActivity) {
 
-    val topic = TopicNavigator.getCurrentTopic()
+    val currentTopic = TopicNavigator.getCurrentTopic()
 
     fun toNextTopic() {
         TopicNavigator.toNextTopic()
@@ -13,7 +13,7 @@ class ArticleController(private val activity: ArticleActivity) {
     }
 
     fun changeArticleStatus() {
-        if (topic.isRead) {
+        if (currentTopic.isRead) {
             markArticleAsUnread()
         } else {
             markArticleAsRead()
@@ -21,20 +21,20 @@ class ArticleController(private val activity: ArticleActivity) {
     }
 
     fun markArticleAsRead() {
-        if (!topic.isRead) {
-            topic.isRead = true
-            UpdateTopicReadStatusTask(activity).execute(topic)
+        if (!currentTopic.isRead) {
+            currentTopic.isRead = true
+            UpdateTopicReadStatusTask(activity).execute(currentTopic)
         }
     }
 
     private fun markArticleAsUnread() {
-        if (topic.isRead) {
-            topic.isRead = false
-            UpdateTopicReadStatusTask(activity).execute(topic)
+        if (currentTopic.isRead) {
+            currentTopic.isRead = false
+            UpdateTopicReadStatusTask(activity).execute(currentTopic)
         }
     }
 
     fun requestArticleText() {
-        GetArticleTextTask(activity).execute(topic)
+        GetArticleTextTask(activity).execute(currentTopic)
     }
 }
