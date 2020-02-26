@@ -54,7 +54,7 @@ object TopicsDownloader {
 
         lines.add("Источник: <a href=\"https://vk.com/bingopark\">дикая собака бинго</a>")
 
-        return Topic(lines[0], lines.subList(1, lines.size).joinToString(separator = "\n"))
+        return Topic(lines[0].capitalizeWords(), lines.subList(1, lines.size).joinToString(separator = "\n"))
     }
 
     private fun getToken(): String {
@@ -62,6 +62,8 @@ object TopicsDownloader {
         return FileReader(file).readLines()[0]
     }
 }
+
+fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
 
 fun main() {
     val topics = TopicsDownloader.downloadTopics()
