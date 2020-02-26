@@ -97,6 +97,7 @@ class ArticleActivity : AppCompatActivity() {
     fun startNextTopic() {
         val intent = Intent(this, ArticleActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun setStatusPicture() {
