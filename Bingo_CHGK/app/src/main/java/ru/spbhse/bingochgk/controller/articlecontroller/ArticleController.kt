@@ -37,4 +37,8 @@ class ArticleController(private val activity: ArticleActivity) {
     fun requestArticleText() {
         GetArticleTextTask(activity).execute(currentTopic)
     }
+
+    fun uploadQuestions() {
+        UploadQuestionsTask(this).execute(currentTopic.name)
+    }
 }
