@@ -69,7 +69,7 @@ class ArticleActivity : AppCompatActivity() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.upload_questions -> {
-                    Toast.makeText(this, "Вопросы подгружены", Toast.LENGTH_LONG).show()
+                    controller.uploadQuestions()
                 }
             }
             true
