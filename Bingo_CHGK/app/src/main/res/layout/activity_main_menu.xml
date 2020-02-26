@@ -4,52 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:gravity="center"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".activities.MainMenuActivity">
 
-    <Button
-        android:id="@+id/all_topics_button"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Все темы" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <Button
-        android:id="@+id/random_question_button"
-        android:layout_width="match_parent"
+
+        <Button
+            android:id="@+id/all_collections_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Мои подборки" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/info_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/info" />
+
+
+            <ImageButton
+                android:id="@+id/random_question_button"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/play_button" />
+
+            <ImageButton
+                android:id="@+id/saved_questions_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/floppy_disk" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/all_topics_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_shadow_start_color"
+            android:text="Все темы" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/donate_cat_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Случайный вопрос" />
+        android:background="@null"
+        android:contentDescription="possible logo"
+        android:src="@drawable/question_cat" />
 
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/main_menu_cat_gif"
-        android:layout_width="match_parent"
-        android:layout_height="312dp"
-        android:layout_weight="1"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:src="@drawable/space_cat" />
-
-
-    <Button
-        android:id="@+id/all_collections_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Мои подборки" />
-
-    <Button
-        android:id="@+id/saved_questions_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Сохраненные вопросы" />
-
-    <Button
-        android:id="@+id/info_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Справка" />
 </LinearLayout>
