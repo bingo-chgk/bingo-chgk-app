@@ -28,7 +28,5 @@ fun articleToHTML(article: String): String {
         }
     }
 
-    Logger.d(stringBuilder.toString())
-
     return stringBuilder.toString()
 }

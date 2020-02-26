@@ -1,7 +1,6 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -16,20 +15,20 @@ import ru.spbhse.bingochgk.controller.articlecontroller.ArticleController
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.utils.Logger
 import ru.spbhse.bingochgk.utils.articleToHTML
-import java.lang.ref.WeakReference
 
 
 class ArticleActivity : AppCompatActivity() {
 
-    private lateinit var topic: Topic
     private lateinit var controller: ArticleController
+    private lateinit var topic: Topic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        topic = intent.getSerializableExtra("topic") as Topic
-        controller = ArticleController(topic, this)
+        controller = ArticleController(this)
+
+        topic = controller.currentTopic
 
         toolbar.title = topic.name
         progress_bar.progress = topic.progress
@@ -42,7 +41,11 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         to_next_article_button_up.setOnClickListener {
-            Toast.makeText(this, "hello arrow!", Toast.LENGTH_LONG).show()
+            controller.toNextTopic()
+        }
+
+        to_next_article_button_down.setOnClickListener {
+            controller.toNextTopic()
         }
 
         article_status.setOnClickListener {
@@ -87,6 +90,12 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         article_text.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    fun startNextTopic() {
+        val intent = Intent(this, ArticleActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     fun setStatusPicture() {
