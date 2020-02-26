@@ -6,61 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".activities.AllTopicsActivity">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                android:background="#787878"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:title="Все темы"
+                app:titleTextColor="#ffffff" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#787878"
-                    app:titleTextColor="#ffffff"
-                    app:title="Все темы"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="?attr/actionBarTheme" />
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Поиск"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Поиск"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
-                    android:inputType="textPersonName" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topics_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="60dp"
+                android:layout_weight="1"
+                app:layoutManager="LinearLayoutManager" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/topics_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="60dp"
-                    app:layoutManager="LinearLayoutManager"/>
+        </LinearLayout>
 
-            </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        </androidx.core.widget.NestedScrollView>
-
-        <ImageButton
-            android:id="@+id/add_topic_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@null"
-            app:srcCompat="@drawable/ic_plus" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_topic_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@null"
+        android:scaleType="center"
+        app:maxImageSize="56dp"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/rounded_plus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
