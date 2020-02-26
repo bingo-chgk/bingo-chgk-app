@@ -1,9 +1,16 @@
 package ru.spbhse.bingochgk.controller.articlecontroller
 
 import ru.spbhse.bingochgk.activities.ArticleActivity
-import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.model.TopicNavigator
 
-class ArticleController(private val topic: Topic, private val activity: ArticleActivity) {
+class ArticleController(private val activity: ArticleActivity) {
+
+    val topic = TopicNavigator.getCurrentTopic()
+
+    fun toNextTopic() {
+        TopicNavigator.toNextTopic()
+        activity.startNextTopic()
+    }
 
     fun changeArticleStatus() {
         if (topic.isRead) {

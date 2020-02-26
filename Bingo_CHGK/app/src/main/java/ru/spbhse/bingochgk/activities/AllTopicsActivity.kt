@@ -42,10 +42,11 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     override fun onItemClick(position: Int) {
+        controller.goToTopic(position)
+    }
+
+    fun startTopicReading() {
         val intent = Intent(this, ArticleActivity::class.java)
-
-        intent.putExtra("topic", topics[position])
-
         startActivity(intent)
     }
 

@@ -21,15 +21,16 @@ import java.lang.ref.WeakReference
 
 class ArticleActivity : AppCompatActivity() {
 
-    private lateinit var topic: Topic
     private lateinit var controller: ArticleController
+    private lateinit var topic: Topic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        topic = intent.getSerializableExtra("topic") as Topic
-        controller = ArticleController(topic, this)
+        controller = ArticleController(this)
+
+        topic = controller.topic
 
         toolbar.title = topic.name
         progress_bar.progress = topic.progress
@@ -42,7 +43,11 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         to_next_article_button_up.setOnClickListener {
-            Toast.makeText(this, "hello arrow!", Toast.LENGTH_LONG).show()
+            controller.toNextTopic()
+        }
+
+        to_next_article_button_down.setOnClickListener {
+            controller.toNextTopic()
         }
 
         article_status.setOnClickListener {
@@ -87,6 +92,11 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         article_text.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    fun startNextTopic() {
+        val intent = Intent(this, ArticleActivity::class.java)
+        startActivity(intent)
     }
 
     fun setStatusPicture() {
