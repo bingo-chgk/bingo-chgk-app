@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/all_collections"
+            android:title="Мои подборки" />
+        <item
+            android:id="@+id/saved_questions"
+            android:title="Сохраненные вопросы" />
+        <item
+            android:id="@+id/info"
+            android:title="Справка" />
+        <item
+            android:id="@+id/random_question"
+            android:title="Случайный вопрос" />
+        <item
+            android:id="@+id/all_topics"
+            android:title="Все статьи" />
+
+    </group>
+</menu>
