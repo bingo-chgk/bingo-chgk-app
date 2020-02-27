@@ -98,6 +98,11 @@ class ArticleActivity : AppCompatActivity() {
         finish()
     }
 
+    fun onTextLoaded(result: String) {
+        setArticleText(result)
+        cat_progress_bar.visibility = View.GONE
+    }
+
     fun setStatusPicture() {
         Logger.d("Setting new image")
         val imageId = if (topic.isRead) {
