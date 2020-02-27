@@ -172,7 +172,7 @@ object Database {
         return topics
     }
 
-    fun getRandomQuestion(): Question {
+    fun getRandomQuestion(): Question? {
         val cursor = database.rawQuery(
             """SELECT 
                 |id, 
@@ -192,6 +192,9 @@ object Database {
                 |""".trimMargin(),
             emptyArray()
         )
+        if (cursor.isAfterLast) {
+            return null
+        }
         cursor.moveToFirst()
         return Question(
             text = cursor.getString(3),

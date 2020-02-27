@@ -11,11 +11,11 @@ class RandomQuestionController(private val activity: RandomQuestionActivity) {
     }
 
     inner class GetRandomQuestionTask : AsyncTask<Unit, Unit, Question>() {
-        override fun doInBackground(vararg params: Unit?): Question {
+        override fun doInBackground(vararg params: Unit?): Question? {
             return Database.getRandomQuestion()
         }
 
-        override fun onPostExecute(result: Question) {
+        override fun onPostExecute(result: Question?) {
             super.onPostExecute(result)
             activity.onQuestionIsReady(result)
         }
