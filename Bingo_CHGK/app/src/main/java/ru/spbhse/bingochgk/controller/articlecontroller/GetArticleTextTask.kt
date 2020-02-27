@@ -11,7 +11,6 @@ class GetArticleTextTask(activity: ArticleActivity) : AsyncTask<Topic, Unit, Str
     private val activityReference = WeakReference(activity)
 
     override fun doInBackground(vararg params: Topic): String {
-        Thread.sleep(10000)
         return params[0].loadText()
     }
 
