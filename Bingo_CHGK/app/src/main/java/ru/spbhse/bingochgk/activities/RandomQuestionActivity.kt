@@ -37,8 +37,8 @@ class RandomQuestionActivity : QuestionActivity() {
         if (question == null) {
             toNextQuestionButton.visibility = View.GONE
             to_next_question_button_up.visibility = View.GONE
-            answerButton.isEnabled = false
-            saveQuestionButton.isEnabled = false
+            answerButton.visibility = View.GONE
+//            saveQuestionButton.visibility = View.GONE
             questionText.text = """
                 По какой-то причине мы не смогли получить случайный вопрос из базы.
                 
