@@ -55,7 +55,7 @@
                 android:indeterminate="false"
                 android:progress="35"
                 android:progressDrawable="@drawable/progress_bar"
-                app:layout_constraintLeftx_toLeftOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
