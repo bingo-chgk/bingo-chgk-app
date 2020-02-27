@@ -60,8 +60,7 @@
                 android:layout_height="match_parent"
                 android:indeterminate="true"
                 android:layout_gravity="center"
-                android:foregroundGravity="center"
-                android:indeterminateDrawable="@drawable/cat_progress_bar" />
+                android:foregroundGravity="center" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
