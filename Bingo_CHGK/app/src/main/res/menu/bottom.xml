@@ -10,7 +10,7 @@
             android:title="Сохраненные вопросы" />
         <item
             android:id="@+id/info"
-            android:title="Справка" />
+            android:title="О приложении" />
         <item
             android:id="@+id/random_question"
             android:title="Случайный вопрос" />

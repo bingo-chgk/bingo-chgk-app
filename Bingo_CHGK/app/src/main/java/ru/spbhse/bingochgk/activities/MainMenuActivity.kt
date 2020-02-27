@@ -30,11 +30,13 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(Intent(this, RandomQuestionActivity::class.java))
         }
 
-
-        info_button.setOnClickListener {
-//            startActivity(Intent(this, ReferenceActivity::class.java))
+        up_menu_button.setOnClickListener {
             val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
             bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+        }
+
+        info_button.setOnClickListener {
+            startActivity(Intent(this, ReferenceActivity::class.java))
         }
     }
 }

@@ -15,22 +15,22 @@
         android:layout_gravity="top"
         android:layout_marginStart="30dp"
         android:layout_marginTop="68dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="15dp"
         android:gravity="center"
-        android:text="ЗАГОЛОВОК"
+        android:text="БиНгО ЧгК"
         android:textSize="30sp"
+        android:textColor="#2F4F4F"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/info_button"
-        android:layout_width="283dp"
-        android:layout_height="318dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:background="@null"
         android:contentDescription="possible logo"
@@ -46,7 +46,6 @@
         android:layout_marginStart="29dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="69dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,9 +76,23 @@
             android:background="@null"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/library" />
-
-
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/up_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginBottom="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:scaleY="-1"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/menu_arrow"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
