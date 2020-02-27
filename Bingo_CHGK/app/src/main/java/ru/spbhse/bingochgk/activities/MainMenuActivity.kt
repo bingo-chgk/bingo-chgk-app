@@ -3,7 +3,10 @@ package ru.spbhse.bingochgk.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main_menu.*
+import kotlinx.android.synthetic.main.bottom_fragment.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 
@@ -28,16 +31,10 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
 
-        all_collections_button.setOnClickListener {
-            startActivity(Intent(this, CollectionsActivity::class.java))
-        }
-
-        saved_questions_button.setOnClickListener {
-            startActivity(Intent(this, SavedQuestionsActivity::class.java))
-        }
-
         info_button.setOnClickListener {
-            startActivity(Intent(this, ReferenceActivity::class.java))
+//            startActivity(Intent(this, ReferenceActivity::class.java))
+            val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
+            bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
         }
     }
 }
