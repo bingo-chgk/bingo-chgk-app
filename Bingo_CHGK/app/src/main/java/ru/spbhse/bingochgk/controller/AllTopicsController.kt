@@ -22,7 +22,7 @@ class AllTopicsController(private val activity: AllTopicsActivity) {
         activity.startTopicReading()
     }
 
-    inner class GetAllTopicsTask() : AsyncTask<Unit, Unit, List<Topic>>() {
+    inner class GetAllTopicsTask : AsyncTask<Unit, Unit, List<Topic>>() {
 
         override fun doInBackground(vararg params: Unit?): List<Topic> {
             return Database.getAllTopics()

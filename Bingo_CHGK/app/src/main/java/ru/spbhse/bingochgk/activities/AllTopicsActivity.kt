@@ -2,6 +2,7 @@ package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,6 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
         setContentView(R.layout.activity_all_topics)
 
         toolbar.title = "Все темы"
-
         add_topic_button.setOnClickListener {
             startActivity(Intent(this, CreateArticleActivity::class.java))
         }
@@ -39,6 +39,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
 
         val topicAdapter = TopicAdapter(this, this.topics, this)
         topics_list.adapter = topicAdapter
+        cat_progress_bar.visibility = View.GONE
     }
 
     override fun onItemClick(position: Int) {
