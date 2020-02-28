@@ -20,6 +20,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'org.xerial:sqlite-jdbc:3.8.11'
     compile 'com.vk.api:sdk:0.5.12'
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
 }
 
 compileKotlin {
