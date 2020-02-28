@@ -1,10 +1,8 @@
-package ru.spbhse.bingochgk.model
-
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import ru.spbhse.bingochgk.utils.Logger
 import java.io.IOException
+import java.lang.RuntimeException
 
 object QuestionsFinder {
     fun getAllQuestionsByAnswerTag(tag: String): List<Question> {
@@ -21,13 +19,11 @@ object QuestionsFinder {
                         .get()
                     break
                 } catch (e: IOException) {
-                    Logger.e(e.message!!)
+                    println("Miss $tag page $page")
                 }
             }
             if (doc == null) {
-                // TODO : бросить исключение
-                Logger.e("Could not download all questions, request=$tag, page=$page")
-                break
+                throw RuntimeException("Miss me?")
             }
             val questions = doc.getElementsByClass("question")
 

@@ -64,11 +64,3 @@ object TopicsDownloader {
 }
 
 fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
-
-fun main() {
-    val topics = TopicsDownloader.downloadTopics()
-    Database.connect()
-    for (topicId in 0..topics.lastIndex) {
-        Database.insertTopic(topics[topicId], topicId)
-    }
-}
