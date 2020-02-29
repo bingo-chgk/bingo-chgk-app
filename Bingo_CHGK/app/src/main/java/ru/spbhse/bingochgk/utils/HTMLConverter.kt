@@ -1,7 +1,5 @@
 package ru.spbhse.bingochgk.utils
 
-import android.util.Log
-
 fun articleToHTML(article: String): String {
     val lines = article.lines()
 
@@ -29,8 +27,6 @@ fun articleToHTML(article: String): String {
             append("</ul>")
         }
     }
-
-    Logger.d(stringBuilder.toString())
 
     return stringBuilder.toString()
 }

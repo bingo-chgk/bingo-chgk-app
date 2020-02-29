@@ -9,28 +9,30 @@ DROP TABLE IF EXISTS Handout;
 DROP TABLE IF EXISTS Topic;
 
 CREATE TABLE Topic(
-	id INTEGER PRIMARY KEY,
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	text TEXT NOT NULL,
 	name TEXT NOT NULL,
 	read BOOLEAN NOT NULL
 );
 
 CREATE TABLE Handout(
-	id INTEGER PRIMARY KEY,
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	text_handout_path TEXT,
 	image_handout_path TEXT,
 	audio_handout_path TEXT
 );
 
 CREATE TABLE Question(
-	id INTEGER PRIMARY KEY,
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	topic_id INTEGER NOT NULL REFERENCES Topic(id),
 	dbchgkinfo_id TEXT NOT NULL UNIQUE,
+	text TEXT NOT NULL,
 	handout_id INT REFERENCES Handout(id),
 	comment_text TEXT,
 	author TEXT,
 	sources TEXT,
 	additional_answers TEXT,
+	wrong_answers TEXT,
 	answer TEXT NOT NULL
 );
 

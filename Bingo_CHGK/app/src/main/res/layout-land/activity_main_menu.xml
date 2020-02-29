@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:orientation="horizontal"
+    tools:context=".activities.MainMenuActivity">
+
+    <ImageButton
+        android:id="@+id/info_button"
+        android:layout_width="283dp"
+        android:layout_height="318dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@null"
+        android:contentDescription="possible logo"
+        android:src="@drawable/question_cat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="69dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_button">
+
+
+        <ImageButton
+            android:id="@+id/random_question_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/play_button" />
+
+        <ImageButton
+            android:id="@+id/all_topics_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/library" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/up_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:layout_gravity="center"
+        android:rotation="90"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/menu_arrow"/>
+
+</LinearLayout>

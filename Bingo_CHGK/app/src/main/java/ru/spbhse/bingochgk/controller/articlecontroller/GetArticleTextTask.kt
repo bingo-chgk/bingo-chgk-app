@@ -16,6 +16,6 @@ class GetArticleTextTask(activity: ArticleActivity) : AsyncTask<Topic, Unit, Str
 
     override fun onPostExecute(result: String) {
         super.onPostExecute(result)
-        activityReference.get()?.setArticleText(result)
+        activityReference.get()?.onTextLoaded(result)
     }
 }

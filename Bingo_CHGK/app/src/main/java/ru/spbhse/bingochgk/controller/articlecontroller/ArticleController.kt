@@ -1,12 +1,19 @@
 package ru.spbhse.bingochgk.controller.articlecontroller
 
 import ru.spbhse.bingochgk.activities.ArticleActivity
-import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.model.TopicNavigator
 
-class ArticleController(private val topic: Topic, private val activity: ArticleActivity) {
+class ArticleController(private val activity: ArticleActivity) {
+
+    val currentTopic = TopicNavigator.getCurrentTopic()
+
+    fun toNextTopic() {
+        TopicNavigator.toNextTopic()
+        activity.startNextTopic()
+    }
 
     fun changeArticleStatus() {
-        if (topic.isRead) {
+        if (currentTopic.isRead) {
             markArticleAsUnread()
         } else {
             markArticleAsRead()
@@ -14,20 +21,24 @@ class ArticleController(private val topic: Topic, private val activity: ArticleA
     }
 
     fun markArticleAsRead() {
-        if (!topic.isRead) {
-            topic.isRead = true
-            UpdateTopicReadStatusTask(activity).execute(topic)
+        if (!currentTopic.isRead) {
+            currentTopic.isRead = true
+            UpdateTopicReadStatusTask(activity).execute(currentTopic)
         }
     }
 
     private fun markArticleAsUnread() {
-        if (topic.isRead) {
-            topic.isRead = false
-            UpdateTopicReadStatusTask(activity).execute(topic)
+        if (currentTopic.isRead) {
+            currentTopic.isRead = false
+            UpdateTopicReadStatusTask(activity).execute(currentTopic)
         }
     }
 
     fun requestArticleText() {
-        GetArticleTextTask(activity).execute(topic)
+        GetArticleTextTask(activity).execute(currentTopic)
+    }
+
+    fun uploadQuestions() {
+        UploadQuestionsTask(this).execute(currentTopic.name)
     }
 }

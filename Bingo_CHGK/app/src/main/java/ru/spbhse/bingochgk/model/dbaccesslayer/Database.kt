@@ -4,7 +4,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import ru.spbhse.bingochgk.model.Collection
+import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.utils.Logger
 
 object Database {
     private lateinit var databaseManager: DatabaseManager
@@ -13,6 +15,7 @@ object Database {
     fun init(context: Context) {
         databaseManager = DatabaseManager(context)
         database = databaseManager.writableDatabase
+        Logger.d("Database initialized")
     }
 
     fun getTopicText(topic: Topic): String {
@@ -113,6 +116,43 @@ object Database {
         return collections
     }
 
+    fun insertQuestionsToDatabase(questions: List<Question>, topic: Topic) {
+        for (question in questions) {
+            database.execSQL(
+                """INSERT OR IGNORE INTO 
+                    |Question(
+                    |   topic_id, 
+                    |   dbchgkinfo_id,
+                    |   text,
+                    |   handout_id, 
+                    |   comment_text, 
+                    |   author, 
+                    |   sources, 
+                    |   additional_answers, 
+                    |   wrong_answers,
+                    |   answer
+                    |)
+                    |VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    |""".trimMargin(),
+                arrayOf(
+                    topic.databaseId.toString(),
+                    question.dbChgkInfoId,
+                    question.text,
+                    "null",
+                    question.comment,
+                    question.author,
+                    question.sources,
+                    question.additionalAnswers,
+                    question.wrongAnswers,
+                    question.answer
+                )
+            )
+            Logger.d(question.dbChgkInfoId)
+        }
+
+        Logger.d("insert ${questions.size} new questions")
+    }
+
     // NOT TESTED AT ALL
     fun getTopicsByDatabaseStoredCollection(collection: Collection): List<Topic> {
         val cursor = database.rawQuery(
@@ -130,6 +170,43 @@ object Database {
         cursor.close()
 
         return topics
+    }
+
+    fun getRandomQuestion(): Question? {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |id, 
+                |topic_id, 
+                |dbchgkinfo_id,
+                |text, 
+                |handout_id, 
+                |comment_text,
+                |author,
+                |sources,
+                |additional_answers,
+                |wrong_answers,
+                |answer
+                |FROM Question
+                |ORDER BY RANDOM()
+                |LIMIT 1
+                |""".trimMargin(),
+            emptyArray()
+        )
+        if (cursor.isAfterLast) {
+            return null
+        }
+        cursor.moveToFirst()
+        return Question(
+            text = cursor.getString(3),
+            answer = cursor.getString(10),
+            dbChgkInfoId = cursor.getString(2),
+            databaseId = cursor.getInt(0),
+            sources = cursor.getString(7),
+            author = cursor.getString(6),
+            wrongAnswers = cursor.getString(9),
+            additionalAnswers = cursor.getString(8),
+            comment = cursor.getString(5)
+        ).also { cursor.close() }
     }
 
     private fun collectTopicsFromCursor(cursor: Cursor): List<Topic> {
