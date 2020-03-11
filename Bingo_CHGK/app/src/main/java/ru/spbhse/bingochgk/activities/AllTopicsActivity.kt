@@ -1,13 +1,18 @@
 package ru.spbhse.bingochgk.activities
 
+import android.app.SearchableInfo
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_all_topics.*
+import kotlinx.android.synthetic.main.activity_main_menu.view.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.model.Topic
@@ -26,6 +31,10 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
         add_topic_button.setOnClickListener {
             startActivity(Intent(this, CreateArticleActivity::class.java))
         }
+
+        toolbar.setOnClickListener {
+            search.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {
@@ -39,6 +48,28 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
 
         val topicAdapter = TopicAdapter(this, this.topics, this)
         topics_list.adapter = topicAdapter
+
+        search.isSubmitButtonEnabled = true
+        search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                search.clearFocus()
+                search.visibility = View.GONE
+                topicAdapter.notifyDataSetChanged()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                topicAdapter.filter.filter(newText)
+                topicAdapter.notifyDataSetChanged()
+                return true
+            }
+        })
+        search.setOnCloseListener {
+            topicAdapter.dropSearch()
+            topicAdapter.notifyDataSetChanged()
+            false
+        }
+
         cat_progress_bar.visibility = View.GONE
     }
 
@@ -68,5 +99,16 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
         val intent = Intent(this, TopicQuestionActivity::class.java)
 
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        val adapter = topics_list.adapter as? TopicAdapter
+
+        if (adapter == null || !adapter.isFilterApplied()) {
+            super.onBackPressed()
+        } else {
+            adapter.dropSearch()
+            adapter.notifyDataSetChanged()
+        }
     }
 }

@@ -29,19 +29,18 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:title="Все темы"
-                app:titleTextColor="#ffffff" />
+                app:titleTextColor="#ffffff">
 
+                <android.widget.SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:iconifiedByDefault="false" />
 
-            <EditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Поиск"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName"
-                android:singleLine="true" />
+            </androidx.appcompat.widget.Toolbar>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -58,9 +57,9 @@
                 android:id="@+id/cat_progress_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:indeterminate="true"
                 android:layout_gravity="center"
-                android:foregroundGravity="center" />
+                android:foregroundGravity="center"
+                android:indeterminate="true" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
