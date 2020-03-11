@@ -4,37 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
+    android:gravity="center"
     android:orientation="horizontal"
     tools:context=".activities.MainMenuActivity">
 
-    <ImageButton
-        android:id="@+id/info_button"
-        android:layout_width="283dp"
-        android:layout_height="318dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@null"
-        android:contentDescription="possible logo"
-        android:src="@drawable/question_cat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:text="БиНгО ЧгК"
+            android:textColor="#2F4F4F"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/info_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/question_cat" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="69dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_button">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <ImageButton
@@ -47,7 +53,7 @@
             android:adjustViewBounds="true"
             android:background="@null"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/play_button" />
+            app:srcCompat="@drawable/ball_of_wool" />
 
         <ImageButton
             android:id="@+id/all_topics_button"
@@ -59,23 +65,53 @@
             android:adjustViewBounds="true"
             android:background="@null"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/library" />
-
+            app:srcCompat="@drawable/reading_cat" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/up_menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:layout_gravity="center"
-        android:rotation="90"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/menu_arrow"/>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:background="#787878"
+        android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/information" />
+
+        <ImageButton
+            android:id="@+id/saved_questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/saved" />
+
+        <ImageButton
+            android:id="@+id/collections_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/library" />
+    </LinearLayout>
 
 </LinearLayout>
