@@ -197,18 +197,7 @@ object Database {
             return null
         }
         cursor.moveToFirst()
-        return Question(
-            text = cursor.getString(3),
-            answer = cursor.getString(10),
-            dbChgkInfoId = cursor.getString(2),
-            databaseId = cursor.getInt(0),
-            sources = cursor.getString(7),
-            author = cursor.getString(6),
-            wrongAnswers = cursor.getString(9),
-            additionalAnswers = cursor.getString(8),
-            comment = cursor.getString(5),
-            topicId = cursor.getInt(1)
-        ).also { cursor.close() }
+        return collectQuestionFromCursor(cursor).also { cursor.close() }
     }
 
     fun getRandomQuestion(): Question? {
@@ -235,18 +224,80 @@ object Database {
             return null
         }
         cursor.moveToFirst()
-        return Question(
-            text = cursor.getString(3),
-            answer = cursor.getString(10),
-            dbChgkInfoId = cursor.getString(2),
-            databaseId = cursor.getInt(0),
-            sources = cursor.getString(7),
-            author = cursor.getString(6),
-            wrongAnswers = cursor.getString(9),
-            additionalAnswers = cursor.getString(8),
-            comment = cursor.getString(5),
-            topicId = cursor.getInt(1)
-        ).also { cursor.close() }
+        return collectQuestionFromCursor(cursor).also { cursor.close() }
+    }
+
+    fun getQuestionById(id: Int): Question? {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |id, 
+                |topic_id, 
+                |dbchgkinfo_id,
+                |text, 
+                |handout_id, 
+                |comment_text,
+                |author,
+                |sources,
+                |additional_answers,
+                |wrong_answers,
+                |answer
+                |FROM Question
+                |WHERE id = ?
+                |LIMIT 1
+                |""".trimMargin(),
+            arrayOf("$id")
+        )
+        if (cursor.isAfterLast) {
+            return null
+        }
+        cursor.moveToFirst()
+        return collectQuestionFromCursor(cursor).also { cursor.close() }
+    }
+
+    fun saveQuestion(question: Question) {
+        database.execSQL(
+            """INSERT OR IGNORE INTO 
+                    |SavedQuestion(
+                    |   question_id
+                    |)
+                    |VALUES(?)
+                    |""".trimMargin(),
+            arrayOf("${question.databaseId}")
+        )
+    }
+
+    fun removeSavedQuestion(question: Question) {
+        database.execSQL(
+            """DELETE FROM
+                    |SavedQuestion
+                    |WHERE question_id = ?
+                    |""".trimMargin(),
+            arrayOf(question.databaseId.toString())
+        )
+    }
+
+    fun getSavedQuestions(): List<Question> {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |id, 
+                |topic_id, 
+                |dbchgkinfo_id,
+                |text, 
+                |handout_id, 
+                |comment_text,
+                |author,
+                |sources,
+                |additional_answers,
+                |wrong_answers,
+                |answer
+                |FROM Question
+                |WHERE id in SavedQuestion
+                |""".trimMargin(),
+            emptyArray()
+        )
+
+        return collectQuestionsFromCursor(cursor)
+            .also { cursor.close() }
     }
 
     private fun collectTopicsFromCursor(cursor: Cursor): List<Topic> {
@@ -264,5 +315,32 @@ object Database {
         }
 
         return topics
+    }
+
+    private fun collectQuestionsFromCursor(cursor: Cursor): List<Question> {
+        val questions = mutableListOf<Question>()
+
+        while (cursor.moveToNext()) {
+            questions.add(
+                collectQuestionFromCursor(cursor)
+            )
+        }
+
+        return questions
+    }
+
+    private fun collectQuestionFromCursor(cursor: Cursor): Question {
+        return Question(
+            text = cursor.getString(3),
+            answer = cursor.getString(10),
+            dbChgkInfoId = cursor.getString(2),
+            databaseId = cursor.getInt(0),
+            sources = cursor.getString(7),
+            author = cursor.getString(6),
+            wrongAnswers = cursor.getString(9),
+            additionalAnswers = cursor.getString(8),
+            comment = cursor.getString(5),
+            topicId = cursor.getInt(1)
+        )
     }
 }

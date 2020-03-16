@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.saved_question_item.view.*
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.model.Question
 
 class SavedQuestionAdapter(
-    private val items: List<String>,
+    private val items: List<Question>,
     val context: Context,
     private val actionsProvider: SavedQuestionActionsProvider
 ) : RecyclerView.Adapter<SavedQuestionViewHolder>() {
@@ -26,7 +27,7 @@ class SavedQuestionAdapter(
     }
 
     override fun onBindViewHolder(holder: SavedQuestionViewHolder, position: Int) {
-        holder.name?.text = items[position]
+        holder.name?.text = items[position].text
     }
 }
 
