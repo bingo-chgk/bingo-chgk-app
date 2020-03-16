@@ -1,22 +1,20 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_collections.*
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.controller.CollectionsController
+import ru.spbhse.bingochgk.model.Collection
 
 class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider {
-
-    private val collectionsListTitles =
-        mutableListOf("Прочитанные", "TODO", "InTeReStInG", "Сашина подборки", "Шишкин лес")
-
-    private val adapter = CollectionsListAdapter(collectionsListTitles, this, this)
+    private lateinit var collections: MutableList<Collection>
+    private lateinit var adapter: CollectionsListAdapter
+    val controller = CollectionsController(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,26 +22,23 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
         add_collection_button.setOnClickListener {
             startActivity(Intent(this, CreateCollectionActivity::class.java))
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        controller.requestCollections()
+    }
+
+    fun setCollections(loaded: List<Collection>) {
+        collections = loaded.toMutableList()
+        adapter = CollectionsListAdapter(collections, this, this)
         collections_list.adapter = adapter
-
-        collections_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                //TODO
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //TODO
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //TODO implement list filter
-            }
-        })
     }
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, ConcreteCollectionActivity::class.java)
+        intent.putExtra("id", collections[position].databaseId)
+        intent.putExtra("name", collections[position].name)
         startActivity(intent)
     }
 
@@ -52,7 +47,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
         popupMenu.menu.add("Удалить подборку")
         popupMenu.setOnMenuItemClickListener {
             // TODO: switch
-            collectionsListTitles.removeAt(position)
+            collections.removeAt(position)
             adapter.notifyDataSetChanged()
             Toast.makeText(
                 this, "Подборка удалена",

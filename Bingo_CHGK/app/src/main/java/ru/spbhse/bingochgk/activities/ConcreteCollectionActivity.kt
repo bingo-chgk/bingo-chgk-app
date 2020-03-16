@@ -11,21 +11,24 @@ import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Topic
 
 class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
-
     private val initTopics = listOf<Topic>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_concrete_collection)
 
+        val currentCollectionId = intent.extras?.get("id") as? Int ?: 0
+        val currentCollectionName = intent.extras?.get("name") as? String ?: "Поброка 42"
+
         val topicAdapter = TopicAdapter(this, initTopics, this)
         topics_list.adapter = topicAdapter
 
-        toolbar.title = "Подборка 42"
+        toolbar.title = currentCollectionName
 
         add_topic_button.setOnClickListener {
-//            Toast.makeText(this, "Add button", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this, TopicsChoiceActivity::class.java))
+            val intent = Intent(this, TopicsChoiceActivity::class.java)
+            intent.putExtra("id", currentCollectionId)
+            startActivity(intent)
         }
 
         to_question_by_collection_button.setOnClickListener {

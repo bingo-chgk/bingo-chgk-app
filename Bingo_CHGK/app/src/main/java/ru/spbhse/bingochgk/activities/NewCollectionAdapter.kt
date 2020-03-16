@@ -41,17 +41,16 @@ class NewCollectionListViewHolder(view: View, actionsProvider: NewCollectionList
 
     init {
         view.setOnClickListener {
+            actionsProvider.onItemClick(adapterPosition, checkBox?.isChecked ?: false)
             checkBox?.isChecked = !checkBox?.isChecked!!
-            actionsProvider.onItemClick(adapterPosition)
         }
         view.setOnLongClickListener {
             actionsProvider.onItemLongClick(adapterPosition)
         }
-
     }
 }
 
 interface NewCollectionListActionsProvider {
-    fun onItemClick(position: Int)
+    fun onItemClick(position: Int, isChecked: Boolean)
     fun onItemLongClick(position: Int): Boolean
 }

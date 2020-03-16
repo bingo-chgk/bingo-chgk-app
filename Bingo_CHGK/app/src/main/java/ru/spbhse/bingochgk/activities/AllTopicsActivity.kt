@@ -10,11 +10,12 @@ import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_all_topics.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
+import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
 
 
-class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
-
+class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
+    TopicsConsumer {
     private lateinit var controller: AllTopicsController
     private lateinit var topics: List<Topic>
 
@@ -34,7 +35,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
         controller.requestTopics()
     }
 
-    fun onTopicsAreLoaded(topics: List<Topic>) {
+    override fun onTopicsAreLoaded(topics: List<Topic>) {
         this.topics = topics
 
         val topicAdapter = TopicAdapter(this, this.topics, this)

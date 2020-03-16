@@ -1,5 +1,6 @@
 package ru.spbhse.bingochgk.model.dbaccesslayer
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -29,6 +30,69 @@ object Database {
             cursor.moveToFirst()
             cursor.getString(0)
         }.also { cursor.close() }
+    }
+
+    fun addCollection(name: String): Int {
+        val values = ContentValues()
+        values.put("name", name)
+        return database.insert("Collection", null, values).toInt() // heh
+    }
+
+    fun addTopicToCollection(collection: Int, topic: Int) {
+        database.execSQL(
+            """INSERT OR IGNORE INTO 
+                    |CollectionTopic(
+                    |   collection_id,
+                    |   topic_id
+                    |)
+                    |VALUES(?, ?)
+                    |""".trimMargin(),
+            arrayOf(
+                collection,
+                topic
+            )
+        )
+    }
+
+    fun removeTopicFromCollection(collection: Int, topic: Int) {
+        database.execSQL(
+            """DELETE FROM
+                    |CollectionTopic
+                    |WHERE collection_id = ? 
+                    |AND topic_id = ?
+                    |""".trimMargin(),
+            arrayOf(
+                collection,
+                topic
+            )
+        )
+    }
+
+    fun getAllCollections(): List<Collection> {
+        val cursor = database.rawQuery(
+            """SELECT name, id
+                |FROM Collection
+                |""".trimMargin(),
+            null
+        )
+
+        val collections = mutableListOf<Collection>()
+
+        while (cursor.moveToNext()) {
+            collections.add(
+                Collection(
+                    cursor.getString(0),
+                    cursor.getInt(1)
+                )
+            )
+        }
+        cursor.close()
+
+        return collections
+    }
+
+    fun getTopicsByCollection(collection: Collection): List<Topic> {
+        return emptyList()
     }
 
     fun setTopicReadStatus(topic: Topic) {
@@ -82,7 +146,7 @@ object Database {
                 |FROM TopicPercentage
                 |WHERE id = ?
                 |""".trimMargin(),
-            arrayOf("${topic.databaseId}" )
+            arrayOf("${topic.databaseId}")
         )
 
         // TODO: Throw something if no such element found
