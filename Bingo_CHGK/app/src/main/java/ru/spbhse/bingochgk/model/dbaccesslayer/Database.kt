@@ -205,7 +205,8 @@ object Database {
             author = cursor.getString(6),
             wrongAnswers = cursor.getString(9),
             additionalAnswers = cursor.getString(8),
-            comment = cursor.getString(5)
+            comment = cursor.getString(5),
+            topicId = cursor.getInt(1)
         ).also { cursor.close() }
     }
 

@@ -8,4 +8,5 @@ class Question(val text: String,
                val sources: String?,
                val author: String?,
                val dbChgkInfoId: String,
-               val databaseId: Int = 0)
+               val databaseId: Int = 0,
+               val topicId: Int = 0)

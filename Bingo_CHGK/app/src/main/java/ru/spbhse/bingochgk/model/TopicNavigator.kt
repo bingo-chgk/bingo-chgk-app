@@ -21,4 +21,8 @@ object TopicNavigator {
         position++
         position %= topicCollection.size
     }
+
+    fun selectItemById(id: Int) {
+        position = topicCollection.indexOfFirst { topic -> topic.databaseId == id }
+    }
 }
