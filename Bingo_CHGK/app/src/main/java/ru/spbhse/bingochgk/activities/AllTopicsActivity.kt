@@ -66,7 +66,6 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener {
 
     override fun onQuestionButtonClick(position: Int) {
         val intent = Intent(this, TopicQuestionActivity::class.java)
-
         startActivity(intent)
     }
 }

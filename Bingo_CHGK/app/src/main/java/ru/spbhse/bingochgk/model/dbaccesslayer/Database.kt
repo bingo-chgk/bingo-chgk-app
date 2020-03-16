@@ -172,6 +172,45 @@ object Database {
         return topics
     }
 
+    fun getTopicQuestion(topic: Topic): Question? {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |id, 
+                |topic_id, 
+                |dbchgkinfo_id,
+                |text, 
+                |handout_id, 
+                |comment_text,
+                |author,
+                |sources,
+                |additional_answers,
+                |wrong_answers,
+                |answer
+                |FROM Question
+                |WHERE topic_id = ?
+                |ORDER BY RANDOM()
+                |LIMIT 1
+                |""".trimMargin(),
+            arrayOf("${topic.databaseId}")
+        )
+        if (cursor.isAfterLast) {
+            return null
+        }
+        cursor.moveToFirst()
+        return Question(
+            text = cursor.getString(3),
+            answer = cursor.getString(10),
+            dbChgkInfoId = cursor.getString(2),
+            databaseId = cursor.getInt(0),
+            sources = cursor.getString(7),
+            author = cursor.getString(6),
+            wrongAnswers = cursor.getString(9),
+            additionalAnswers = cursor.getString(8),
+            comment = cursor.getString(5),
+            topicId = cursor.getInt(1)
+        ).also { cursor.close() }
+    }
+
     fun getRandomQuestion(): Question? {
         val cursor = database.rawQuery(
             """SELECT 
