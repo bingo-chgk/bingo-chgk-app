@@ -158,6 +158,13 @@ open class QuestionActivity : AppCompatActivity() {
         val lhsLength = lhs.length
         val rhsLength = rhs.length
 
+        if (lhsLength == 0) {
+            return rhsLength
+        }
+        if (rhsLength == 0) {
+            return lhsLength
+        }
+
         var cost = Array(lhsLength) { it }
         var newCost = Array(lhsLength) { 0 }
 
@@ -171,7 +178,7 @@ open class QuestionActivity : AppCompatActivity() {
                 val costInsert = cost[j] + 1
                 val costDelete = newCost[j - 1] + 1
 
-                newCost[j] = Math.min(Math.min(costInsert, costDelete), costReplace)
+                newCost[j] = costInsert.coerceAtMost(costDelete).coerceAtMost(costReplace)
             }
 
             val swap = cost
