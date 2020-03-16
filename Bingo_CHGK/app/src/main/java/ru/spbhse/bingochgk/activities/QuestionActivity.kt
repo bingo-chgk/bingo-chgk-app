@@ -15,16 +15,17 @@ import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.QuestionController
 import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.TopicNavigator
+import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
 import java.util.*
 
 open class QuestionActivity : AppCompatActivity() {
 
-    private var question: Question? = null
+    protected var question: Question? = null
     private val youAreCorrect = "Это правильный ответ!"
     private val youAreWrong = "Это неправильный ответ"
 
-    private var saved = false
+    protected var saved = false
 
     private val questionController: QuestionController = QuestionController(this)
 
@@ -38,16 +39,6 @@ open class QuestionActivity : AppCompatActivity() {
 
         rejectAnswerButton.setOnClickListener {
             markAnswerWrong()
-        }
-
-        saveQuestionButton.setOnClickListener {
-            if (!saved) {
-                saveQuestionButton.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
-                saved = true
-            } else {
-                saveQuestionButton.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                saved = false
-            }
         }
     }
 
@@ -109,6 +100,19 @@ open class QuestionActivity : AppCompatActivity() {
 
         goToArticleButton.setOnClickListener {
             questionController.loadTopics()
+        }
+
+        saveQuestionButton.setOnClickListener {
+            if (!saved) {
+                saveQuestionButton.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+                saved = true
+                Database.saveQuestion(question)
+                Logger.d("Saving question")
+            } else {
+                saveQuestionButton.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                saved = false
+                Database.removeSavedQuestion(question)
+            }
         }
     }
 

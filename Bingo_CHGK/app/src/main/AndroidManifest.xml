@@ -16,15 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.TopicQuestionActivity"></activity>
+        <activity android:name=".activities.TopicQuestionActivity" />
         <activity android:name=".activities.CollectionQuestionActivity" />
         <activity android:name=".activities.RandomQuestionActivity" />
+        <activity android:name=".activities.SavedQuestionActivity" />
         <activity android:windowSoftInputMode="stateHidden" android:name=".activities.AllTopicsActivity" />
         <activity android:windowSoftInputMode="stateHidden" android:name=".activities.CreateCollectionActivity" />
         <activity android:name=".activities.ArticleActivity" />
         <activity android:name=".activities.ReferenceActivity" />
         <activity android:name=".activities.CreateArticleActivity" />
-        <activity android:name=".activities.SavedQuestionsActivity" />
+        <activity android:name=".activities.SavedQuestionsChoiceActivity" />
         <activity android:name=".activities.QuestionActivity" />
         <activity android:name=".activities.ConcreteCollectionActivity" />
         <activity android:windowSoftInputMode="stateHidden" android:name=".activities.CollectionsActivity" />

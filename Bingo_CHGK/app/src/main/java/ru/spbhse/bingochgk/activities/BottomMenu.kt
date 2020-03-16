@@ -15,7 +15,7 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
 
         navigation_view.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.saved_questions -> startActivity(Intent(context, SavedQuestionsActivity::class.java))
+                R.id.saved_questions -> startActivity(Intent(context, SavedQuestionsChoiceActivity::class.java))
                 R.id.info -> startActivity(Intent(context, ReferenceActivity::class.java))
                 R.id.all_collections -> startActivity(Intent(context, CollectionsActivity::class.java))
                 R.id.random_question -> startActivity(Intent(context, RandomQuestionActivity::class.java))

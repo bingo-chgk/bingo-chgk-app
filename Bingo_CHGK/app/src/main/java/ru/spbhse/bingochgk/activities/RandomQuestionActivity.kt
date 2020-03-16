@@ -7,8 +7,6 @@ import kotlinx.android.synthetic.main.activity_question.*
 import ru.spbhse.bingochgk.controller.RandomQuestionController
 
 class RandomQuestionActivity : QuestionActivity() {
-
-    //private val defaultImage = R.drawable.mock_image
     private val controller = RandomQuestionController(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +19,6 @@ class RandomQuestionActivity : QuestionActivity() {
         additionalLayout.visibility = View.GONE
 
         additionalMaterialImage.visibility = View.GONE
-        //additionalMaterialImage.setImageResource(defaultImage)
 
         toNextQuestionButton.setOnClickListener {
             toNextQuestion()
