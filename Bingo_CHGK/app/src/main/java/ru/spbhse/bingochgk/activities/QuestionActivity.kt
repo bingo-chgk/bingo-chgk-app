@@ -76,7 +76,7 @@ open class QuestionActivity : AppCompatActivity() {
             return
         }
 
-        questionText.text = question.text
+        questionText.text = question.text.replace(Regex("Вопрос [0-9]+: "), "")
 
         correctAnswer.text = question.answer
         commentText.text = question.comment
