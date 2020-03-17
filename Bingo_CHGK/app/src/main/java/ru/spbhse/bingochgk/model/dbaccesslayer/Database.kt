@@ -32,6 +32,13 @@ object Database {
         }.also { cursor.close() }
     }
 
+    fun addCollectionWithTopics(name: String, topics: List<Int>) {
+        val collectionId = addCollection(name)
+        for (topic in topics) {
+            addTopicToCollection(collectionId, topic)
+        }
+    }
+
     fun addCollection(name: String): Int {
         val values = ContentValues()
         values.put("name", name)

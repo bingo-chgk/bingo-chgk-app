@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.topics_choice_item.view.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Topic
 
-class NewCollectionAdapter(
+class TopicsChoiceAdapter(
     private val items: List<Topic>,
     val context: Context,
     private val actionsProvider: NewCollectionListActionsProvider

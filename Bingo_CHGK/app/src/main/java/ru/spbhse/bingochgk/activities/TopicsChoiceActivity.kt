@@ -12,7 +12,7 @@ import ru.spbhse.bingochgk.model.Topic
 
 class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvider, TopicsConsumer {
     private var availableTopics = listOf<Topic>()
-    private lateinit var adapter: NewCollectionAdapter
+    private lateinit var adapter: TopicsChoiceAdapter
     private val controller = TopicsChoiceController()
     private val loadController = TopicLoadController(this)
     private val topicsToAdd = mutableSetOf<Topic>()
@@ -52,7 +52,7 @@ class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvid
 
     override fun onTopicsAreLoaded(topics: List<Topic>) {
         availableTopics = topics
-        adapter = NewCollectionAdapter(availableTopics, this, this)
+        adapter = TopicsChoiceAdapter(availableTopics, this, this)
         topics_choice_list.adapter = adapter
     }
 }
