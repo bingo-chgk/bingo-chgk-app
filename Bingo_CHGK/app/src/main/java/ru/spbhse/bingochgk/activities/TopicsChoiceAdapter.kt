@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.topics_choice_item.view.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Topic
 
-class NewCollectionAdapter(
+class TopicsChoiceAdapter(
     private val items: List<Topic>,
     val context: Context,
     private val actionsProvider: NewCollectionListActionsProvider
@@ -40,18 +40,23 @@ class NewCollectionListViewHolder(view: View, actionsProvider: NewCollectionList
     private val checkBox: CheckBox? = view.topic_added_check
 
     init {
-        view.setOnClickListener {
-            checkBox?.isChecked = !checkBox?.isChecked!!
-            actionsProvider.onItemClick(adapterPosition)
+        checkBox?.setOnClickListener {
+            actionsProvider.onItemClick(adapterPosition, !checkBox.isChecked)
         }
+
+        view.setOnClickListener {
+            checkBox ?: return@setOnClickListener
+            actionsProvider.onItemClick(adapterPosition, checkBox.isChecked)
+            checkBox.isChecked = !checkBox.isChecked
+        }
+
         view.setOnLongClickListener {
             actionsProvider.onItemLongClick(adapterPosition)
         }
-
     }
 }
 
 interface NewCollectionListActionsProvider {
-    fun onItemClick(position: Int)
+    fun onItemClick(position: Int, isChecked: Boolean)
     fun onItemLongClick(position: Int): Boolean
 }

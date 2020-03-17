@@ -1,30 +1,58 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_topics_choice.*
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.controller.TopicLoadController
+import ru.spbhse.bingochgk.controller.TopicsChoiceController
+import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
 
-class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvider {
-    private val availableTopics = listOf<Topic>()
+class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvider, TopicsConsumer {
+    private var availableTopics = listOf<Topic>()
+    private lateinit var adapter: TopicsChoiceAdapter
+    private val controller = TopicsChoiceController()
+    private val loadController = TopicLoadController(this)
+    private val topicsToAdd = mutableSetOf<Topic>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics_choice)
 
-        val adapter = NewCollectionAdapter(availableTopics, this, this)
-        topics_choice_list.adapter = adapter
-
+        val currentCollectionId = intent.extras?.get("id") as? Int ?: 0
         done_button.setOnClickListener {
+            applyChanges(currentCollectionId)
             finish()
         }
     }
 
-    override fun onItemClick(position: Int) {}
+    override fun onResume() {
+        super.onResume()
+        loadController.requestTopics()
+    }
+
+    private fun applyChanges(collectionId: Int) {
+        controller.addTopics(collectionId, topicsToAdd.toList())
+    }
+
+    override fun onItemClick(position: Int, isChecked: Boolean) {
+        if (isChecked) {
+            topicsToAdd.remove(availableTopics[position])
+        } else {
+            topicsToAdd.add((availableTopics[position]))
+        }
+    }
+
     override fun onItemLongClick(position: Int): Boolean {
         startActivity(Intent(this, ArticleActivity::class.java))
         return true
+    }
+
+    override fun onTopicsAreLoaded(topics: List<Topic>) {
+        availableTopics = topics
+        adapter = TopicsChoiceAdapter(availableTopics, this, this)
+        topics_choice_list.adapter = adapter
     }
 }

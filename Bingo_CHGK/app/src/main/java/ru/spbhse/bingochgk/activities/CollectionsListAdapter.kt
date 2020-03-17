@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.collections_list_item.view.*
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.model.Collection
 
 class CollectionsListAdapter(
-    private val items: List<String>,
+    private val items: List<Collection>,
     val context: Context,
     private val actionsProvider: CollectionsListActionsProvider
 ) : RecyclerView.Adapter<CollectionsListViewHolder>() {
@@ -27,7 +28,7 @@ class CollectionsListAdapter(
     }
 
     override fun onBindViewHolder(holder: CollectionsListViewHolder, position: Int) {
-        holder.name?.text = items[position]
+        holder.name?.text = items[position].name
     }
 }
 
