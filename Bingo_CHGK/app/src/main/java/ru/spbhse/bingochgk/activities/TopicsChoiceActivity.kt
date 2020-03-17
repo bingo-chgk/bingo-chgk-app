@@ -1,16 +1,14 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_topics_choice.*
 import ru.spbhse.bingochgk.R
-import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.TopicLoadController
 import ru.spbhse.bingochgk.controller.TopicsChoiceController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
-import ru.spbhse.bingochgk.utils.Logger
 
 class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvider, TopicsConsumer {
     private var availableTopics = listOf<Topic>()
@@ -46,6 +44,7 @@ class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvid
             topicsToAdd.add((availableTopics[position]))
         }
     }
+
     override fun onItemLongClick(position: Int): Boolean {
         startActivity(Intent(this, ArticleActivity::class.java))
         return true

@@ -40,10 +40,16 @@ class NewCollectionListViewHolder(view: View, actionsProvider: NewCollectionList
     private val checkBox: CheckBox? = view.topic_added_check
 
     init {
-        view.setOnClickListener {
-            actionsProvider.onItemClick(adapterPosition, checkBox?.isChecked ?: false)
-            checkBox?.isChecked = !checkBox?.isChecked!!
+        checkBox?.setOnClickListener {
+            actionsProvider.onItemClick(adapterPosition, !checkBox.isChecked)
         }
+
+        view.setOnClickListener {
+            checkBox ?: return@setOnClickListener
+            actionsProvider.onItemClick(adapterPosition, checkBox.isChecked)
+            checkBox.isChecked = !checkBox.isChecked
+        }
+
         view.setOnLongClickListener {
             actionsProvider.onItemLongClick(adapterPosition)
         }

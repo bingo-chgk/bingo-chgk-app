@@ -91,8 +91,19 @@ object Database {
         return collections
     }
 
-    fun getTopicsByCollection(collection: Collection): List<Topic> {
-        return emptyList()
+    fun getTopicsByCollection(collection: Int): List<Topic> {
+        val cursor = database.rawQuery(
+            """SELECT t.name, t.percentage, t.id, t.read
+                |FROM TopicPercentage t
+                |INNER JOIN CollectionTopic ct
+                |ON ct.topic_id = t.id
+                |WHERE ct.collection_id = ?
+                |""".trimMargin(),
+            arrayOf(collection.toString())
+        )
+        val topics = collectTopicsFromCursor(cursor)
+        Logger.d("got ${topics.size} topics")
+        return topics
     }
 
     fun setTopicReadStatus(topic: Topic) {
