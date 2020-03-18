@@ -44,7 +44,7 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         saved_questions.setOnClickListener {
-            startActivity(Intent(this, SavedQuestionsActivity::class.java))
+            startActivity(Intent(this, SavedQuestionActivity::class.java))
         }
     }
 }
