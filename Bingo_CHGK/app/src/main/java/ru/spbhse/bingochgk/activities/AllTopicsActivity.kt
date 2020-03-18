@@ -17,6 +17,7 @@ import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.utils.Logger
 
 
 class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
@@ -60,8 +61,8 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                Logger.d(newText!!)
                 topicAdapter.filter.filter(newText)
-                topicAdapter.notifyDataSetChanged()
                 return true
             }
         })

@@ -1,7 +1,6 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.utils.Logger
 
 
 internal class TopicAdapter(
@@ -81,6 +81,7 @@ internal class TopicAdapter(
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             filteredTopics = results?.values as? List<Topic> ?: topics
+            notifyDataSetChanged()
         }
     }
 }
