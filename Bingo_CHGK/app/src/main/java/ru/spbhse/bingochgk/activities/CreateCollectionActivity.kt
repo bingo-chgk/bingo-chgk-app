@@ -19,8 +19,6 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
     private val loadController = TopicLoadController(this)
     private lateinit var adapter : TopicsChoiceAdapter
 
-    private val topics = mutableSetOf<Topic>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_collection)
@@ -34,7 +32,7 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
             }
             controller.addCollection(
                 new_collection_name_text.text.toString(),
-                topics.map { it.databaseId })
+                adapter.topicsToAdd.map { it.databaseId })
             finish()
         }
     }
@@ -46,9 +44,9 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
 
     override fun onItemClick(position: Int, isChecked: Boolean) {
         if (isChecked) {
-            topics.remove(availableTopics[position])
+            adapter.unCheckTopic(position)
         } else {
-            topics.add((availableTopics[position]))
+            adapter.checkTopic(position)
         }
     }
 
@@ -56,10 +54,35 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
         availableTopics = topics
         adapter = TopicsChoiceAdapter(availableTopics, this, this)
         article_to_choose_list.adapter = adapter
+
+        new_collection_search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                new_collection_search.clearFocus()
+                adapter.notifyDataSetChanged()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filterBy(newText ?: "")
+                return true
+            }
+        })
+        new_collection_search.setOnCloseListener {
+            adapter.dropSearch()
+            false
+        }
     }
 
     override fun onItemLongClick(position: Int): Boolean {
         startActivity(Intent(this, ArticleActivity::class.java))
         return true
+    }
+
+    override fun onBackPressed() {
+        if (adapter.isFilterApplied()) {
+            adapter.dropSearch()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

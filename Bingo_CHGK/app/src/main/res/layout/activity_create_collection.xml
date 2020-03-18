@@ -33,7 +33,19 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:title="Новая подборка"
-                app:titleTextColor="#ffffff" />
+                app:titleTextColor="#ffffff">
+
+                <SearchView
+                    android:id="@+id/new_collection_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:singleLine="true"
+                    android:iconifiedByDefault="true"
+                    android:visibility="visible"
+                    android:inputType="text"
+                />
+            </androidx.appcompat.widget.Toolbar>
 
             <EditText
                 android:id="@+id/new_collection_name_text"
@@ -43,7 +55,7 @@
                 android:hint="Название"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
 
 <!--            <EditText-->
 <!--                android:id="@+id/create_collection_search"-->
