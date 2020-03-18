@@ -198,6 +198,36 @@ object Database {
         return collections
     }
 
+    fun insertTopic(name: String, text: String): Topic {
+        database.beginTransaction()
+        database.execSQL(
+            """INSERT INTO
+                |Topic(id, text, name, read)
+                |VALUES (
+                |   (SELECT MIN(id) - 1 FROM Topic),
+                |   ?,
+                |   ?,
+                |   0
+                |)
+                |""".trimMargin(),
+            arrayOf(text, name)
+        )
+        val cursor = database.rawQuery(
+            """SELECT MIN(id) FROM Topic
+                |""".trimMargin(),
+            arrayOf()
+        )
+
+        cursor.moveToFirst()
+        val id = cursor.getInt(0)
+        cursor.close()
+
+        database.setTransactionSuccessful()
+        database.endTransaction()
+
+        return Topic(name, 0, id, false)
+    }
+
     fun insertQuestionsToDatabase(questions: List<Question>, topic: Topic) {
         for (question in questions) {
             database.execSQL(

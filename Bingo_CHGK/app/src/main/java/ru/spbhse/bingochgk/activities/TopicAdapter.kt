@@ -8,7 +8,6 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.Topic
-import ru.spbhse.bingochgk.utils.Logger
 
 
 internal class TopicAdapter(
@@ -20,6 +19,16 @@ internal class TopicAdapter(
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val filter = CustomFilter()
     private var filteredTopics = topics
+
+    fun realPosition(filteredPosition: Int): Int {
+        val topic = filteredTopics[filteredPosition]
+        for ((realTopic, id) in topics zip topics.indices) {
+            if (realTopic.databaseId == topic.databaseId) {
+                return id
+            }
+        }
+        return 0
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = inflater.inflate(R.layout.topic_item, parent, false)

@@ -9,10 +9,8 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_all_topics.*
-import kotlinx.android.synthetic.main.activity_main_menu.view.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
@@ -24,6 +22,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     TopicsConsumer {
     private lateinit var controller: AllTopicsController
     private lateinit var topics: List<Topic>
+    private lateinit var topicAdapter: TopicAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +47,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     override fun onTopicsAreLoaded(topics: List<Topic>) {
         this.topics = topics
 
-        val topicAdapter = TopicAdapter(this, this.topics, this)
+        topicAdapter = TopicAdapter(this, this.topics, this)
         topics_list.adapter = topicAdapter
 
         search.isSubmitButtonEnabled = true
@@ -76,7 +75,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        controller.goToTopic(position)
+        controller.goToTopic(topicAdapter.realPosition(position))
     }
 
     fun startTopicReading() {

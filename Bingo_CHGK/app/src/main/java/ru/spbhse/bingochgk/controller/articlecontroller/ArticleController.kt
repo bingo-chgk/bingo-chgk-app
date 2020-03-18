@@ -1,9 +1,11 @@
 package ru.spbhse.bingochgk.controller.articlecontroller
 
 import ru.spbhse.bingochgk.activities.ArticleActivity
+import ru.spbhse.bingochgk.controller.QuestionLoadController
+import ru.spbhse.bingochgk.controller.UploadQuestionsTask
 import ru.spbhse.bingochgk.model.TopicNavigator
 
-class ArticleController(private val activity: ArticleActivity) {
+class ArticleController(private val activity: ArticleActivity) : QuestionLoadController {
 
     val currentTopic = TopicNavigator.getCurrentTopic()
 
@@ -39,6 +41,10 @@ class ArticleController(private val activity: ArticleActivity) {
     }
 
     fun uploadQuestions() {
-        UploadQuestionsTask(this).execute(currentTopic.name)
+        UploadQuestionsTask(currentTopic, this).execute()
+    }
+
+    override fun onQuestionsDownload() {
+
     }
 }

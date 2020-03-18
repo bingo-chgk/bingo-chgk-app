@@ -89,4 +89,8 @@
             ]]>
         </htmlData>
     </string>
+    <string name="ArticleName">Название темы</string>
+    <string name="writeArticleName">Введите название</string>
+    <string name="createArticle">Создать тему</string>
+    <string name="uploadQuestions">Загрузить вопросы</string>
 </resources>

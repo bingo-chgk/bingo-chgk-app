@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_concrete_collection.*
 import ru.spbhse.bingochgk.R
-import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.ConcreteCollectionController
 import ru.spbhse.bingochgk.model.Topic
 

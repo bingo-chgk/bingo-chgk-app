@@ -10,7 +10,7 @@
         android:id="@+id/new_topic_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Название темы"
+        android:text="@string/ArticleName"
         android:textColor="#000000"/>
 
     <EditText
@@ -18,36 +18,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
-        android:hint="Гиперссылка"/>
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/new_topic_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:text="Ссылка на источник" />
-
-    <EditText
-        android:id="@+id/new_topic_source"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="https://en.wikipedia.org/wiki/Hyperlink"
+        android:hint="@string/writeArticleName"
         android:inputType="text" />
 
     <Button
         android:id="@+id/create_topic_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Создать тему" />
+        android:text="@string/createArticle" />
 
     <CheckBox
         android:id="@+id/load_checkBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Загрузить вопросы" />
+        android:text="@string/uploadQuestions" />
 
 </LinearLayout>
