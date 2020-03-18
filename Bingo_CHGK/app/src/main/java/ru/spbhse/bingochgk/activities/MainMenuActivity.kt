@@ -3,10 +3,7 @@ package ru.spbhse.bingochgk.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main_menu.*
-import kotlinx.android.synthetic.main.bottom_fragment.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 
@@ -44,7 +41,7 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         saved_questions.setOnClickListener {
-            startActivity(Intent(this, SavedQuestionActivity::class.java))
+            startActivity(Intent(this, SavedQuestionsChoiceActivity::class.java))
         }
     }
 }

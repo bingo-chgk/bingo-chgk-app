@@ -17,10 +17,11 @@ class DatabaseManager(private val context: Context)
     }
 
     // For testing
-    init {
-        this.writableDatabase.disableWriteAheadLogging()
-        copyDatabaseFromAssets()
-    }
+    // Uncomment if you want repopulate database without changing version
+//    init {
+//        this.writableDatabase.disableWriteAheadLogging()
+//        copyDatabaseFromAssets()
+//    }
 
     override fun onCreate(db: SQLiteDatabase) {
         Logger.d("Installing database")
