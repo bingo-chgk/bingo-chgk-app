@@ -11,6 +11,7 @@ import ru.spbhse.bingochgk.controller.CreateCollectionController
 import ru.spbhse.bingochgk.controller.TopicLoadController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.model.TopicNavigator
 
 class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsProvider,
     TopicsConsumer {
@@ -74,6 +75,7 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
     }
 
     override fun onItemLongClick(position: Int): Boolean {
+        TopicNavigator.selectItemById(adapter.getTopicIdAt(position))
         startActivity(Intent(this, ArticleActivity::class.java))
         return true
     }

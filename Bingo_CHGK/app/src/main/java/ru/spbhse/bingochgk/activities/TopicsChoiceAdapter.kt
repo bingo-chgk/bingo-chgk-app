@@ -45,6 +45,10 @@ class TopicsChoiceAdapter(
         topicsToAdd.remove(filteredItems[position])
     }
 
+    fun getTopicIdAt(position: Int): Int {
+        return filteredItems[position].databaseId
+    }
+
     fun dropSearch() {
         filteredItems = items
         notifyDataSetChanged()

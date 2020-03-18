@@ -10,6 +10,7 @@ import ru.spbhse.bingochgk.controller.TopicLoadController
 import ru.spbhse.bingochgk.controller.TopicsChoiceController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.model.TopicNavigator
 
 class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvider, TopicsConsumer {
     private var availableTopics = listOf<Topic>()
@@ -46,6 +47,7 @@ class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvid
     }
 
     override fun onItemLongClick(position: Int): Boolean {
+        TopicNavigator.selectItemById(adapter.getTopicIdAt(position))
         startActivity(Intent(this, ArticleActivity::class.java))
         return true
     }
