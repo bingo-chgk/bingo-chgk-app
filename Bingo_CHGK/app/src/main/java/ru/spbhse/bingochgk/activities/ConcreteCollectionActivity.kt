@@ -1,10 +1,10 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_concrete_collection.*
 import ru.spbhse.bingochgk.R
@@ -13,12 +13,14 @@ import ru.spbhse.bingochgk.model.Topic
 
 class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     private var initTopics = listOf<Topic>()
+    private lateinit var topicAdapter: TopicAdapter
     private val controller = ConcreteCollectionController(this)
     private var currentCollectionId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_concrete_collection)
+
 
         currentCollectionId = intent.extras?.get("id") as? Int ?: 0
         val currentCollectionName = intent.extras?.get("name") as? String ?: "Поброка 42"
@@ -32,8 +34,12 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         }
 
         to_question_by_collection_button.setOnClickListener {
-            startActivity(Intent(this, TopicQuestionActivity::class.java))
+            val intent = Intent(this, CollectionQuestionActivity::class.java)
+            intent.putExtra("name", currentCollectionName)
+            intent.putExtra("topics", initTopics.map { it.databaseId }.toIntArray())
+            startActivity(intent)
         }
+        to_question_by_collection_button.isEnabled = false
     }
 
     override fun onResume() {
@@ -42,8 +48,10 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     fun onTopicsLoaded(topics: List<Topic>) {
-        val topicAdapter = TopicAdapter(this, topics, this)
+        initTopics = topics
+        topicAdapter = TopicAdapter(this, topics, this)
         topics_list.adapter = topicAdapter
+        to_question_by_collection_button.isEnabled = true
     }
 
     override fun onItemClick(position: Int) {

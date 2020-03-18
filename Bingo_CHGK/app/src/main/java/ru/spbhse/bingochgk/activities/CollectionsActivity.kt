@@ -61,6 +61,8 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
 
     override fun onQuestionButtonClick(position: Int) {
         val intent = Intent(this, CollectionQuestionActivity::class.java)
+        intent.putExtra("id", collections[position].databaseId)
+        intent.putExtra("name", collections[position].name)
         startActivity(intent)
     }
 }
