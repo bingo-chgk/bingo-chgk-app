@@ -24,12 +24,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
+            <SearchView
                 android:id="@+id/topics_choice_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:iconifiedByDefault="false"
                 android:inputType="text" />
 
             <androidx.recyclerview.widget.RecyclerView

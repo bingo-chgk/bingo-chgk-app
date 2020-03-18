@@ -18,8 +18,11 @@ class TopicsChoiceAdapter(
     private val actionsProvider: NewCollectionListActionsProvider
 ) : RecyclerView.Adapter<NewCollectionListViewHolder>() {
 
+    private var filteredItems = items
+    val topicsToAdd = mutableSetOf<Topic>()
+
     override fun getItemCount(): Int {
-        return items.size
+        return filteredItems.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewCollectionListViewHolder {
@@ -29,8 +32,31 @@ class TopicsChoiceAdapter(
     }
 
     override fun onBindViewHolder(holder: NewCollectionListViewHolder, position: Int) {
-        holder.name?.text = items[position].name
-        holder.progress?.progress = items[position].progress
+        holder.name?.text = filteredItems[position].name
+        holder.progress?.progress = filteredItems[position].progress
+        holder.checkBox?.isChecked = topicsToAdd.contains(filteredItems[position])
+    }
+
+    fun checkTopic(position: Int) {
+        topicsToAdd.add(filteredItems[position])
+    }
+
+    fun unCheckTopic(position: Int) {
+        topicsToAdd.remove(filteredItems[position])
+    }
+
+    fun dropSearch() {
+        filteredItems = items
+        notifyDataSetChanged()
+    }
+
+    fun filterBy(substring: String) {
+        filteredItems = items.filter { it.name.contains(substring, ignoreCase = true) }
+        notifyDataSetChanged()
+    }
+
+    fun isFilterApplied(): Boolean {
+        return filteredItems.size != items.size
     }
 }
 
@@ -38,7 +64,7 @@ class NewCollectionListViewHolder(view: View, actionsProvider: NewCollectionList
     RecyclerView.ViewHolder(view) {
     val name: TextView? = view.topic_to_add_name
     val progress: ProgressBar? = view.topic_to_add_progress_bar
-    private val checkBox: CheckBox? = view.topic_added_check
+    val checkBox: CheckBox? = view.topic_added_check
 
     init {
         checkBox?.setOnClickListener {
