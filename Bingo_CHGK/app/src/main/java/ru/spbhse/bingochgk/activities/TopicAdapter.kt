@@ -20,7 +20,7 @@ internal class TopicAdapter(
     private val filter = CustomFilter()
     private var filteredTopics = topics
 
-    fun realPosition(filteredPosition: Int): Int {
+    private fun realPosition(filteredPosition: Int): Int {
         val topic = filteredTopics[filteredPosition]
         for ((realTopic, id) in topics zip topics.indices) {
             if (realTopic.databaseId == topic.databaseId) {
@@ -55,13 +55,13 @@ internal class TopicAdapter(
 
         init {
             view.setOnClickListener {
-                onTopicClickListener.onItemClick(adapterPosition)
+                onTopicClickListener.onItemClick(realPosition(adapterPosition))
             }
             view.setOnLongClickListener {
-                onTopicClickListener.onItemLongClick(adapterPosition)
+                onTopicClickListener.onItemLongClick(realPosition(adapterPosition))
             }
             questionButton.setOnClickListener {
-                onTopicClickListener.onQuestionButtonClick(adapterPosition)
+                onTopicClickListener.onQuestionButtonClick(realPosition(adapterPosition))
             }
         }
     }

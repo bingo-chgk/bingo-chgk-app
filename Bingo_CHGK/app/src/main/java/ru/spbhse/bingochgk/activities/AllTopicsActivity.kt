@@ -75,7 +75,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        controller.goToTopic(topicAdapter.realPosition(position))
+        controller.goToTopic(position)
     }
 
     fun startTopicReading() {
