@@ -16,11 +16,13 @@ class TopicQuestionActivity : QuestionActivity() {
         toNextQuestionButton.setOnClickListener {
             val intent = Intent(this, TopicQuestionActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         to_next_question_button_up.setOnClickListener {
             val intent = Intent(this, TopicQuestionActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }
