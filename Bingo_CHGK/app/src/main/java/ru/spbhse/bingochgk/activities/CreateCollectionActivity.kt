@@ -1,7 +1,9 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_create_collection.*
 import ru.spbhse.bingochgk.R
@@ -24,6 +26,12 @@ class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsPr
         setContentView(R.layout.activity_create_collection)
 
         create_collection_button.setOnClickListener {
+            if (new_collection_name_text.text.isEmpty()) {
+                new_collection_name_text.setHintTextColor(Color.RED)
+                new_collection_name_text.requestFocus()
+                Toast.makeText(this, "Empty collection name", Toast.LENGTH_LONG).show() // ???
+                return@setOnClickListener
+            }
             controller.addCollection(
                 new_collection_name_text.text.toString(),
                 topics.map { it.databaseId })
