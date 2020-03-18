@@ -113,6 +113,66 @@ object Database {
         return topics
     }
 
+    fun getCollectionQuestion(collection: Int): Question? {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |q.id, 
+                |q.topic_id, 
+                |q.dbchgkinfo_id,
+                |q.text, 
+                |q.handout_id, 
+                |q.comment_text,
+                |q.author,
+                |q.sources,
+                |q.additional_answers,
+                |q.wrong_answers,
+                |q.answer
+                |FROM Question q
+                |JOIN CollectionTopic c
+                |ON q.topic_id = c.topic_id
+                |WHERE c.collection_id = ?
+                |ORDER BY RANDOM()
+                |LIMIT 1
+                |""".trimMargin(),
+            arrayOf(collection.toString())
+        )
+        if (cursor.isAfterLast) {
+            return null
+        }
+
+        cursor.moveToFirst()
+        return collectQuestionFromCursor(cursor).also { cursor.close() }
+    }
+
+    fun getCollectionQuestion(topics: List<Int>): Question? {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |id, 
+                |topic_id, 
+                |dbchgkinfo_id,
+                |text, 
+                |handout_id, 
+                |comment_text,
+                |author,
+                |sources,
+                |additional_answers,
+                |wrong_answers,
+                |answer
+                |FROM Question
+                |WHERE topic_id in (${topics.joinToString(", ")})
+                |ORDER BY RANDOM()
+                |LIMIT 1
+                |""".trimMargin(),
+            emptyArray()
+        )
+        if (cursor.isAfterLast) {
+            return null
+        }
+
+        cursor.moveToFirst()
+        return collectQuestionFromCursor(cursor).also { cursor.close() }
+    }
+
     fun setTopicReadStatus(topic: Topic) {
         database.execSQL(
             """UPDATE Topic
