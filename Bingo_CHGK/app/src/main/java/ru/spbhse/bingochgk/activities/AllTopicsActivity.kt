@@ -28,7 +28,8 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_topics)
 
-        toolbar.title = "Все темы"
+        all_topics_toolbar_title.text = "Все темы"
+
         add_topic_button.setOnClickListener {
             startActivity(Intent(this, CreateArticleActivity::class.java))
         }

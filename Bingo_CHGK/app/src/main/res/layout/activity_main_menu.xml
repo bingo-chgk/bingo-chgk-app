@@ -14,10 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="68dp"
-        android:fontFamily="monospace"
+        android:layout_marginTop="70dp"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="БиНгО ЧгК"
+        android:text="ЧГК Бинго"
         android:textColor="#2F4F4F"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:background="@null"
         android:src="@drawable/question_cat"
@@ -51,29 +51,73 @@
         app:layout_constraintTop_toBottomOf="@+id/info_button">
 
 
-        <ImageButton
-            android:id="@+id/random_question_button"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ball_of_wool" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/all_topics_button"
+            <ImageButton
+                android:id="@+id/random_question_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ask" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Случайный вопрос"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/background_dark"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/reading_cat" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/all_topics_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/reading_cat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Все статьи"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/background_dark"
+                android:layout_marginBottom="10dp"
+                />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
