@@ -15,6 +15,7 @@ import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.model.TopicNavigator
 import ru.spbhse.bingochgk.utils.Logger
 
 
@@ -98,6 +99,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     }
 
     override fun onQuestionButtonClick(position: Int) {
+        TopicNavigator.selectItem(position)
         val intent = Intent(this, TopicQuestionActivity::class.java)
         startActivity(intent)
     }
