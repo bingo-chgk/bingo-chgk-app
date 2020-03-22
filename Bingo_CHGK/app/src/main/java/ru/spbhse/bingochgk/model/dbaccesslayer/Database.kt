@@ -10,12 +10,16 @@ import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.utils.Logger
 
 object Database {
-    private lateinit var databaseManager: DatabaseManager
     private lateinit var database: SQLiteDatabase
 
     fun init(context: Context, name: String = "db", version: Int = 1) {
-        databaseManager = DatabaseManager(context, name, version)
-        database = databaseManager.writableDatabase
+        // Magic! Consult with Igor if you want change something here
+        val manager = DatabaseManager(context, name, version)
+        manager.readableDatabase
+        manager.close()
+        manager.init()
+        val openHelper = OpenHelper(context, name, version)
+        database = openHelper.writableDatabase
         Logger.d("Database initialized")
     }
 
