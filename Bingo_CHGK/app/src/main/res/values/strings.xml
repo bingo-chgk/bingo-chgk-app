@@ -10,6 +10,7 @@
     <div id="node-2" class="node odd full-node node-type-page">
 
 
+
         <div class="content">
             <p>Интернет-клуб "Что? Где? Когда?" предоставляет пользователям Базы Вопросов<br />
                 право:</p>
@@ -101,7 +102,6 @@
     <string name="collection42">Поброка 42</string>
     <string name="allTopics">Все темы</string>
     <string name="topicName">Название темы</string>
-    <string name="ready">Готово</string>
     <string name="licenseName">Лицензия</string>
     <string name="authorsName">Авторы</string>
     <string name="sourcesName">Источники</string>
@@ -115,7 +115,6 @@
     <string name="nook">Не засчитать</string>
     <string name="nextQuestion">Следующий вопрос</string>
     <string name="appTitle">ЧГК Бинго</string>
-    <string name="randomQuestion">Случайный вопрос</string>
     <string name="allTopicsA">Все статьи</string>
     <string name="Title">Название</string>
     <string name="ready">Готово</string>
