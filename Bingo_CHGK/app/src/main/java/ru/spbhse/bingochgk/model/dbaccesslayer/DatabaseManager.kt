@@ -8,13 +8,9 @@ import java.io.File
 import java.io.FileOutputStream
 
 // SHOULD NOT BE CREATED FROM MAIN THREAD
-class DatabaseManager(private val context: Context)
-    : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-
-    companion object {
-        private const val DATABASE_NAME = "db"
-        private const val DATABASE_VERSION = 1
-    }
+class DatabaseManager(private val context: Context, private val dbName: String,
+                      dbVersion: Int)
+    : SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
     // For testing
     // Uncomment if you want repopulate database without changing version
@@ -31,7 +27,7 @@ class DatabaseManager(private val context: Context)
 
     private fun copyDatabaseFromAssets() {
         val inputStream = context.assets.open("database.db")
-        val outputStream = FileOutputStream(File(context.getDatabasePath(DATABASE_NAME).path))
+        val outputStream = FileOutputStream(File(context.getDatabasePath(dbName).path))
 
         inputStream.copyTo(outputStream)
 

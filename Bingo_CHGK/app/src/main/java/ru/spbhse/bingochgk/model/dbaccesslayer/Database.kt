@@ -13,8 +13,8 @@ object Database {
     private lateinit var databaseManager: DatabaseManager
     private lateinit var database: SQLiteDatabase
 
-    fun init(context: Context) {
-        databaseManager = DatabaseManager(context)
+    fun init(context: Context, name: String = "db", version: Int = 1) {
+        databaseManager = DatabaseManager(context, name, version)
         database = databaseManager.writableDatabase
         Logger.d("Database initialized")
     }
