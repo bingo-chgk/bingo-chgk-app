@@ -46,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Раздаточный материал"
+                    android:text="@string/additionalMaterial"
                     android:layout_marginStart="10dp"
                     android:textSize="24sp"/>
 
@@ -74,7 +74,7 @@
                     android:id="@+id/questionTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Вопрос"
+                    android:text="@string/question"
                     android:layout_marginStart="10dp"
                     android:textSize="24sp"/>
 
@@ -108,7 +108,7 @@
                         android:layout_width="210dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:hint="Введите ответ"
+                        android:hint="@string/writeAnswer"
                         android:imeOptions="actionDone"
                         android:singleLine="true"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -124,7 +124,7 @@
                         android:layout_width="210dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Готово!"
+                        android:text="@string/readyButton"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/questionText" />
@@ -145,7 +145,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ответ"
+                    android:text="@string/answer"
                     android:layout_marginStart="10dp"
                     android:textSize="24sp"/>
 
@@ -164,7 +164,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Комментарий"
+                    android:text="@string/comment"
                     android:layout_marginStart="10dp"
                     android:textSize="24sp"/>
 
@@ -219,7 +219,7 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:text="Засчитать"/>
+                        android:text="@string/ok"/>
 
                     <Button
                         android:id="@+id/rejectAnswerButton"
@@ -228,7 +228,7 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:text="Не засчитать"/>
+                        android:text="@string/nook"/>
                 </LinearLayout>
 
                 <Space
@@ -254,7 +254,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="Следующий вопрос"/>
+                    android:text="@string/nextQuestion"/>
             </LinearLayout>
 
         </LinearLayout>
