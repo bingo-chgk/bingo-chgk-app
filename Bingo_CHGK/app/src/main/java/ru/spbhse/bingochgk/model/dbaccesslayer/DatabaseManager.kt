@@ -9,25 +9,28 @@ import java.io.FileOutputStream
 
 // SHOULD NOT BE CREATED FROM MAIN THREAD
 class DatabaseManager(private val context: Context, private val dbName: String,
-                      dbVersion: Int)
+                      private val dbVersion: Int)
     : SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
-    // For testing
-    // Uncomment if you want repopulate database without changing version
-    init {
-        this.writableDatabase.disableWriteAheadLogging()
-        copyDatabaseFromAssets()
+    private var shouldCreate = false
+    private var shouldUpdate = false
+    private lateinit var path: String
+
+    fun init() {
+        Logger.d("Copy database from assets $shouldUpdate $shouldCreate")
+        if (shouldUpdate || shouldCreate) {
+            copyDatabaseFromAssets(path)
+        }
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        Logger.d("Installing database")
-        copyDatabaseFromAssets()
-        Logger.d("Database installed successfully")
+        path = db.path
+        shouldCreate = true
     }
 
-    private fun copyDatabaseFromAssets() {
+    private fun copyDatabaseFromAssets(path: String) {
         val inputStream = context.assets.open("database.db")
-        val outputStream = FileOutputStream(File(context.getDatabasePath(dbName).path))
+        val outputStream = FileOutputStream(File(path))
 
         inputStream.copyTo(outputStream)
 
@@ -45,9 +48,17 @@ class DatabaseManager(private val context: Context, private val dbName: String,
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        Logger.d("Upgrading database from version $oldVersion to $newVersion")
-        copyDatabaseFromAssets()
-        // TODO : Change to repopulating database
-        Logger.d("Database upgraded successfully")
+        path = db.path
+        shouldUpdate = true
+    }
+}
+
+class OpenHelper(context: Context, dbName: String, dbVersion: Int)
+    : SQLiteOpenHelper(context, dbName, null, dbVersion) {
+
+    override fun onCreate(db: SQLiteDatabase?) {
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
     }
 }

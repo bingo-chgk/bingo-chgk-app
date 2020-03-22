@@ -12,8 +12,6 @@ class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Database.init(this)
-
         setContentView(R.layout.activity_main_menu)
 
         // For testing Concretecollection
