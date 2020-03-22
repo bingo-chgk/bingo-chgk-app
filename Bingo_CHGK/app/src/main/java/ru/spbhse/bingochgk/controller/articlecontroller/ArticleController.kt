@@ -41,10 +41,17 @@ class ArticleController(private val activity: ArticleActivity) : QuestionLoadCon
     }
 
     fun uploadQuestions() {
+        activity.setProgressBar()
         UploadQuestionsTask(currentTopic, this).execute()
     }
 
     override fun onQuestionsDownload() {
+        activity.unsetProgressBar()
+        activity.onQuestionsDownload()
+    }
 
+    override fun onQuestionDownloadError() {
+        activity.unsetProgressBar()
+        activity.showQuestionDownloadError()
     }
 }

@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import ru.spbhse.bingochgk.utils.Logger
 import java.io.IOException
+import java.lang.Exception
 
 object QuestionsFinder {
     fun getAllQuestionsByAnswerTag(tag: String): List<Question> {
@@ -25,9 +26,7 @@ object QuestionsFinder {
                 }
             }
             if (doc == null) {
-                // TODO : бросить исключение
-                Logger.e("Could not download all questions, request=$tag, page=$page")
-                break
+                throw QuestionDownloadException("Cannot load question $tag")
             }
             val questions = doc.getElementsByClass("question")
 
@@ -84,3 +83,5 @@ private class QuestionBuilder {
             comment, sources, author, dbChgkInfoId!!)
     }
 }
+
+class QuestionDownloadException(message: String) : Exception(message)

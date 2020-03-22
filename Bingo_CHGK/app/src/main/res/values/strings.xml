@@ -93,4 +93,9 @@
     <string name="writeArticleName">Введите название</string>
     <string name="createArticle">Создать тему</string>
     <string name="uploadQuestions">Загрузить вопросы</string>
+    <string name="deleteTopic">Удалить тему</string>
+    <string name="uploadQuestionsByTopic">Подгрузить вопросы по теме</string>
+    <string name="cannotUploadQuestions">Не удалось подгрузить вопросы</string>
+    <string name="uploadQuestionsText">Подгрузить вопросы</string>
+    <string name="questionsDownloaded">Вопросы успешно загружены</string>
 </resources>

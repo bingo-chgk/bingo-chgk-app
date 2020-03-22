@@ -12,7 +12,7 @@ import ru.spbhse.bingochgk.controller.ConcreteCollectionController
 import ru.spbhse.bingochgk.model.Topic
 
 class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
-    private var initTopics = listOf<Topic>()
+    private var topics = listOf<Topic>()
     private lateinit var topicAdapter: TopicAdapter
     private val controller = ConcreteCollectionController(this)
     private var currentCollectionId = 0
@@ -36,7 +36,7 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         to_question_by_collection_button.setOnClickListener {
             val intent = Intent(this, CollectionQuestionActivity::class.java)
             intent.putExtra("name", currentCollectionName)
-            intent.putExtra("topics", initTopics.map { it.databaseId }.toIntArray())
+            intent.putExtra("topics", topics.map { it.databaseId }.toIntArray())
             startActivity(intent)
         }
         to_question_by_collection_button.isEnabled = false
@@ -48,7 +48,7 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     fun onTopicsLoaded(topics: List<Topic>) {
-        initTopics = topics
+        this.topics = topics
         topicAdapter = TopicAdapter(this, topics, this)
         topics_list.adapter = topicAdapter
         to_question_by_collection_button.isEnabled = true
@@ -59,12 +59,12 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         startActivity(intent)
     }
 
-    override fun onItemLongClick(position: Int): Boolean {
-        val popupMenu = PopupMenu(this, topics_list[position])
+    override fun onItemLongClick(topicListPosition: Int, position: Int): Boolean {
+        val popupMenu = PopupMenu(this, topics_list[topicListPosition])
         popupMenu.menu.add("Удалить тему")
         popupMenu.menu.add("Подгрузить вопросы по теме")
         popupMenu.show()
-        Toast.makeText(this, "long click ${initTopics[position].name}", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "long click ${topics[position].name}", Toast.LENGTH_LONG).show()
         return true
     }
 

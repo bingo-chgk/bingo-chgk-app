@@ -233,31 +233,6 @@ object Database {
         return cursor.getInt(0).also { cursor.close() }
     }
 
-    // NOT TESTED AT ALL
-    fun getAllDatabaseStoredCollections(): List<Collection> {
-        val cursor = database.rawQuery(
-            """SELECT name, id 
-                |FROM Collection
-                |ORDER BY name
-                |""".trimMargin(),
-            null
-        )
-
-        val collections = mutableListOf<Collection>()
-
-        while (cursor.moveToNext()) {
-            collections.add(
-                Collection(
-                    cursor.getString(0),
-                    cursor.getInt(1)
-                )
-            )
-        }
-
-        cursor.close()
-        return collections
-    }
-
     fun insertTopic(name: String, text: String): Topic {
         database.beginTransaction()
         database.execSQL(
@@ -325,25 +300,6 @@ object Database {
         Logger.d("insert ${questions.size} new questions")
     }
 
-    // NOT TESTED AT ALL
-    fun getTopicsByDatabaseStoredCollection(collection: Collection): List<Topic> {
-        val cursor = database.rawQuery(
-            """SELECT name, percentage, id, read
-                |FROM TopicPercentage
-                |JOIN CollectionTopic ON CollectionTopic.topic_id = TopicPercentage.id
-                |WHERE CollectionTopic.collection_id = ?
-                |ORDER BY name
-                |""".trimMargin(),
-            arrayOf("${collection.databaseId}")
-        )
-
-        val topics = collectTopicsFromCursor(cursor)
-
-        cursor.close()
-
-        return topics
-    }
-
     fun getTopicQuestion(topic: Topic): Question? {
         val cursor = database.rawQuery(
             """SELECT 
@@ -397,6 +353,47 @@ object Database {
         }
         cursor.moveToFirst()
         return collectQuestionFromCursor(cursor).also { cursor.close() }
+    }
+
+    fun deleteTopic(topic: Topic) {
+        database.beginTransaction()
+        database.delete(
+            "SavedQuestion",
+            "question_id IN (SELECT id FROM Question WHERE id = ?)",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
+            "CollectionTopic",
+            "topic_id = ?",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
+            "SeenQuestion",
+            "question_id IN (SELECT id FROM Question WHERE id = ?)",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
+            "SearchInfo",
+            "topic_id = ?",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
+            "Handout",
+            "id IN (SELECT handout_id FROM Question WHERE topic_id = ?)",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
+            "Question",
+            "topic_id = ?",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
+            "Topic",
+            "id = ?",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.setTransactionSuccessful()
+        database.endTransaction()
     }
 
     fun getQuestionById(id: Int): Question? {
