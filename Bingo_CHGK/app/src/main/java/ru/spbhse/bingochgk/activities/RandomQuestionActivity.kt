@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_question.*
+import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.RandomQuestionController
 
 class RandomQuestionActivity : QuestionActivity() {
@@ -12,7 +13,7 @@ class RandomQuestionActivity : QuestionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        toolbar.title = "Случайный вопрос"
+        toolbar.title = getString(R.string.randomQuestion)
 
         controller.requestRandomQuestion()
 

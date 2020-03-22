@@ -18,19 +18,19 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Лицензия"/>
+            android:text="@string/licenseName"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/authorsBuutton"
             android:layout_weight="1"
-            android:text="Авторы"/>
+            android:text="@string/authorsName"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/sourcesButton"
             android:layout_weight="1"
-            android:text="Источники"/>
+            android:text="@string/sourcesName"/>
 
     </LinearLayout>
 

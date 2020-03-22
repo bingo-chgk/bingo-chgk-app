@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_question.*
+import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.SavedQuestionController
 
 class SavedQuestionActivity : QuestionActivity() {
@@ -13,7 +14,7 @@ class SavedQuestionActivity : QuestionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        toolbar.title = "Сохранённый вопрос"
+        toolbar.title = getString(R.string.savedQuestion)
         controller.requestQuestion(intent.getIntExtra("question_id", 0))
 
         additionalLayout.visibility = View.GONE
