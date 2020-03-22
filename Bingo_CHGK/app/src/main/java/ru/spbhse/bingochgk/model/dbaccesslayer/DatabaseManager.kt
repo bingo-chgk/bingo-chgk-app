@@ -56,6 +56,10 @@ class DatabaseManager(private val context: Context, private val dbName: String,
 class OpenHelper(context: Context, dbName: String, dbVersion: Int)
     : SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
+    init {
+        writableDatabase.disableWriteAheadLogging()
+    }
+
     override fun onCreate(db: SQLiteDatabase?) {
     }
 

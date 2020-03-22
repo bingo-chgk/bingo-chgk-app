@@ -127,11 +127,13 @@ open class QuestionActivity : AppCompatActivity() {
     }
 
     protected fun markAnswerCorrect() {
+        questionController.markCorrect(question!!)
         isCorrectAnswer.text = youAreCorrect
         isCorrectAnswer.setBackgroundColor(Color.GREEN)
     }
 
     protected fun markAnswerWrong() {
+        questionController.markWrong(question!!)
         isCorrectAnswer.text = youAreWrong
         isCorrectAnswer.setBackgroundColor(Color.RED)
     }
@@ -140,6 +142,7 @@ open class QuestionActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
         }
+        @Suppress("DEPRECATION")
         return Html.fromHtml(htmlText)
     }
 

@@ -36,6 +36,23 @@ object Database {
         }.also { cursor.close() }
     }
 
+    fun markAnswer(question: Question, isRightAnswer: Boolean) {
+        database.beginTransaction()
+        database.delete(
+            "SeenQuestion",
+            "question_id = ?",
+            arrayOf(question.databaseId.toString())
+        )
+        database.execSQL(
+            """INSERT INTO SeenQuestion(question_id, answered_right)
+                |VALUES(?, ?)
+            """.trimMargin(),
+            arrayOf(question.databaseId.toString(), if (isRightAnswer) "1" else "0")
+        )
+        database.setTransactionSuccessful()
+        database.endTransaction()
+    }
+
     fun addCollectionWithTopics(name: String, topics: List<Int>) {
         val collectionId = addCollection(name)
         for (topic in topics) {
