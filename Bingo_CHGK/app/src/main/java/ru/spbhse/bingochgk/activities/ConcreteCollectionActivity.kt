@@ -2,6 +2,8 @@ package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +14,9 @@ import ru.spbhse.bingochgk.controller.ConcreteCollectionController
 import ru.spbhse.bingochgk.model.Topic
 
 class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
-    private var initTopics = listOf<Topic>()
+    private var topics = listOf<Topic>()
     private lateinit var topicAdapter: TopicAdapter
-    private val controller = ConcreteCollectionController(this)
+    private lateinit var controller: ConcreteCollectionController
     private var currentCollectionId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,9 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
 
 
         currentCollectionId = intent.extras?.get("id") as? Int ?: 0
-        val currentCollectionName = intent.extras?.get("name") as? String ?: "Поброка 42"
+        val currentCollectionName = intent.extras?.get("name") as? String ?: getString(R.string.collection42)
+
+        controller = ConcreteCollectionController(this, currentCollectionId)
 
         toolbar.title = currentCollectionName
 
@@ -36,7 +40,7 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         to_question_by_collection_button.setOnClickListener {
             val intent = Intent(this, CollectionQuestionActivity::class.java)
             intent.putExtra("name", currentCollectionName)
-            intent.putExtra("topics", initTopics.map { it.databaseId }.toIntArray())
+            intent.putExtra("topics", topics.map { it.databaseId }.toIntArray())
             startActivity(intent)
         }
         to_question_by_collection_button.isEnabled = false
@@ -44,11 +48,11 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
 
     override fun onResume() {
         super.onResume()
-        controller.requestTopics(currentCollectionId)
+        controller.requestTopics()
     }
 
     fun onTopicsLoaded(topics: List<Topic>) {
-        initTopics = topics
+        this.topics = topics
         topicAdapter = TopicAdapter(this, topics, this)
         topics_list.adapter = topicAdapter
         to_question_by_collection_button.isEnabled = true
@@ -59,18 +63,65 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
         startActivity(intent)
     }
 
-    override fun onItemLongClick(position: Int): Boolean {
-        val popupMenu = PopupMenu(this, topics_list[position])
-        popupMenu.menu.add("Удалить тему")
-        popupMenu.menu.add("Подгрузить вопросы по теме")
+    override fun onItemLongClick(topicListPosition: Int, position: Int): Boolean {
+        val popupMenu = PopupMenu(this, topics_list[topicListPosition])
+        popupMenu.menu.add(getString(R.string.deleteTopic))
+        popupMenu.menu.add(getString(R.string.uploadQuestionsByTopic))
+        popupMenu.setOnMenuItemClickListener {
+            when (it.title) {
+                getString(R.string.deleteTopic) -> {
+                    controller.deleteTopic(topics[position], position)
+                }
+                getString(R.string.uploadQuestionsByTopic) -> {
+                    controller.uploadQuestions(topics[position])
+                }
+            }
+            true
+        }
         popupMenu.show()
-        Toast.makeText(this, "long click ${initTopics[position].name}", Toast.LENGTH_LONG).show()
         return true
     }
 
     override fun onQuestionButtonClick(position: Int) {
         val intent = Intent(this, TopicQuestionActivity::class.java)
         startActivity(intent)
+    }
+
+    fun onTopicDeleted(position: Int) {
+        val newTopics = topics.toMutableList()
+        newTopics.removeAt(position)
+        onTopicsLoaded(newTopics)
+    }
+
+    fun setProgressBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = View.VISIBLE
+    }
+
+    fun unsetProgressBar() {
+        window.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = View.GONE
+    }
+
+    fun showQuestionDownloadError() {
+        Toast.makeText(
+            this,
+            getString(R.string.cannotUploadQuestions),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun onQuestionsDownloaded() {
+        Toast.makeText(
+            this,
+            getString(R.string.questionsDownloaded),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
 

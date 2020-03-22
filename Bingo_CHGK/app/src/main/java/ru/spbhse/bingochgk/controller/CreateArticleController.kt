@@ -8,6 +8,7 @@ import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 class CreateArticleController(private val activity: CreateArticleActivity) : QuestionLoadController {
 
     fun uploadQuestions(topic: Topic) {
+        activity.setProgressBar()
         UploadQuestionsTask(topic, this).execute()
     }
 
@@ -20,6 +21,13 @@ class CreateArticleController(private val activity: CreateArticleActivity) : Que
     }
 
     override fun onQuestionsDownload() {
+        activity.unsetProgressBar()
+        activity.onQuestionsUploaded()
+    }
+
+    override fun onQuestionDownloadError() {
+        activity.unsetProgressBar()
+        activity.showQuestionDownloadError()
         activity.onQuestionsUploaded()
     }
 }

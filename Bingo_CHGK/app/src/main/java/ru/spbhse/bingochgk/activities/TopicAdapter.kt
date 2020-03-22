@@ -58,7 +58,7 @@ internal class TopicAdapter(
                 onTopicClickListener.onItemClick(realPosition(adapterPosition))
             }
             view.setOnLongClickListener {
-                onTopicClickListener.onItemLongClick(realPosition(adapterPosition))
+                onTopicClickListener.onItemLongClick(adapterPosition, realPosition(adapterPosition))
             }
             questionButton.setOnClickListener {
                 onTopicClickListener.onQuestionButtonClick(realPosition(adapterPosition))
@@ -89,6 +89,7 @@ internal class TopicAdapter(
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            @Suppress("UNCHECKED_CAST")
             filteredTopics = results?.values as? List<Topic> ?: topics
             notifyDataSetChanged()
         }
@@ -97,7 +98,7 @@ internal class TopicAdapter(
 
 interface OnTopicClickListener {
     fun onItemClick(position: Int)
-    fun onItemLongClick(position: Int): Boolean
+    fun onItemLongClick(topicListPosition: Int, position: Int): Boolean
     fun onQuestionButtonClick(position: Int)
 }
 

@@ -44,6 +44,7 @@
                     android:iconifiedByDefault="true"
                     android:visibility="visible"
                     android:inputType="text"
+                    android:theme="@style/AppTheme.WhiteToolbar"
                 />
             </androidx.appcompat.widget.Toolbar>
 

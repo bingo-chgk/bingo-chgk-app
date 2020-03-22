@@ -2,11 +2,14 @@ package ru.spbhse.bingochgk.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.WindowManager
+import android.widget.Toast
 import ru.spbhse.bingochgk.R
 import kotlinx.android.synthetic.main.activity_create_article.*
 import ru.spbhse.bingochgk.controller.CreateArticleController
 import ru.spbhse.bingochgk.model.Topic
-import ru.spbhse.bingochgk.model.Wiki
 
 class CreateArticleActivity : AppCompatActivity() {
 
@@ -53,6 +56,29 @@ class CreateArticleActivity : AppCompatActivity() {
         }
         status = ArticleCreationStatus.QUESTIONS_ARE_LOADED
         finish()
+    }
+
+    fun setProgressBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = VISIBLE
+    }
+
+    fun unsetProgressBar() {
+        window.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = GONE
+    }
+
+    fun showQuestionDownloadError() {
+        Toast.makeText(
+            this,
+            getString(R.string.cannotUploadQuestions),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private enum class ArticleCreationStatus {

@@ -6,9 +6,14 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
+import android.view.WindowManager
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_article.*
+import kotlinx.android.synthetic.main.activity_article.cat_progress_bar
+import kotlinx.android.synthetic.main.activity_article.scroll
+import kotlinx.android.synthetic.main.activity_article.toolbar
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.articlecontroller.ArticleController
 import ru.spbhse.bingochgk.model.Topic
@@ -81,10 +86,11 @@ class ArticleActivity : AppCompatActivity() {
         return scroll.getChildAt(0).bottom <= scroll.height + scroll.scrollY
     }
 
-    fun setArticleText(text: String) {
+    private fun setArticleText(text: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             article_text.text = Html.fromHtml(articleToHTML(text), Html.FROM_HTML_MODE_LEGACY)
         } else {
+            @Suppress("DEPRECATION")
             article_text.text = Html.fromHtml(articleToHTML(text))
         }
 
@@ -111,5 +117,36 @@ class ArticleActivity : AppCompatActivity() {
         }
         Logger.d("topic is read? ${topic.isRead}")
         article_status.setBackgroundResource(imageId)
+    }
+
+    fun onQuestionsDownload() {
+        Toast.makeText(
+            this,
+            getString(R.string.questionsDownloaded),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun setProgressBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = View.VISIBLE
+    }
+
+    fun unsetProgressBar() {
+        window.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = View.GONE
+    }
+
+    fun showQuestionDownloadError() {
+        Toast.makeText(
+            this,
+            getString(R.string.cannotUploadQuestions),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

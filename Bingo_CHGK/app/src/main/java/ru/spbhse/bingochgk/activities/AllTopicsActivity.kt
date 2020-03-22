@@ -1,11 +1,11 @@
 package ru.spbhse.bingochgk.activities
 
-import android.app.SearchableInfo
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.WindowManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +16,11 @@ import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.model.TopicNavigator
-import ru.spbhse.bingochgk.utils.Logger
 
 
 class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     TopicsConsumer {
+
     private lateinit var controller: AllTopicsController
     private lateinit var topics: List<Topic>
     private lateinit var topicAdapter: TopicAdapter
@@ -36,7 +36,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
         }
 
         toolbar.setOnClickListener {
-            search.visibility = View.VISIBLE
+            search.visibility = VISIBLE
         }
     }
 
@@ -51,6 +51,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
 
         topicAdapter = TopicAdapter(this, this.topics, this)
         topics_list.adapter = topicAdapter
+        topicAdapter.filter.filter(search.query)
 
         search.isSubmitButtonEnabled = true
         search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
@@ -62,7 +63,6 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Logger.d(newText!!)
                 topicAdapter.filter.filter(newText)
                 return true
             }
@@ -85,16 +85,22 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
         startActivity(intent)
     }
 
-    override fun onItemLongClick(position: Int): Boolean {
-        val popupMenu = PopupMenu(this, topics_list[position])
-        popupMenu.menu.add("Удалить тему")
-        popupMenu.menu.add("Подгрузить вопросы по теме")
+    override fun onItemLongClick(topicListPosition: Int, position: Int): Boolean {
+        val popupMenu = PopupMenu(this, topics_list[topicListPosition])
+        popupMenu.menu.add(getString(R.string.deleteTopic))
+        popupMenu.menu.add(getString(R.string.uploadQuestionsByTopic))
+        popupMenu.setOnMenuItemClickListener {
+            when (it.title) {
+                getString(R.string.deleteTopic) -> {
+                    controller.deleteTopic(topics[position], position)
+                }
+                getString(R.string.uploadQuestionsByTopic) -> {
+                    controller.uploadQuestions(topics[position])
+                }
+            }
+            true
+        }
         popupMenu.show()
-        Toast.makeText(
-            this,
-            "long click ${topics[position].name}",
-            Toast.LENGTH_LONG
-        ).show()
         return true
     }
 
@@ -113,5 +119,42 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
             adapter.dropSearch()
             adapter.notifyDataSetChanged()
         }
+    }
+
+    fun onQuestionsDownload() {
+        Toast.makeText(
+            this,
+            getString(R.string.questionsDownloaded),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    fun onTopicDeleted(position: Int) {
+        val newTopics = topics.toMutableList()
+        newTopics.removeAt(position)
+        onTopicsAreLoaded(newTopics)
+    }
+
+    fun setProgressBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = VISIBLE
+    }
+
+    fun unsetProgressBar() {
+        window.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        uploadQuestionsProgressBar.visibility = GONE
+    }
+
+    fun showQuestionDownloadError() {
+        Toast.makeText(
+            this,
+            getString(R.string.cannotUploadQuestions),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
