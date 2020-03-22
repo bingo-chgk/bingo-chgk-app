@@ -22,8 +22,8 @@ import java.util.*
 open class QuestionActivity : AppCompatActivity() {
 
     protected var question: Question? = null
-    private val youAreCorrect = getString(R.string.rightAnswer)
-    private val youAreWrong = getString(R.string.wrongAnswer)
+    private lateinit var youAreCorrect: String
+    private lateinit var youAreWrong: String
     private val defaultQuestionText = """
                 По какой-то причине мы не смогли получить случайный вопрос из базы.
                 
@@ -54,6 +54,8 @@ open class QuestionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        youAreCorrect = getString(R.string.rightAnswer)
+        youAreWrong = getString(R.string.wrongAnswer)
         setContentView(R.layout.activity_question)
 
         acceptAnswerButton.setOnClickListener {
