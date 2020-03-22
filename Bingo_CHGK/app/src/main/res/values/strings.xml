@@ -98,4 +98,6 @@
     <string name="cannotUploadQuestions">Не удалось подгрузить вопросы</string>
     <string name="uploadQuestionsText">Подгрузить вопросы</string>
     <string name="questionsDownloaded">Вопросы успешно загружены</string>
+    <string name="collection42">Поброка 42</string>
+    <string name="allTopics">Все темы</string>
 </resources>

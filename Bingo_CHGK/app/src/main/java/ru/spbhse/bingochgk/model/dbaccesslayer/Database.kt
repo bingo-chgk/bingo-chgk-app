@@ -423,6 +423,14 @@ object Database {
         return collectQuestionFromCursor(cursor).also { cursor.close() }
     }
 
+    fun deleteTopicFromCollection(topic: Topic, collectionId: Int) {
+        database.delete(
+            "CollectionTopic",
+            "collection_id = ? AND topic_id = ?",
+            arrayOf(collectionId.toString(), topic.databaseId.toString())
+        )
+    }
+
     fun saveQuestion(question: Question) {
         database.execSQL(
             """INSERT OR IGNORE INTO 
