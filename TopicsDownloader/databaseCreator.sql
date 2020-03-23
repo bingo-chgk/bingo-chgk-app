@@ -48,7 +48,7 @@ CREATE TABLE SeenQuestion(
 );
 
 CREATE TABLE Collection(
-	id INTEGER SERIAL KEY,
+	id INTEGER PRIMARY KEY,
 	name TEXT NOT NULL
 );
 

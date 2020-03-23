@@ -130,4 +130,5 @@
     <string name="wrongAnswer">Это неправильный ответ</string>
     <string name="toArticle">Перейти к статье</string>
     <string name="yourAnswer">Ваш ответ: </string>
+    <string name="removeCollection">"Удалить подборку"</string>
 </resources>
