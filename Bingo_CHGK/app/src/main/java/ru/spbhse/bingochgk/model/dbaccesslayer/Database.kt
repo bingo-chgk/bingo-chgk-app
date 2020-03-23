@@ -7,6 +7,8 @@ import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.utils.Logger
+import java.util.*
+import kotlin.collections.ArrayList
 
 object Database {
     private lateinit var database: SQLiteDatabase
@@ -250,7 +252,8 @@ object Database {
             null
         )
 
-        val topics = collectTopicsFromCursor(cursor)
+        val topics = ArrayList(collectTopicsFromCursor(cursor))
+            .sortedBy { it.name.toLowerCase(Locale.ROOT) }
 
         cursor.close()
 
