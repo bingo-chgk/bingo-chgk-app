@@ -73,7 +73,13 @@
     </string>
 
     <string name="authors">
-        Здесь будут наши имена
+        <htmlData>
+            <![CDATA[
+        <a href=\"http://t.me/smirnov_i\">Смирнов Игорь</a><br />
+        <a href=\"http://t.me/vvitaliis\">Селищев Виталий</a><br />
+        <a href=\"http://t.me/drazumova\">Разумова Дарья</a><br />
+        ]]>
+        </htmlData>
     </string>
 
     <string name="defaultQuestion">
