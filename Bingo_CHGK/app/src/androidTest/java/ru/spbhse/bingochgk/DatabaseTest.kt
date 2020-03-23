@@ -15,7 +15,7 @@ import ru.spbhse.bingochgk.utils.Logger
 class DatabaseTest {
     @Before
     fun setUp() {
-        Database.init(getApplicationContext<Context>(), "test_database.db", 2, true)
+        Database.init(getApplicationContext<Context>(), "test_database.db", 2, force = true)
     }
 
     @Test
@@ -25,6 +25,19 @@ class DatabaseTest {
         val collection = Database.getAllCollections()
             .first { collection -> collection.name == collectionName }
         assertEquals(collectionName, collection.name)
+    }
+
+    @Test
+    fun testRemoveCollection() {
+        val collectionName = "testCollection"
+        Database.addCollection(collectionName)
+        val collection = Database.getAllCollections()
+            .first { collection -> collection.name == collectionName }
+
+        Database.removeCollection(collection)
+
+        assertNull(Database.getAllCollections()
+            .firstOrNull { collection -> collection.name == collectionName })
     }
 
     @Test
@@ -81,6 +94,27 @@ class DatabaseTest {
         val expectedTexts = setOf(topicText, anotherTopicText)
         assertEquals(expectedNames, updatedTopics.map { topic -> topic.name }.toSet())
         assertEquals(expectedTexts, updatedTopics.map { topic -> topic.loadText() }.toSet())
+    }
+
+    @Test
+    fun testDeleteTopicFromCollection() {
+        val collectionName = "testCollection"
+        val topicName = "testTopic"
+        val topicText = "testText"
+
+        Database.addCollection(collectionName)
+        Database.insertTopic(topicName, topicText)
+
+        val collection = Database.getAllCollections()
+            .first { collection -> collection.name == collectionName }
+        val topic = Database.getAllTopics().first { topic -> topic.name == topicName }
+
+        Database.addTopicToCollection(collection.databaseId, topic.databaseId)
+
+        Database.deleteTopicFromCollection(topic, collection.databaseId)
+
+        val topics = Database.getTopicsByCollection(collection.databaseId)
+        assertEquals(0, topics.size)
     }
 
     @Test
