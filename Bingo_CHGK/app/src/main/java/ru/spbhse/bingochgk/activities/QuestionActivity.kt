@@ -83,12 +83,29 @@ open class QuestionActivity : AppCompatActivity() {
         questionText.text = question.text.replace(Regex("Вопрос [0-9]+: "), "")
 
         correctAnswer.text = question.answer
-        commentText.text = question.comment
+        var comment = ""
+        if (question.additionalAnswers != null) {
+            comment += question.additionalAnswers + "\n"
+        }
+        if (question.comment != null) {
+            comment += question.comment + "\n"
+        }
+        if (question.sources != null) {
+            comment += question.sources + "\n"
+        }
+        if (question.author != null) {
+            comment += question.author + "\n"
+        }
+        if (comment.endsWith("!\n")) {
+            comment = comment.substring(0 until comment.lastIndex - 2)
+        }
+        commentText.text = comment
 
         answerButton.setOnClickListener {
             val userAnswer = answerInputField.text.toString()
-            userAnswerText.text = "Ваш ответ: $userAnswer"
-            goToArticleButton.text = "Перейти к статье"
+            val yourAnswerView = getString(R.string.yourAnswer) + userAnswer
+            userAnswerText.text = yourAnswerView
+            goToArticleButton.text = getString(R.string.toArticle)
             inputAnswerLayout.visibility = View.GONE
             answerLayout.visibility = View.VISIBLE
             commentText.visibility = View.VISIBLE

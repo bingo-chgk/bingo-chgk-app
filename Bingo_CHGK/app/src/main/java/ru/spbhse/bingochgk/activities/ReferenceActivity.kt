@@ -42,6 +42,7 @@ class ReferenceActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
         }
+        @Suppress("DEPRECATION")
         return Html.fromHtml(htmlText)
     }
 }
