@@ -3,13 +3,10 @@ package ru.spbhse.bingochgk.activities
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_question.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.QuestionController
@@ -17,7 +14,6 @@ import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.TopicNavigator
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
-import java.util.*
 
 open class QuestionActivity : AppCompatActivity() {
 
@@ -112,7 +108,7 @@ open class QuestionActivity : AppCompatActivity() {
 
             commentText.movementMethod = LinkMovementMethod.getInstance()
 
-            if (checkAnswer(userAnswer, question.answer)) {
+            if (questionController.checkAnswer(userAnswer, question.answer)) {
                 markAnswerCorrect()
             } else {
                 markAnswerWrong()
@@ -143,77 +139,15 @@ open class QuestionActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    protected fun markAnswerCorrect() {
+    private fun markAnswerCorrect() {
         questionController.markCorrect(question!!)
         isCorrectAnswer.text = youAreCorrect
         isCorrectAnswer.setBackgroundColor(Color.GREEN)
     }
 
-    protected fun markAnswerWrong() {
+    private fun markAnswerWrong() {
         questionController.markWrong(question!!)
         isCorrectAnswer.text = youAreWrong
         isCorrectAnswer.setBackgroundColor(Color.RED)
-    }
-
-    protected fun getTextFromHtml(htmlText: String): Spanned? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
-        }
-        @Suppress("DEPRECATION")
-        return Html.fromHtml(htmlText)
-    }
-
-    private fun checkAnswer(userAnswer: String, correctAnswer: String): Boolean {
-        val preparedUserAnswer = prepareAnswer(userAnswer)
-        val preparedCorrectAnswer = prepareAnswer(correctAnswer)
-        Logger.d("user: $preparedUserAnswer")
-        Logger.d("correct: $preparedCorrectAnswer")
-        Logger.d("dist: " + levenshtein(preparedUserAnswer, preparedCorrectAnswer))
-        return levenshtein(preparedUserAnswer, preparedCorrectAnswer) <= 3;
-    }
-
-    private fun prepareAnswer(answer: String): CharSequence {
-        return answer
-            .replace("[^A-Za-z0-9 ]", "")
-            .replace("\"", "")
-            .replace(".", "")
-            .toLowerCase(Locale.ROOT)
-            .replace("ответ:", "")
-            .trim()
-    }
-
-    private fun levenshtein(lhs: CharSequence, rhs: CharSequence) : Int {
-        val lhsLength = lhs.length
-        val rhsLength = rhs.length
-
-        if (lhsLength == 0) {
-            return rhsLength
-        }
-        if (rhsLength == 0) {
-            return lhsLength
-        }
-
-        var cost = Array(lhsLength) { it }
-        var newCost = Array(lhsLength) { 0 }
-
-        for (i in 1 until rhsLength) {
-            newCost[0] = i
-
-            for (j in 1 until lhsLength) {
-                val match = if (lhs[j - 1] == rhs[i - 1]) 0 else 1
-
-                val costReplace = cost[j - 1] + match
-                val costInsert = cost[j] + 1
-                val costDelete = newCost[j - 1] + 1
-
-                newCost[j] = costInsert.coerceAtMost(costDelete).coerceAtMost(costReplace)
-            }
-
-            val swap = cost
-            cost = newCost
-            newCost = swap
-        }
-
-        return cost[lhsLength - 1]
     }
 }
