@@ -90,6 +90,6 @@ class CheckAnswerTest {
     fun testIgnoreSpacesOutside() {
         val actual = "  an answer   "
         val expected = "answer"
-        assertTrue(controller.checkAnswer(actual, expected))
+        assertFalse(controller.checkAnswer(actual, expected))
     }
 }
