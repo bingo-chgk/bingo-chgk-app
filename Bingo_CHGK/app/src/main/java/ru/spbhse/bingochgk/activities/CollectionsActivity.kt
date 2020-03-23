@@ -2,6 +2,8 @@ package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,17 +48,32 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
         val popupMenu = PopupMenu(this, collections_list[position])
         popupMenu.menu.add("Удалить подборку")
         popupMenu.setOnMenuItemClickListener {
-            // TODO: switch
-            collections.removeAt(position)
-            adapter.notifyDataSetChanged()
-            Toast.makeText(
-                this, "Подборка удалена",
-                Toast.LENGTH_LONG
-            ).show()
+            controller.removeCollection(collections[position], position)
             true
         }
         popupMenu.show()
         return true
+    }
+
+    fun onCollectionRemoved(position: Int) {
+        val newCollections = collections.toMutableList()
+        newCollections.removeAt(position)
+        setCollections(newCollections)
+    }
+
+    fun setProgressBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        deleteCollectionProgressBar.visibility = View.VISIBLE
+    }
+
+    fun unsetProgressBar() {
+        window.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        deleteCollectionProgressBar.visibility = View.GONE
     }
 
     override fun onQuestionButtonClick(position: Int) {
