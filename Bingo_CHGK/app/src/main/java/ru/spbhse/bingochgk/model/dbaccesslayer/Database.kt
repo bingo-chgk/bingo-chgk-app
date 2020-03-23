@@ -10,12 +10,16 @@ import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.utils.Logger
 
 object Database {
-    private lateinit var databaseManager: DatabaseManager
     private lateinit var database: SQLiteDatabase
 
-    fun init(context: Context, name: String = "db", version: Int = 1) {
-        databaseManager = DatabaseManager(context, name, version)
-        database = databaseManager.writableDatabase
+    fun init(context: Context, name: String = "db", version: Int = 2) {
+        // Magic! Consult with Igor if you want change something here
+        val manager = DatabaseManager(context, name, version)
+        manager.readableDatabase
+        manager.close()
+        manager.init()
+        val openHelper = OpenHelper(context, name, version)
+        database = openHelper.writableDatabase
         Logger.d("Database initialized")
     }
 
@@ -34,6 +38,23 @@ object Database {
             cursor.moveToFirst()
             cursor.getString(0)
         }.also { cursor.close() }
+    }
+
+    fun markAnswer(question: Question, isRightAnswer: Boolean) {
+        database.beginTransaction()
+        database.delete(
+            "SeenQuestion",
+            "question_id = ?",
+            arrayOf(question.databaseId.toString())
+        )
+        database.execSQL(
+            """INSERT INTO SeenQuestion(question_id, answered_right)
+                |VALUES(?, ?)
+            """.trimMargin(),
+            arrayOf(question.databaseId.toString(), if (isRightAnswer) "1" else "0")
+        )
+        database.setTransactionSuccessful()
+        database.endTransaction()
     }
 
     fun addCollectionWithTopics(name: String, topics: List<Int>) {
@@ -77,6 +98,22 @@ object Database {
                 topic
             )
         )
+    }
+
+    fun removeCollection(collection: Collection) {
+        database.beginTransaction()
+        database.delete(
+            "CollectionTopic",
+            "collection_id = ?",
+            arrayOf(collection.databaseId.toString())
+        )
+        database.delete(
+            "Collection",
+            "id = ?",
+            arrayOf(collection.databaseId.toString())
+        )
+        database.setTransactionSuccessful()
+        database.endTransaction()
     }
 
     fun getAllCollections(): List<Collection> {

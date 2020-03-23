@@ -40,9 +40,16 @@ object QuestionsFinder {
 
                 val classToLine = classesMap(question)
 
+                if (classToLine == null) {
+                    continue
+                }
+
                 builder.text = classToLine["Question"]
                 builder.answer = classToLine["Answer"]
                 builder.comment = classToLine["Comments"]
+                builder.sources = classToLine["Sources"]
+                builder.author = classToLine["Authors"]
+                builder.additionalAnswers = classToLine["PassCriteria"]
 
                 allQuestions.add(builder.build())
             }
@@ -56,12 +63,14 @@ object QuestionsFinder {
 
     // very stupid implementation of class matching
     // doesn't work with multiple line questions
-    private fun classesMap(question: Element): Map<String, String> {
+    private fun classesMap(question: Element): Map<String, String>? {
         val classToLine = mutableMapOf<String, String>()
         for (line in question.html().lines()) {
             if (line.startsWith("<p> <strong class=\"")) {
                 val clazz = Regex("\"[^\"]*\"").find(line)!!.value
                 classToLine[clazz.slice(1 until clazz.lastIndex)] = Jsoup.parse(line).text()
+            } else {
+                return null
             }
         }
         return classToLine
