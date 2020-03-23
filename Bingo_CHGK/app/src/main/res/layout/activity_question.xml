@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.QuestionActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll"
+    <ScrollView
+        android:id="@+id/question_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -254,6 +254,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/nextQuestion"/>
             </LinearLayout>
 
@@ -262,7 +263,7 @@
 
 
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/starButtonLayout"
