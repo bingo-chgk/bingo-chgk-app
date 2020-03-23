@@ -76,6 +76,11 @@
         Здесь будут наши имена
     </string>
 
+    <string name="defaultQuestion">
+        По какой-то причине мы не смогли получить вопрос из базы.
+        Попробуйте перезагрузить приложение.
+    </string>
+
     <string name="sources">
         <htmlData><![CDATA[
         <p><strong><br />
