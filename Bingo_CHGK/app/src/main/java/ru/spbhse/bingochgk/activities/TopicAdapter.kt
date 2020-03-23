@@ -1,12 +1,14 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import ru.spbhse.bingochgk.R
+import ru.spbhse.bingochgk.R.color.markedArticle
 import ru.spbhse.bingochgk.model.Topic
 
 
@@ -39,6 +41,10 @@ internal class TopicAdapter(
         val topic = filteredTopics[position]
         holder.nameView.text = topic.name
         holder.topicProgressBar.progress = topic.progress
+        if (topic.isRead) {
+            val color = context?.resources?.getColor(markedArticle) ?: Color.CYAN
+            holder.itemView.setBackgroundColor(color)
+        }
     }
 
     override fun getItemCount(): Int {
