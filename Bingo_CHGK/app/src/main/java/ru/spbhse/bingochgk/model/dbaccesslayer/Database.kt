@@ -24,7 +24,7 @@ object Database {
     }
 
     fun loadFromAssets() {
-        databaseManager.init()
+        databaseManager.init(true)
     }
 
     fun getTopicText(topic: Topic): String {
