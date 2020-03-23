@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import kotlinx.android.synthetic.main.activity_reference.*
 import ru.spbhse.bingochgk.R
 
@@ -31,6 +32,8 @@ class ReferenceActivity : AppCompatActivity() {
 
         authorsBuutton.setOnClickListener {
             referenceText.text = authorsText
+            referenceText.movementMethod = LinkMovementMethod.getInstance();
+
         }
 
         sourcesButton.setOnClickListener {
