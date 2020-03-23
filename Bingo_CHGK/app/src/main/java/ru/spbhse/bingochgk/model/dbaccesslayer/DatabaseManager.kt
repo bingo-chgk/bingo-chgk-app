@@ -12,14 +12,24 @@ class DatabaseManager(private val context: Context, private val dbName: String,
                       private val dbVersion: Int)
     : SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
+
     private var shouldCreate = false
     private var shouldUpdate = false
     private lateinit var path: String
 
-    fun init() {
+    fun init(force: Boolean) {
         Logger.d("Copy database from assets $shouldUpdate $shouldCreate")
-        if (shouldUpdate || shouldCreate) {
+        if (shouldUpdate || shouldCreate || force) {
             copyDatabaseFromAssets(path)
+        }
+    }
+
+    override fun onOpen(db: SQLiteDatabase?) {
+        super.onOpen(db)
+        if (db != null) {
+            path = db.path
+        } else {
+            path = ""
         }
     }
 

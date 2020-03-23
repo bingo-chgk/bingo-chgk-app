@@ -11,13 +11,14 @@ import ru.spbhse.bingochgk.utils.Logger
 
 object Database {
     private lateinit var database: SQLiteDatabase
+    private lateinit var manager: DatabaseManager
 
-    fun init(context: Context, name: String = "db", version: Int = 2) {
+    fun init(context: Context, name: String = "db", version: Int = 2, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
-        val manager = DatabaseManager(context, name, version)
+        manager = DatabaseManager(context, name, version)
         manager.readableDatabase
         manager.close()
-        manager.init()
+        manager.init(force)
         val openHelper = OpenHelper(context, name, version)
         database = openHelper.writableDatabase
         Logger.d("Database initialized")
@@ -54,16 +55,36 @@ object Database {
     }
 
     fun addCollectionWithTopics(name: String, topics: List<Int>) {
-        val collectionId = addCollection(name)
+        database.beginTransaction()
+        val collectionId = addCollectionUnsafe(name)
         for (topic in topics) {
             addTopicToCollection(collectionId, topic)
         }
+        database.setTransactionSuccessful()
+        database.endTransaction()
     }
 
     fun addCollection(name: String): Int {
-        val values = ContentValues()
-        values.put("name", name)
-        return database.insert("Collection", null, values).toInt() // heh
+        database.beginTransaction()
+        val result = addCollectionUnsafe(name)
+        database.setTransactionSuccessful()
+        database.endTransaction()
+        return result
+    }
+
+    private fun addCollectionUnsafe(name: String): Int {
+        database.execSQL(
+            """INSERT INTO Collection(id, name)
+                |VALUES((SELECT MAX(id + 1) FROM Collection), ?)
+            """.trimMargin(),
+            arrayOf(name)
+        )
+        val cursor = database.rawQuery("SELECT MAX(id) FROM Collection", arrayOf())
+        cursor.moveToFirst()
+        val collectionId = cursor.getInt(0)
+        cursor.close()
+
+        return collectionId
     }
 
     fun addTopicToCollection(collection: Int, topic: Int) {
