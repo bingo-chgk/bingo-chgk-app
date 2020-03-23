@@ -100,7 +100,6 @@
     <string name="uploadQuestionsText">Подгрузить вопросы</string>
     <string name="questionsDownloaded">Вопросы успешно загружены</string>
     <string name="collection42">Поброка 42</string>
-    <string name="allTopics">Все темы</string>
     <string name="topicName">Название темы</string>
     <string name="licenseName">Лицензия</string>
     <string name="authorsName">Авторы</string>
@@ -125,4 +124,5 @@
     <string name="wrongAnswer">Это неправильный ответ</string>
     <string name="toArticle">Перейти к статье</string>
     <string name="yourAnswer">Ваш ответ: </string>
+    <string name="allTopics">Все темы</string>
 </resources>

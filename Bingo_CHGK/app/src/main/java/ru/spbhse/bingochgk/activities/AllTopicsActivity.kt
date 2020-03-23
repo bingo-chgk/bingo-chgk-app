@@ -29,7 +29,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_topics)
 
-        all_topics_toolbar_title.text = "Все темы"
+        all_topics_toolbar_title.text = getString(R.string.allTopics)
 
         add_topic_button.setOnClickListener {
             startActivity(Intent(this, CreateArticleActivity::class.java))
@@ -57,7 +57,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
         search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 search.clearFocus()
-                search.visibility = View.GONE
+                search.visibility = GONE
                 topicAdapter.notifyDataSetChanged()
                 return true
             }
