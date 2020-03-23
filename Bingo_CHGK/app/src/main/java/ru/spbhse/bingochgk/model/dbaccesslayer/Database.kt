@@ -96,6 +96,22 @@ object Database {
         )
     }
 
+    fun removeCollection(collection: Collection) {
+        database.beginTransaction()
+        database.delete(
+            "CollectionTopic",
+            "collection_id = ?",
+            arrayOf(collection.databaseId.toString())
+        )
+        database.delete(
+            "Collection",
+            "id = ?",
+            arrayOf(collection.databaseId.toString())
+        )
+        database.setTransactionSuccessful()
+        database.endTransaction()
+    }
+
     fun getAllCollections(): List<Collection> {
         val cursor = database.rawQuery(
             """SELECT name, id
