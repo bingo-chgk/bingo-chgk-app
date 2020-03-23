@@ -15,8 +15,7 @@ import ru.spbhse.bingochgk.utils.Logger
 class DatabaseTest {
     @Before
     fun setUp() {
-        Database.init(getApplicationContext<Context>(), "test_database.db", 1)
-        Database.loadFromAssets()
+        Database.init(getApplicationContext<Context>(), "test_database.db", 2, true)
     }
 
     @Test

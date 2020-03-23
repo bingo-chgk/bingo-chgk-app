@@ -24,6 +24,15 @@ class DatabaseManager(private val context: Context, private val dbName: String,
         }
     }
 
+    override fun onOpen(db: SQLiteDatabase?) {
+        super.onOpen(db)
+        if (db != null) {
+            path = db.path
+        } else {
+            path = ""
+        }
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         path = db.path
         shouldCreate = true
