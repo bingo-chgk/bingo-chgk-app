@@ -136,6 +136,7 @@ object Database {
         val cursor = database.rawQuery(
             """SELECT name, id
                 |FROM Collection
+                |ORDER BY name
                 |""".trimMargin(),
             null
         )
