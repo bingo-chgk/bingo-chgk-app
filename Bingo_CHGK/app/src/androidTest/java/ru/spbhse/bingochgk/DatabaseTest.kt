@@ -33,9 +33,11 @@ class DatabaseTest {
         Database.addCollection(collectionName)
         val collection = Database.getAllCollections()
             .first { collection -> collection.name == collectionName }
+        val allCollectionsSize = Database.getAllCollections().size
 
         Database.removeCollection(collection)
 
+        assertNotEquals(allCollectionsSize, Database.getAllCollections().size)
         assertNull(Database.getAllCollections()
             .firstOrNull { collection -> collection.name == collectionName })
     }

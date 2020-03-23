@@ -1,6 +1,5 @@
 package ru.spbhse.bingochgk.model.dbaccesslayer
 
-import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -13,7 +12,7 @@ object Database {
     private lateinit var database: SQLiteDatabase
     private lateinit var manager: DatabaseManager
 
-    fun init(context: Context, name: String = "db", version: Int = 2, force: Boolean = false) {
+    fun init(context: Context, name: String = "db", version: Int = 3, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
         manager = DatabaseManager(context, name, version)
         manager.readableDatabase
@@ -75,7 +74,7 @@ object Database {
     private fun addCollectionUnsafe(name: String): Int {
         database.execSQL(
             """INSERT INTO Collection(id, name)
-                |VALUES((SELECT MAX(id + 1) FROM Collection), ?)
+                |VALUES((SELECT COALESCE(MAX(id + 1), 0) FROM Collection), ?)
             """.trimMargin(),
             arrayOf(name)
         )
