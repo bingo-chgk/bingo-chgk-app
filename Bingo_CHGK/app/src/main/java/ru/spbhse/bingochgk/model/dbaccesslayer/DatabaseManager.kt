@@ -14,7 +14,8 @@ class DatabaseManager(private val context: Context, private val dbName: String,
 
     // For testing
     // Uncomment if you want repopulate database without changing version
-    init {
+    fun init() {
+        Logger.d("Copying database")
         this.writableDatabase.disableWriteAheadLogging()
         copyDatabaseFromAssets()
     }

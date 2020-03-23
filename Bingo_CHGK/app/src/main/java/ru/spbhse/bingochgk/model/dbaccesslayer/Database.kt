@@ -19,6 +19,10 @@ object Database {
         Logger.d("Database initialized")
     }
 
+    fun loadFromAssets() {
+        databaseManager.init()
+    }
+
     fun getTopicText(topic: Topic): String {
         val cursor = database.rawQuery(
             "SELECT text FROM Topic where id = ?",
