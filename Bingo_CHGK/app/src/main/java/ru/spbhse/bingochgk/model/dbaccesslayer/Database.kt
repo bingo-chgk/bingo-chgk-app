@@ -12,7 +12,7 @@ import ru.spbhse.bingochgk.utils.Logger
 object Database {
     private lateinit var database: SQLiteDatabase
 
-    fun init(context: Context, name: String = "db", version: Int = 1) {
+    fun init(context: Context, name: String = "db", version: Int = 2) {
         // Magic! Consult with Igor if you want change something here
         val manager = DatabaseManager(context, name, version)
         manager.readableDatabase
