@@ -18,7 +18,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    ndkVersion "major.minor.build"
+    ndkVersion "21.0.6113669"
     buildTypes {
         release {
             minifyEnabled false
