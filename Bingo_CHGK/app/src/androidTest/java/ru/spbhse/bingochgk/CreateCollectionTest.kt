@@ -32,13 +32,13 @@ class CreateCollectionTest {
     @JvmField
     val questionTest = ActivityTestRule(LaunchActivity::class.java)
 
-    @Before
     fun setUp() {
         Database.init(questionTest.activity, "test_database.db", 3, force = true)
     }
 
     @Test
     fun testCreateCollection() {
+        setUp()
         val collectionName = "My collection"
         onView(withId(R.id.collections_button)).perform(click())
         onView(withId(R.id.add_collection_button)).perform(click())
@@ -62,6 +62,7 @@ class CreateCollectionTest {
 
     @Test
     fun testDeleteCollection() {
+        setUp()
         val collectionName = "My collection"
         onView(withId(R.id.collections_button)).perform(click())
         onView(withId(R.id.add_collection_button)).perform(click())
