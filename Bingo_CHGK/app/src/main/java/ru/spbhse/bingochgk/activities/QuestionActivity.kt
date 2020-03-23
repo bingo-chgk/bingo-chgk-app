@@ -92,6 +92,8 @@ open class QuestionActivity : AppCompatActivity() {
             } else {
                 markAnswerWrong()
             }
+
+            question_scroll.post(Runnable { question_scroll.fullScroll(View.FOCUS_DOWN) })
         }
 
         goToArticleButton.setOnClickListener {
@@ -119,14 +121,14 @@ open class QuestionActivity : AppCompatActivity() {
     }
 
     private fun markAnswerCorrect() {
-        questionController.markCorrect(question!!)
         isCorrectAnswer.text = youAreCorrect
         isCorrectAnswer.setBackgroundColor(Color.GREEN)
+        questionController.markCorrect(question!!)
     }
 
     private fun markAnswerWrong() {
-        questionController.markWrong(question!!)
         isCorrectAnswer.text = youAreWrong
         isCorrectAnswer.setBackgroundColor(Color.RED)
+        questionController.markWrong(question!!)
     }
 }

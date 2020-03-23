@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.LaunchActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +26,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.TopicQuestionActivity" />
-        <activity android:name=".activities.CollectionQuestionActivity" />
-        <activity android:name=".activities.RandomQuestionActivity" />
+        <activity
+            android:name=".activities.CollectionQuestionActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.RandomQuestionActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.SavedQuestionActivity" />
         <activity
             android:name=".activities.AllTopicsActivity"
@@ -39,7 +43,9 @@
         <activity android:name=".activities.ReferenceActivity" />
         <activity android:name=".activities.CreateArticleActivity" />
         <activity android:name=".activities.SavedQuestionsChoiceActivity" />
-        <activity android:name=".activities.QuestionActivity" />
+        <activity
+            android:name=".activities.QuestionActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.ConcreteCollectionActivity" />
         <activity
             android:name=".activities.CollectionsActivity"
@@ -47,7 +53,7 @@
         <activity
             android:name=".activities.TopicsChoiceActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.MainMenuActivity"/>
+        <activity android:name=".activities.MainMenuActivity" />
     </application>
 
 </manifest>
