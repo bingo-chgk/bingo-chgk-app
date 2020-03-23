@@ -46,7 +46,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
 
     override fun onItemLongClick(position: Int): Boolean {
         val popupMenu = PopupMenu(this, collections_list[position])
-        popupMenu.menu.add("Удалить подборку")
+        popupMenu.menu.add(R.string.removeCollection)
         popupMenu.setOnMenuItemClickListener {
             controller.removeCollection(collections[position], position)
             true
