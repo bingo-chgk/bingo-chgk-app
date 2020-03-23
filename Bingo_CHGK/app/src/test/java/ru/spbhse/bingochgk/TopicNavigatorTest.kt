@@ -97,15 +97,43 @@ class TopicNavigatorTest {
 
         TopicNavigator.setNewCollection(listOf(topic1, topic2, topic3))
 
+        TopicNavigator.selectItemById(id1)
         assertEquals(topic1Name, TopicNavigator.getCurrentTopic().name)
 
-        TopicNavigator.toNextTopic()
-        assertEquals(topic2Name, TopicNavigator.getCurrentTopic().name)
-
-        TopicNavigator.toNextTopic()
+        TopicNavigator.selectItemById(id3)
         assertEquals(topic3Name, TopicNavigator.getCurrentTopic().name)
 
-        TopicNavigator.toNextTopic()
+        TopicNavigator.selectItemById(id2)
+        assertEquals(topic2Name, TopicNavigator.getCurrentTopic().name)
+
+        TopicNavigator.selectItemById(id3)
+        assertEquals(topic3Name, TopicNavigator.getCurrentTopic().name)
+    }
+
+    @Test
+    fun testSelectItemOfSeveralElementsCollection() {
+        val topic1Name = "1"
+        val id1 = 1
+        val topic1 = Topic(topic1Name, 0, id1, false)
+        val topic2Name = "2"
+        val id2 = 2
+        val topic2 = Topic(topic2Name, 0, id2, false)
+        val topic3Name = "3"
+        val id3 = 3
+        val topic3 = Topic(topic3Name, 0, id3, false)
+
+        TopicNavigator.setNewCollection(listOf(topic1, topic2, topic3))
+
+        TopicNavigator.selectItem(2)
+        assertEquals(topic3Name, TopicNavigator.getCurrentTopic().name)
+
+        TopicNavigator.selectItem(0)
         assertEquals(topic1Name, TopicNavigator.getCurrentTopic().name)
+
+        TopicNavigator.selectItem(1)
+        assertEquals(topic2Name, TopicNavigator.getCurrentTopic().name)
+
+        TopicNavigator.selectItem(1)
+        assertEquals(topic2Name, TopicNavigator.getCurrentTopic().name)
     }
 }
