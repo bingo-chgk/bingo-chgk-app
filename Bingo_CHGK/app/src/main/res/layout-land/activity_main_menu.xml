@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
+        android:layout_weight="1"
         android:gravity="top"
         android:orientation="vertical">
 
@@ -19,7 +20,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.1"
             android:fontFamily="monospace"
             android:text="БиНгО ЧгК"
             android:textColor="#2F4F4F"
@@ -40,6 +41,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -74,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
+        android:layout_weight="1"
         android:background="#787878"
         android:orientation="vertical">
 
