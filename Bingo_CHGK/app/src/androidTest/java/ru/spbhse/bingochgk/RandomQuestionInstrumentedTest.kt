@@ -47,6 +47,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun ableToAnswer() {
+        scrollToBottom()
         onView(withId(R.id.answerInputField))
             .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
             .check(matches(isEnabled()))
@@ -60,6 +61,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun sendAnswerButtonPresents() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
             .check(
                 matches(isClickable())
@@ -68,6 +70,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun answerPresentsAfterButtonClick() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         onView(withText(R.string.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -75,6 +78,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun commentPresentsAfterButtonClick() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         onView(withText(R.string.comment)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -82,6 +86,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun answerStatusPresentsAfterButtonClick() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         onView(withText(R.string.wrongAnswer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -90,6 +95,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun markAsCorrectAnswerButtonWorks() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         onView(withText(R.string.ok)).check(matches(isClickable())).perform(click())
@@ -99,6 +105,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun markAsIncorrectAnswerButtonWorks() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         onView(withText(R.string.ok)).perform(click())
@@ -110,6 +117,7 @@ class RandomQuestionInstrumentedTest {
     @Test
     fun goToArticleButtonRedirecting() {
         Intents.init()
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         onView(withText(R.string.toArticle)).check(matches(isCompletelyDisplayed()))
@@ -119,6 +127,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun questionChangedAfterToolBarNextClick() {
+        scrollToBottom()
         var oldText = ""
         onView(withId(R.id.questionText)).check { view, noViewFoundException ->
             assertNull(noViewFoundException)
@@ -138,6 +147,7 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun questionChangedAfterDownNextClick() {
+        scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
         var oldText = ""
@@ -154,5 +164,10 @@ class RandomQuestionInstrumentedTest {
             val textView = view as TextView
             assertNotEquals(textView.text.toString(), oldText)
         }
+    }
+
+    private fun scrollToBottom() {
+        onView(withId(R.id.answerButton))
+            .perform(scrollTo())
     }
 }
