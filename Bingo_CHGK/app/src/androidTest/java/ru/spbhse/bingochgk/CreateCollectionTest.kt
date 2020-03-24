@@ -32,7 +32,7 @@ class CreateCollectionTest {
     @JvmField
     val questionTest = ActivityTestRule(LaunchActivity::class.java)
 
-    fun setUp() {
+    private fun setUp() {
         Database.init(questionTest.activity, "test_database.db", 3, force = true)
     }
 
@@ -49,6 +49,7 @@ class CreateCollectionTest {
         onView(withId(R.id.new_collection_name_text)).perform(typeText(collectionName))
         onView(withId(R.id.create_collection_button)).perform(click())
 
+        Thread.sleep(150)
 
         onView(withId(R.id.collections_list))
             .perform(RecyclerViewActions.actionOnItem<ViewHolder>(
@@ -73,6 +74,7 @@ class CreateCollectionTest {
         onView(withId(R.id.new_collection_name_text)).perform(typeText(collectionName))
         onView(withId(R.id.create_collection_button)).perform(click())
 
+        Thread.sleep(150)
 
         onView(withId(R.id.collections_list))
             .perform(RecyclerViewActions.actionOnItem<ViewHolder>(
