@@ -77,9 +77,9 @@ class ReadArticlesTest {
         goToHelloWorldArticle()
         onView(withId(R.id.to_next_article_button_down)).perform(scrollTo())
         onView(withId(R.id.to_questions_by_article_button)).perform(click())
-        onView(withId(R.id.scroll)).perform(swipeUp())
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
         onView(withId(R.id.answerButton)).perform(click())
-        onView(withId(R.id.scroll)).perform(swipeUp())
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
         onView(withId(R.id.goToArticleButton)).perform(click())
         onView(withId(R.id.article_text)).check(matches(StartsWithMatcher("Простейшая")))
     }
