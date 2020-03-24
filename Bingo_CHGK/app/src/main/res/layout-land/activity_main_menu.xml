@@ -12,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
+        android:gravity="top"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
             android:layout_weight="1"
             android:fontFamily="monospace"
             android:text="БиНгО ЧгК"
@@ -33,6 +33,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:src="@drawable/question_cat" />
+
     </LinearLayout>
 
 
@@ -70,7 +71,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
         android:background="#787878"
