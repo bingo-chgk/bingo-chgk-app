@@ -127,7 +127,6 @@ class RandomQuestionInstrumentedTest {
 
     @Test
     fun questionChangedAfterToolBarNextClick() {
-        scrollToBottom()
         var oldText = ""
         onView(withId(R.id.questionText)).check { view, noViewFoundException ->
             assertNull(noViewFoundException)
