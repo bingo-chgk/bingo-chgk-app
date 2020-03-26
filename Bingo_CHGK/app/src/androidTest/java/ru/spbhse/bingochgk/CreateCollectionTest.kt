@@ -16,7 +16,6 @@ import androidx.test.rule.ActivityTestRule
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.anyOf
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -58,7 +57,7 @@ class CreateCollectionTest {
         onView(withId(R.id.topics_list)).check(matches(withItemCount(2)))
 
         onView(withId(R.id.topics_list)).perform(actionOnItemAtPosition<ViewHolder>(1, click()))
-        onView(withId(R.id.article_text)).check(matches(StartsWithMatcher("Ежегодный")))
+        onView(withId(R.id.article_text)).check(matches(StartsWithMatcher("Простейшая")))
     }
 
     @Test
@@ -81,7 +80,7 @@ class CreateCollectionTest {
                 hasDescendant(anyOf(withText(collectionName))), longClick()))
         onView(withText(R.string.removeCollection)).inRoot(isPlatformPopup()).perform(click())
 
-        onView(withId(R.id.collections_list)).check(matches(withItemCount(0)))
+        onView(withId(R.id.collections_list)).check(matches(withItemCount(2)))
     }
 
     class RecyclerViewMatchers {

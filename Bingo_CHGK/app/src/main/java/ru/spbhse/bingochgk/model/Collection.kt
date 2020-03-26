@@ -4,7 +4,8 @@ import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import java.io.Serializable
 
 object Collections {
-    fun getAllCollections(nameForRead: String, nameForUnread: String): List<Collection> {
+    fun getAllCollections(nameForRead: String = "Прочитанные",
+                          nameForUnread: String = "Непрочитанные"): List<Collection> {
         val collections = mutableListOf(
             ReadArticles(nameForRead),
             UnreadArticles(nameForUnread)

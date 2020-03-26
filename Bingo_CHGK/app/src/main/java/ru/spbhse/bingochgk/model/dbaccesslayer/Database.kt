@@ -94,7 +94,7 @@ object Database {
         addTopicToCollection(collection.databaseId, topic.databaseId)
     }
 
-    private fun addTopicToCollection(collectionId: Int, topic: Int) {
+    private fun addTopicToCollection(collectionId: Int, topicId: Int) {
         database.execSQL(
             """INSERT OR IGNORE INTO 
                     |CollectionTopic(
@@ -105,7 +105,7 @@ object Database {
                     |""".trimMargin(),
             arrayOf(
                 collectionId,
-                topic
+                topicId
             )
         )
     }
@@ -119,7 +119,7 @@ object Database {
                     |""".trimMargin(),
             arrayOf(
                 collection.databaseId,
-                topic
+                topic.databaseId
             )
         )
     }

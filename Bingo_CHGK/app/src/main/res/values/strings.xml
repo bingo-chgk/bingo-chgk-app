@@ -137,4 +137,5 @@
     <string name="yourAnswer">Ваш ответ: </string>
     <string name="allTopics">Все темы</string>
     <string name="removeCollection">"Удалить подборку"</string>
+    <string name="newCollection">Новая подборка</string>
 </resources>
