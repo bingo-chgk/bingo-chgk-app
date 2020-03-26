@@ -2,19 +2,28 @@ package ru.spbhse.bingochgk.controller
 
 import android.os.AsyncTask
 import ru.spbhse.bingochgk.activities.ConcreteCollectionActivity
+import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Topic
+import ru.spbhse.bingochgk.model.TopicNavigator
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 
 class ConcreteCollectionController(private val activity: ConcreteCollectionActivity,
-                                   private val collectionId: Int)
+                                   private val collection: Collection)
     : QuestionLoadController {
 
+    fun goToTopic(topicId: Int) {
+        TopicNavigator.selectItem(topicId)
+        activity.startTopicReading()
+    }
+
     fun requestTopics() {
-        GetCollectionTopicsTask(this, collectionId).execute()
+        activity.setProgressBar()
+        GetCollectionTopicsTask(this, collection).execute()
     }
 
     fun deleteTopic(topic: Topic, position: Int) {
-        DeleteTopicFromCollectionTask(topic,  this, position, collectionId).execute()
+        activity.setProgressBar()
+        DeleteTopicFromCollectionTask(topic,  this, position, collection).execute()
     }
 
     fun uploadQuestions(topic: Topic) {
@@ -23,17 +32,9 @@ class ConcreteCollectionController(private val activity: ConcreteCollectionActiv
     }
 
     fun onTopicsAreLoaded(result: List<Topic>) {
+        activity.unsetProgressBar()
+        TopicNavigator.setNewCollection(result)
         activity.onTopicsLoaded(result)
-    }
-
-    class GetCollectionTopicsTask(private val parent: ConcreteCollectionController, private val collectionId: Int) : AsyncTask<Unit, Unit, List<Topic>>() {
-        override fun doInBackground(vararg params: Unit?): List<Topic> {
-            return Database.getTopicsByCollection(collectionId)
-        }
-
-        override fun onPostExecute(result: List<Topic>) {
-            parent.onTopicsAreLoaded(result)
-        }
     }
 
     override fun onQuestionsDownload() {
@@ -47,6 +48,7 @@ class ConcreteCollectionController(private val activity: ConcreteCollectionActiv
     }
 
     fun onTopicDeleted(position: Int) {
+        activity.unsetProgressBar()
         activity.onTopicDeleted(position)
     }
 }
@@ -55,13 +57,24 @@ class DeleteTopicFromCollectionTask(
     private val topic: Topic,
     private val controller: ConcreteCollectionController,
     private val position: Int,
-    private val collectionId: Int
+    private val collection: Collection
 ) : AsyncTask<Unit, Unit, Unit>() {
     override fun doInBackground(vararg params: Unit) {
-        Database.deleteTopicFromCollection(topic, collectionId)
+        collection.deleteTopic(topic)
     }
 
     override fun onPostExecute(result: Unit?) {
         controller.onTopicDeleted(position)
+    }
+}
+
+class GetCollectionTopicsTask(private val parent: ConcreteCollectionController,
+                              private val collection: Collection) : AsyncTask<Unit, Unit, List<Topic>>() {
+    override fun doInBackground(vararg params: Unit?): List<Topic> {
+        return collection.loadCollection()
+    }
+
+    override fun onPostExecute(result: List<Topic>) {
+        parent.onTopicsAreLoaded(result)
     }
 }

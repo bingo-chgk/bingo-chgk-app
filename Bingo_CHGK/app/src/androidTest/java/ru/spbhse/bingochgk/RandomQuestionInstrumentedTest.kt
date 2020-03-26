@@ -73,6 +73,8 @@ class RandomQuestionInstrumentedTest {
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
+
         onView(withText(R.string.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
@@ -81,6 +83,8 @@ class RandomQuestionInstrumentedTest {
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
+
         onView(withText(R.string.comment)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
@@ -88,6 +92,8 @@ class RandomQuestionInstrumentedTest {
     fun answerStatusPresentsAfterButtonClick() {
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
+
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
 
         onView(withText(R.string.wrongAnswer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withText(R.string.rightAnswer)).check(doesNotExist())
@@ -98,6 +104,8 @@ class RandomQuestionInstrumentedTest {
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
 
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
+
         onView(withText(R.string.ok)).check(matches(isClickable())).perform(click())
         onView(withText(R.string.rightAnswer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withText(R.string.wrongAnswer)).check(doesNotExist())
@@ -107,6 +115,8 @@ class RandomQuestionInstrumentedTest {
     fun markAsIncorrectAnswerButtonWorks() {
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
+
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
 
         onView(withText(R.string.ok)).perform(click())
         onView(withText(R.string.nook)).perform(click())
@@ -119,6 +129,8 @@ class RandomQuestionInstrumentedTest {
         Intents.init()
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
+
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
 
         onView(withText(R.string.toArticle)).check(matches(isCompletelyDisplayed()))
         onView(withText(R.string.toArticle)).check(matches(isClickable())).perform(click())
@@ -148,6 +160,8 @@ class RandomQuestionInstrumentedTest {
     fun questionChangedAfterDownNextClick() {
         scrollToBottom()
         onView(withText(R.string.readyButton)).perform(click())
+
+        onView(withId(R.id.question_scroll)).perform(swipeUp())
 
         var oldText = ""
         onView(withId(R.id.questionText)).check { view, noViewFoundException ->

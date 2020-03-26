@@ -32,7 +32,7 @@
                 android:background="#787878"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:title="Новая подборка"
+                app:title="@string/newCollection"
                 app:titleTextColor="#ffffff">
 
                 <SearchView

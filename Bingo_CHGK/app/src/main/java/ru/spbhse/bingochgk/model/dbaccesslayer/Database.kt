@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Question
+import ru.spbhse.bingochgk.model.StoredCollection
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.utils.Logger
 import java.util.*
@@ -88,7 +89,12 @@ object Database {
         return collectionId
     }
 
-    fun addTopicToCollection(collection: Int, topic: Int) {
+    fun addTopicToCollection(collection: StoredCollection, topic: Topic) {
+        addTopicToCollection(collection.databaseId, topic.databaseId)
+        addTopicToCollection(collection.databaseId, topic.databaseId)
+    }
+
+    private fun addTopicToCollection(collectionId: Int, topicId: Int) {
         database.execSQL(
             """INSERT OR IGNORE INTO 
                     |CollectionTopic(
@@ -98,13 +104,13 @@ object Database {
                     |VALUES(?, ?)
                     |""".trimMargin(),
             arrayOf(
-                collection,
-                topic
+                collectionId,
+                topicId
             )
         )
     }
 
-    fun removeTopicFromCollection(collection: Int, topic: Int) {
+    fun removeTopicFromCollection(collection: StoredCollection, topic: Topic) {
         database.execSQL(
             """DELETE FROM
                     |CollectionTopic
@@ -112,13 +118,13 @@ object Database {
                     |AND topic_id = ?
                     |""".trimMargin(),
             arrayOf(
-                collection,
-                topic
+                collection.databaseId,
+                topic.databaseId
             )
         )
     }
 
-    fun removeCollection(collection: Collection) {
+    fun removeCollection(collection: StoredCollection) {
         database.beginTransaction()
         database.delete(
             "CollectionTopic",
@@ -134,7 +140,7 @@ object Database {
         database.endTransaction()
     }
 
-    fun getAllCollections(): List<Collection> {
+    fun getAllStoredCollections(): List<StoredCollection> {
         val cursor = database.rawQuery(
             """SELECT name, id
                 |FROM Collection
@@ -143,11 +149,11 @@ object Database {
             null
         )
 
-        val collections = mutableListOf<Collection>()
+        val collections = mutableListOf<StoredCollection>()
 
         while (cursor.moveToNext()) {
             collections.add(
-                Collection(
+                StoredCollection(
                     cursor.getString(0),
                     cursor.getInt(1)
                 )
@@ -173,7 +179,7 @@ object Database {
         return topics
     }
 
-    fun getCollectionQuestion(collection: Int): Question? {
+    fun getCollectionQuestion(collection: StoredCollection): Question? {
         val cursor = database.rawQuery(
             """SELECT 
                 |q.id, 
@@ -194,36 +200,7 @@ object Database {
                 |ORDER BY RANDOM()
                 |LIMIT 1
                 |""".trimMargin(),
-            arrayOf(collection.toString())
-        )
-        if (cursor.isAfterLast) {
-            return null
-        }
-
-        cursor.moveToFirst()
-        return collectQuestionFromCursor(cursor).also { cursor.close() }
-    }
-
-    fun getCollectionQuestion(topics: List<Int>): Question? {
-        val cursor = database.rawQuery(
-            """SELECT 
-                |id, 
-                |topic_id, 
-                |dbchgkinfo_id,
-                |text, 
-                |handout_id, 
-                |comment_text,
-                |author,
-                |sources,
-                |additional_answers,
-                |wrong_answers,
-                |answer
-                |FROM Question
-                |WHERE topic_id in (${topics.joinToString(", ")})
-                |ORDER BY RANDOM()
-                |LIMIT 1
-                |""".trimMargin(),
-            emptyArray()
+            arrayOf(collection.databaseId.toString())
         )
         if (cursor.isAfterLast) {
             return null
@@ -260,15 +237,22 @@ object Database {
         return topics
     }
 
-    // NOT TESTED AT ALL
     fun getAllAlreadyReadTopics(): List<Topic> {
+        return getAllTopicsByRead(true)
+    }
+
+    fun getAllUnreadTopics(): List<Topic> {
+        return getAllTopicsByRead(false)
+    }
+
+    private fun getAllTopicsByRead(isRead: Boolean): List<Topic> {
         val cursor = database.rawQuery(
             """SELECT name, percentage, id, read
                 |FROM TopicPercentage
-                |WHERE read = 1
+                |WHERE read = ?
                 |ORDER BY name
                 |""".trimMargin(),
-            null
+            arrayOf(if (isRead) "1" else "0")
         )
 
         val topics = collectTopicsFromCursor(cursor)
@@ -416,6 +400,43 @@ object Database {
         return collectQuestionFromCursor(cursor).also { cursor.close() }
     }
 
+    fun getRandomQuestionByReadArticle(): Question? {
+        return getRandomQuestionByArticleRead(true)
+    }
+
+    fun getRandomQuestionByUnreadArticle(): Question? {
+        return getRandomQuestionByArticleRead(false)
+    }
+
+    private fun getRandomQuestionByArticleRead(isRead: Boolean): Question? {
+        val cursor = database.rawQuery(
+            """SELECT 
+                |Question.id, 
+                |Question.topic_id, 
+                |Question.dbchgkinfo_id,
+                |Question.text, 
+                |Question.handout_id, 
+                |Question.comment_text,
+                |Question.author,
+                |Question.sources,
+                |Question.additional_answers,
+                |Question.wrong_answers,
+                |Question.answer
+                |FROM Question
+                |JOIN Topic ON Question.topic_id = Topic.id
+                |WHERE Topic.read = ?
+                |ORDER BY RANDOM()
+                |LIMIT 1
+                |""".trimMargin(),
+            arrayOf(if (isRead) "1" else "0")
+        )
+        if (cursor.isAfterLast) {
+            return null
+        }
+        cursor.moveToFirst()
+        return collectQuestionFromCursor(cursor).also { cursor.close() }
+    }
+
     fun deleteTopic(topic: Topic) {
         database.beginTransaction()
         database.delete(
@@ -484,11 +505,11 @@ object Database {
         return collectQuestionFromCursor(cursor).also { cursor.close() }
     }
 
-    fun deleteTopicFromCollection(topic: Topic, collectionId: Int) {
+    fun deleteTopicFromCollection(topic: Topic, collection: StoredCollection) {
         database.delete(
             "CollectionTopic",
             "collection_id = ? AND topic_id = ?",
-            arrayOf(collectionId.toString(), topic.databaseId.toString())
+            arrayOf(collection.databaseId.toString(), topic.databaseId.toString())
         )
     }
 

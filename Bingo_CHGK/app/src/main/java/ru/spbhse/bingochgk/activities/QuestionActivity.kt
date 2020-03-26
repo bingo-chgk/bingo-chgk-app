@@ -93,7 +93,9 @@ open class QuestionActivity : AppCompatActivity() {
                 markAnswerWrong()
             }
 
-            question_scroll.post(Runnable { question_scroll.fullScroll(View.FOCUS_DOWN) })
+            question_scroll.post {
+                question_scroll.scrollTo(0, answerLabel.bottom)
+            }
         }
 
         goToArticleButton.setOnClickListener {

@@ -7,7 +7,9 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.spbhse.bingochgk.model.Collections
 import ru.spbhse.bingochgk.model.Question
+import ru.spbhse.bingochgk.model.StoredCollection
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
 
@@ -22,7 +24,7 @@ class DatabaseTest {
     fun testAddCollection() {
         val collectionName = "testCollection"
         Database.addCollection(collectionName)
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
         assertEquals(collectionName, collection.name)
     }
@@ -31,14 +33,14 @@ class DatabaseTest {
     fun testRemoveCollection() {
         val collectionName = "testCollection"
         Database.addCollection(collectionName)
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
-        val allCollectionsSize = Database.getAllCollections().size
+        val allCollectionsSize = Database.getAllStoredCollections().size
 
-        Database.removeCollection(collection)
+        Database.removeCollection(collection as StoredCollection)
 
-        assertNotEquals(allCollectionsSize, Database.getAllCollections().size)
-        assertNull(Database.getAllCollections()
+        assertNotEquals(allCollectionsSize, Database.getAllStoredCollections().size)
+        assertNull(Database.getAllStoredCollections()
             .firstOrNull { collection -> collection.name == collectionName })
     }
 
@@ -70,11 +72,11 @@ class DatabaseTest {
         Database.addCollection(collectionName)
         Database.insertTopic(topicName, topicText)
 
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
         val topic = Database.getAllTopics().first { topic -> topic.name == topicName }
 
-        Database.addTopicToCollection(collection.databaseId, topic.databaseId)
+        Database.addTopicToCollection(collection as StoredCollection, topic)
         val topics = Database.getTopicsByCollection(collection.databaseId)
 
         assertEquals(1, topics.size)
@@ -87,7 +89,7 @@ class DatabaseTest {
         Database.insertTopic(anotherTopicName, anotherTopicText)
         val anotherTopic = Database.getAllTopics().first { topic -> topic.name == anotherTopicName }
 
-        Database.addTopicToCollection(collection.databaseId, anotherTopic.databaseId)
+        Database.addTopicToCollection(collection, anotherTopic)
         val updatedTopics = Database.getTopicsByCollection(collection.databaseId)
 
         assertEquals(2, updatedTopics.size)
@@ -107,13 +109,13 @@ class DatabaseTest {
         Database.addCollection(collectionName)
         Database.insertTopic(topicName, topicText)
 
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
         val topic = Database.getAllTopics().first { topic -> topic.name == topicName }
 
-        Database.addTopicToCollection(collection.databaseId, topic.databaseId)
+        Database.addTopicToCollection(collection, topic)
 
-        Database.deleteTopicFromCollection(topic, collection.databaseId)
+        Database.deleteTopicFromCollection(topic, collection)
 
         val topics = Database.getTopicsByCollection(collection.databaseId)
         assertEquals(0, topics.size)
@@ -138,7 +140,7 @@ class DatabaseTest {
             listOf(topic.databaseId, anotherTopic.databaseId)
         )
 
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
         val updatedTopics = Database.getTopicsByCollection(collection.databaseId)
 
@@ -166,17 +168,17 @@ class DatabaseTest {
             collectionName,
             listOf(topic.databaseId, anotherTopic.databaseId)
         )
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
 
-        Database.removeTopicFromCollection(collection.databaseId, topic.databaseId)
+        Database.removeTopicFromCollection(collection, topic)
 
         val topics = Database.getTopicsByCollection(collection.databaseId)
         assertEquals(1, topics.size)
         assertEquals(anotherTopicName, topics[0].name)
         assertEquals(anotherTopicText, topics[0].loadText())
 
-        Database.removeTopicFromCollection(collection.databaseId, anotherTopic.databaseId)
+        Database.removeTopicFromCollection(collection, anotherTopic)
         val updatedTopics = Database.getTopicsByCollection(collection.databaseId)
         assertEquals(0, updatedTopics.size)
     }
@@ -287,9 +289,9 @@ class DatabaseTest {
         val question = Database.getTopicQuestion(topic)!!
         Database.saveQuestion(question)
         Database.addCollection(collectionName)
-        val collection = Database.getAllCollections()
+        val collection = Database.getAllStoredCollections()
             .first { collection -> collection.name == collectionName }
-        Database.addTopicToCollection(collection.databaseId, topic.databaseId)
+        Database.addTopicToCollection(collection, topic)
 
         Database.deleteTopic(topic)
 
@@ -302,7 +304,7 @@ class DatabaseTest {
         assertEquals(0, Database.getTopicsByCollection(collection.databaseId).size)
         assertEquals("Not found", Database.getTopicText(topic))
         assertFalse(topicName in Database.getAllTopics().map { topic -> topic.name })
-        assertTrue(collectionName in Database.getAllCollections().map { collection -> collection.name })
+        assertTrue(collectionName in Database.getAllStoredCollections().map { collection -> collection.name })
     }
 
     private fun getQuestions(topicId: Int, count: Int = 10): List<Question> {
