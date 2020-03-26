@@ -9,6 +9,7 @@ import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.TopicLoadController
 import ru.spbhse.bingochgk.controller.TopicsChoiceController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
+import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.model.TopicNavigator
 
@@ -22,9 +23,9 @@ class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvid
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics_choice)
 
-        val currentCollectionId = intent.extras?.get("id") as? Int ?: 0
+        val currentCollection = intent.extras!!.get("collection") as Collection
         done_button.setOnClickListener {
-            applyChanges(currentCollectionId)
+            applyChanges(currentCollection)
             finish()
         }
     }
@@ -34,8 +35,8 @@ class TopicsChoiceActivity : AppCompatActivity(), NewCollectionListActionsProvid
         loadController.requestTopics()
     }
 
-    private fun applyChanges(collectionId: Int) {
-        controller.addTopics(collectionId, adapter.topicsToAdd.toList())
+    private fun applyChanges(collection: Collection) {
+        controller.addTopics(collection, adapter.topicsToAdd.toList())
     }
 
     override fun onItemClick(position: Int, isChecked: Boolean) {

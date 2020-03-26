@@ -3,6 +3,7 @@ package ru.spbhse.bingochgk.activities
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_question.*
 import ru.spbhse.bingochgk.controller.CollectionQuestionController
+import ru.spbhse.bingochgk.model.Collection
 
 class CollectionQuestionActivity : QuestionActivity() {
     private val controller = CollectionQuestionController(this)
@@ -11,18 +12,14 @@ class CollectionQuestionActivity : QuestionActivity() {
         super.onCreate(savedInstanceState)
 
         val extras = intent.extras!!
-        val collectionName = extras.get("name") as? String
-        toolbar.title = "Вопрос по подборке \"$collectionName\""
+        val collection = extras.getSerializable("collection") as? Collection
+        toolbar.title = "Вопрос по подборке \"${collection?.name}\""
 
-        val collectionId = extras.get("id") as? Int
-        val topics = extras.get("topics") as? IntArray
 
-        if (collectionId == null && topics == null) {
+        if (collection == null) {
             onQuestionIsReady(null)
-        } else if (topics != null) {
-            controller.requestQuestion(topics.toList())
-        } else if (collectionId != null) {
-            controller.requestQuestion(collectionId)
+        } else {
+            controller.requestQuestion(collection)
         }
 
         toNextQuestionButton.setOnClickListener {

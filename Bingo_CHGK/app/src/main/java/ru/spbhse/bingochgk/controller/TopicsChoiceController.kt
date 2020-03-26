@@ -1,37 +1,33 @@
 package ru.spbhse.bingochgk.controller
 
 import android.os.AsyncTask
+import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Topic
-import ru.spbhse.bingochgk.model.dbaccesslayer.Database
-import ru.spbhse.bingochgk.utils.Logger
 
-class TopicsChoiceController() {
+class TopicsChoiceController {
 
-    fun addTopics(collectionId: Int, topics: List<Topic>) {
-        AddTopicsToCollectionTask(collectionId, topics.map { it.databaseId }).execute()
+    fun addTopics(collection: Collection, topics: List<Topic>) {
+        AddTopicsToCollectionTask(collection, topics).execute()
     }
 
-    fun removeTopics(collectionId: Int, topics: List<Topic>) {
-        RemoveTopicsToCollectionTask(collectionId, topics.map { it.databaseId }).execute()
+    fun removeTopics(collection: Collection, topics: List<Topic>) {
+        RemoveTopicsToCollectionTask(collection, topics).execute()
     }
 
-    class AddTopicsToCollectionTask(private val collectionId: Int, private val topics: List<Int>) :
+    class AddTopicsToCollectionTask(private val collection: Collection,
+                                    private val topics: List<Topic>) :
         AsyncTask<Unit, Unit, Unit>() {
         override fun doInBackground(vararg params: Unit?) {
-            for (topic in topics) {
-                Database.addTopicToCollection(collectionId, topic)
-            }
+            collection.addTopics(topics)
         }
     }
 
     class RemoveTopicsToCollectionTask(
-        private val collectionId: Int,
-        private val topics: List<Int>
+        private val collection: Collection,
+        private val topics: List<Topic>
     ) : AsyncTask<Unit, Unit, Unit>() {
         override fun doInBackground(vararg params: Unit?) {
-            for (topic in topics) {
-                Database.removeTopicFromCollection(collectionId, topic)
-            }
+            collection.removeTopics(topics)
         }
     }
 }

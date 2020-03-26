@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_collections.*
@@ -39,12 +38,14 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, ConcreteCollectionActivity::class.java)
-        intent.putExtra("id", collections[position].databaseId)
-        intent.putExtra("name", collections[position].name)
+        intent.putExtra("collection", collections[position])
         startActivity(intent)
     }
 
     override fun onItemLongClick(position: Int): Boolean {
+        if (!collections[position].isDatabaseStored) {
+            return true
+        }
         val popupMenu = PopupMenu(this, collections_list[position])
         popupMenu.menu.add(R.string.removeCollection)
         popupMenu.setOnMenuItemClickListener {
@@ -78,8 +79,7 @@ class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider 
 
     override fun onQuestionButtonClick(position: Int) {
         val intent = Intent(this, CollectionQuestionActivity::class.java)
-        intent.putExtra("id", collections[position].databaseId)
-        intent.putExtra("name", collections[position].name)
+        intent.putExtra("collection", collections[position])
         startActivity(intent)
     }
 }

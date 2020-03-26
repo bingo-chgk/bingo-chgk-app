@@ -11,36 +11,38 @@ import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_concrete_collection.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.ConcreteCollectionController
+import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Topic
 
 class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     private var topics = listOf<Topic>()
     private lateinit var topicAdapter: TopicAdapter
     private lateinit var controller: ConcreteCollectionController
-    private var currentCollectionId = 0
+    private lateinit var collection: Collection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_concrete_collection)
 
+        collection = intent.extras!!.getSerializable("collection") as Collection
 
-        currentCollectionId = intent.extras?.get("id") as? Int ?: 0
-        val currentCollectionName = intent.extras?.get("name") as? String ?: getString(R.string.collection42)
+        controller = ConcreteCollectionController(this, collection)
 
-        controller = ConcreteCollectionController(this, currentCollectionId)
+        toolbar.title = collection.name
 
-        toolbar.title = currentCollectionName
-
-        add_topic_button.setOnClickListener {
-            val intent = Intent(this, TopicsChoiceActivity::class.java)
-            intent.putExtra("id", currentCollectionId)
-            startActivity(intent)
+        if (collection.isDatabaseStored) {
+            add_topic_button.setOnClickListener {
+                val intent = Intent(this, TopicsChoiceActivity::class.java)
+                intent.putExtra("collection", collection)
+                startActivity(intent)
+            }
+        } else {
+            add_topic_button.visibility = View.GONE
         }
 
         to_question_by_collection_button.setOnClickListener {
             val intent = Intent(this, CollectionQuestionActivity::class.java)
-            intent.putExtra("name", currentCollectionName)
-            intent.putExtra("topics", topics.map { it.databaseId }.toIntArray())
+            intent.putExtra("collection", collection)
             startActivity(intent)
         }
         to_question_by_collection_button.isEnabled = false
@@ -59,13 +61,19 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
     }
 
     override fun onItemClick(position: Int) {
+        controller.goToTopic(position)
+    }
+
+    fun startTopicReading() {
         val intent = Intent(this, ArticleActivity::class.java)
         startActivity(intent)
     }
 
     override fun onItemLongClick(topicListPosition: Int, position: Int): Boolean {
         val popupMenu = PopupMenu(this, topics_list[topicListPosition])
-        popupMenu.menu.add(getString(R.string.deleteTopic))
+        if (collection.isDatabaseStored) {
+            popupMenu.menu.add(getString(R.string.deleteTopic))
+        }
         popupMenu.menu.add(getString(R.string.uploadQuestionsByTopic))
         popupMenu.setOnMenuItemClickListener {
             when (it.title) {

@@ -1,11 +1,10 @@
 package ru.spbhse.bingochgk.controller
 
 import android.os.AsyncTask
-import android.util.Log
 import ru.spbhse.bingochgk.activities.CollectionsActivity
 import ru.spbhse.bingochgk.model.Collection
+import ru.spbhse.bingochgk.model.Collections
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
-import java.text.FieldPosition
 
 class CollectionsController(private val collectionsActivity: CollectionsActivity) {
     fun requestCollections() {
@@ -33,7 +32,7 @@ class CollectionsController(private val collectionsActivity: CollectionsActivity
     ) : AsyncTask<Unit, Unit, Unit>() {
 
         override fun doInBackground(vararg params: Unit?) {
-            return Database.removeCollection(collection)
+            return collection.deleteCollection()
         }
 
         override fun onPostExecute(result: Unit) {
@@ -44,7 +43,7 @@ class CollectionsController(private val collectionsActivity: CollectionsActivity
     class GetAllCollectionsTask(private val parentController: CollectionsController) :
         AsyncTask<Unit, Unit, List<Collection>>() {
         override fun doInBackground(vararg params: Unit?): List<Collection> {
-            return Database.getAllCollections()
+            return Collections.getAllCollections("Прочитанные", "Непрочитанные")
         }
 
         override fun onPostExecute(result: List<Collection>) {
