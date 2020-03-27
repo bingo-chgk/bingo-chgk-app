@@ -32,7 +32,7 @@ class CreateCollectionTest {
     val questionTest = ActivityTestRule(LaunchActivity::class.java)
 
     private fun setUp() {
-        Database.init(questionTest.activity, "test_database.db", 3, force = true)
+        Database.init(questionTest.activity, "test_database.db", force = true)
     }
 
     @Test

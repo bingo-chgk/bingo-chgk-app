@@ -29,7 +29,7 @@ class ReadArticlesTest {
     val questionTest = ActivityTestRule(LaunchActivity::class.java)
 
     private fun goToHelloWorldArticle() {
-        Database.init(questionTest.activity, "test_database.db", 3, force = true)
+        Database.init(questionTest.activity, "test_database.db", force = true)
         onView(withId(R.id.all_topics_button)).perform(click())
         onView(withId(R.id.topics_list))
             .perform(RecyclerViewActions

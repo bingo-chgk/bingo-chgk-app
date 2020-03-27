@@ -36,7 +36,9 @@ class CreateArticleTask(
     private val controller: CreateArticleController
 ) : AsyncTask<String, Unit, Topic>() {
     override fun doInBackground(vararg params: String): Topic {
-        return Database.insertTopic(params[0], params[1])
+        val topic = Database.insertTopic(params[0], params[1])
+        Database.addTag(topic, topic.name)
+        return topic
     }
 
     override fun onPostExecute(result: Topic) {
