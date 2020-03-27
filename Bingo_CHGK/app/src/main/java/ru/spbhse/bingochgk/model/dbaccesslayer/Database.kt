@@ -15,7 +15,7 @@ object Database {
     private lateinit var database: SQLiteDatabase
     private lateinit var manager: DatabaseManager
 
-    fun init(context: Context, name: String = "db", version: Int = 3, force: Boolean = false) {
+    fun init(context: Context, name: String = "db", version: Int = 4, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
         manager = DatabaseManager(context, name, version)
         manager.readableDatabase
@@ -557,6 +557,34 @@ object Database {
 
         return collectQuestionsFromCursor(cursor)
             .also { cursor.close() }
+    }
+
+    fun addTag(topic: Topic, tag: String) {
+        database.execSQL(
+            """INSERT OR IGNORE INTO SearchInfo(topic_id, tag)
+                |VALUES(?, ?)
+            """.trimMargin(),
+            arrayOf(topic.databaseId.toString(), tag)
+        )
+    }
+
+    fun getTagsByTopic(topic: Topic): List<String> {
+        val cursor = database.rawQuery(
+            """SELECT tag
+                |FROM SearchInfo
+                |WHERE topic_id = ?
+            """.trimMargin(),
+            arrayOf(topic.databaseId.toString())
+        )
+
+        val tags = mutableListOf<String>()
+
+        while (cursor.moveToNext()) {
+            tags.add(cursor.getString(0))
+        }
+        cursor.close()
+
+        return tags
     }
 
     private fun collectTopicsFromCursor(cursor: Cursor): List<Topic> {
