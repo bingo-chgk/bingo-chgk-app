@@ -92,6 +92,7 @@ class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
 
     override fun onQuestionButtonClick(position: Int) {
         val intent = Intent(this, TopicQuestionActivity::class.java)
+        intent.putExtra("topic", topics[position])
         startActivity(intent)
     }
 

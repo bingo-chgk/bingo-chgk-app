@@ -9,10 +9,9 @@ import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
 
 class TopicQuestionController(private val activity: TopicQuestionActivity) {
-    fun requestTopicQuestion() {
-        val currentTopic = TopicNavigator.getCurrentTopic()
-        Logger.d("${currentTopic.name} ${currentTopic.databaseId}")
-        GetTopicQuestionTask(currentTopic).execute()
+    fun requestTopicQuestion(topic: Topic) {
+        Logger.d("${topic.name} ${topic.databaseId}")
+        GetTopicQuestionTask(topic).execute()
     }
 
     inner class GetTopicQuestionTask(val topic: Topic) : AsyncTask<Unit, Unit, Question>() {

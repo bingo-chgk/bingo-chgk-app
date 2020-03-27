@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_question.*
 import ru.spbhse.bingochgk.controller.TopicQuestionController
+import ru.spbhse.bingochgk.model.Topic
 
 class TopicQuestionActivity : QuestionActivity() {
     private val controller = TopicQuestionController(this)
@@ -11,16 +12,16 @@ class TopicQuestionActivity : QuestionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        controller.requestTopicQuestion()
+        val topic = intent.extras!!.getSerializable("topic")!! as Topic
+
+        controller.requestTopicQuestion(topic)
 
         toNextQuestionButton.setOnClickListener {
-            val intent = Intent(this, TopicQuestionActivity::class.java)
             startActivity(intent)
             finish()
         }
 
         to_next_question_button_up.setOnClickListener {
-            val intent = Intent(this, TopicQuestionActivity::class.java)
             startActivity(intent)
             finish()
         }

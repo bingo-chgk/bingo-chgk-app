@@ -105,8 +105,8 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
     }
 
     override fun onQuestionButtonClick(position: Int) {
-        TopicNavigator.selectItem(position)
         val intent = Intent(this, TopicQuestionActivity::class.java)
+        intent.putExtra("topic", topics[position])
         startActivity(intent)
     }
 

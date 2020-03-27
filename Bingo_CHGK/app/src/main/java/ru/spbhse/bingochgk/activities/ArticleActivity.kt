@@ -41,6 +41,7 @@ class ArticleActivity : AppCompatActivity() {
 
         to_questions_by_article_button.setOnClickListener {
             val intent = Intent(this, TopicQuestionActivity::class.java)
+            intent.putExtra("topic", topic)
             startActivity(intent)
         }
 
