@@ -25,7 +25,7 @@ CREATE TABLE Handout(
 CREATE TABLE Question(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	topic_id INTEGER NOT NULL REFERENCES Topic(id),
-	dbchgkinfo_id TEXT NOT NULL UNIQUE,
+	dbchgkinfo_id TEXT NOT NULL,
 	text TEXT NOT NULL,
 	handout_id INT REFERENCES Handout(id),
 	comment_text TEXT,
@@ -33,7 +33,8 @@ CREATE TABLE Question(
 	sources TEXT,
 	additional_answers TEXT,
 	wrong_answers TEXT,
-	answer TEXT NOT NULL
+	answer TEXT NOT NULL,
+	UNIQUE(dbchgkinfo_id, topic_id)
 );
 
 CREATE TABLE SearchInfo(

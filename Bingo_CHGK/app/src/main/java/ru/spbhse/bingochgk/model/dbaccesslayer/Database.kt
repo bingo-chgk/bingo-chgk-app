@@ -3,6 +3,7 @@ package ru.spbhse.bingochgk.model.dbaccesslayer
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import androidx.core.database.getStringOrNull
 import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.StoredCollection
@@ -622,11 +623,11 @@ object Database {
             answer = cursor.getString(10),
             dbChgkInfoId = cursor.getString(2),
             databaseId = cursor.getInt(0),
-            sources = cursor.getString(7),
-            author = cursor.getString(6),
-            wrongAnswers = cursor.getString(9),
-            additionalAnswers = cursor.getString(8),
-            comment = cursor.getString(5),
+            sources = cursor.getStringOrNull(7),
+            author = cursor.getStringOrNull(6),
+            wrongAnswers = cursor.getStringOrNull(9),
+            additionalAnswers = cursor.getStringOrNull(8),
+            comment = cursor.getStringOrNull(5),
             topicId = cursor.getInt(1)
         )
     }

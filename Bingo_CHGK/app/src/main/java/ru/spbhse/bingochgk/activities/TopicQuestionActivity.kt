@@ -1,6 +1,5 @@
 package ru.spbhse.bingochgk.activities
 
-import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_question.*
 import ru.spbhse.bingochgk.controller.TopicQuestionController
