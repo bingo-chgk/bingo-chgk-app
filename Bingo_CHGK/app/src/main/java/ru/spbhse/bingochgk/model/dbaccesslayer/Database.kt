@@ -16,7 +16,7 @@ object Database {
     private lateinit var database: SQLiteDatabase
     private lateinit var manager: DatabaseManager
 
-    fun init(context: Context, name: String = "db", version: Int = 5, force: Boolean = false) {
+    fun init(context: Context, name: String = "db", version: Int = 6, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
         manager = DatabaseManager(context, name, version)
         manager.readableDatabase
@@ -310,6 +310,7 @@ object Database {
     }
 
     fun insertQuestionsToDatabase(questions: List<Question>, topic: Topic) {
+        database.beginTransaction()
         for (question in questions) {
             database.execSQL(
                 """INSERT OR IGNORE INTO 
@@ -342,7 +343,14 @@ object Database {
             )
             Logger.d(question.dbChgkInfoId)
         }
-
+        database.execSQL(
+            """INSERT INTO QuestionAsked
+                |SELECT id, 0
+                |FROM Question
+                |WHERE id NOT IN (SELECT question_id FROM QuestionAsked)
+            """.trimMargin()
+        )
+        database.endTransaction()
         Logger.d("insert ${questions.size} new questions")
     }
 
@@ -441,8 +449,13 @@ object Database {
     fun deleteTopic(topic: Topic) {
         database.beginTransaction()
         database.delete(
+            "QuestionAsked",
+            "question_id IN (SELECT id FROM Question WHERE topic_id = ?)",
+            arrayOf(topic.databaseId.toString())
+        )
+        database.delete(
             "SavedQuestion",
-            "question_id IN (SELECT id FROM Question WHERE id = ?)",
+            "question_id IN (SELECT id FROM Question WHERE topic_id = ?)",
             arrayOf(topic.databaseId.toString())
         )
         database.delete(
@@ -452,7 +465,7 @@ object Database {
         )
         database.delete(
             "SeenQuestion",
-            "question_id IN (SELECT id FROM Question WHERE id = ?)",
+            "question_id IN (SELECT id FROM Question WHERE topic_id = ?)",
             arrayOf(topic.databaseId.toString())
         )
         database.delete(

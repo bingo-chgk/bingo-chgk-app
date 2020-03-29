@@ -19,15 +19,19 @@ fun main() {
 
     for ((topicId, topicName) in topicsWithIds) {
         val tags = TagsDistributor.getTags(topicName)
+        //println(tags)
         val questions = tags
             .map { QuestionsFinder.getAllQuestionsByAnswerTag(it) }
             .flatten()
+        //println("Questions: ${questions.size}")
         val bingoQuestions = questions.filter {
             Bingo.isBingo(it, tags)
         }
+        //println("Bingo: ${bingoQuestions.size}")
         for (question in bingoQuestions) {
             Database.insertQuestion(topicId, question)
         }
         println("$topicName ${bingoQuestions.size}")
     }
+    Database.insertCounters()
 }

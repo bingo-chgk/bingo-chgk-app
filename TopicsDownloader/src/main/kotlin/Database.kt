@@ -2,7 +2,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 object Database {
-    var connection: Connection? = null
+    private lateinit var connection: Connection
 
     fun connect() {
         Class.forName("org.sqlite.JDBC")
@@ -10,7 +10,7 @@ object Database {
     }
 
     fun insertTopic(topic: Topic) {
-        val statement = connection!!.prepareStatement(
+        val statement = connection.prepareStatement(
             "INSERT INTO Topic(text, name, read) VALUES(?, ?, 0)"
         )
         statement.setString(1, topic.text)
@@ -20,7 +20,7 @@ object Database {
     }
 
     fun getAllTopics(): List<Pair<Int, String>> {
-        val statement = connection!!.prepareStatement(
+        val statement = connection.prepareStatement(
             "SELECT id, name FROM Topic"
         )
         val resultSet = statement.executeQuery()
@@ -40,7 +40,7 @@ object Database {
     }
 
     fun insertTag(topicId: Int, tag: String) {
-        val statement = connection!!.prepareStatement(
+        val statement = connection.prepareStatement(
             "INSERT INTO SearchInfo VALUES(?, ?)"
         )
 
@@ -51,7 +51,7 @@ object Database {
     }
 
     fun insertQuestion(topicId: Int, question: Question) {
-        val statement = connection!!.prepareStatement(
+        val statement = connection.prepareStatement(
             """INSERT OR IGNORE INTO 
                     |Question(
                     |   topic_id, 
@@ -80,6 +80,15 @@ object Database {
         statement.setString(9, question.wrongAnswers)
         statement.setString(10, question.answer)
 
+        statement.execute()
+    }
+
+    fun insertCounters() {
+        val statement = connection.prepareStatement(
+            """INSERT INTO QuestionAsked(question_id, counter)
+                |SELECT id, 0 FROM Question
+            """.trimMargin()
+        )
         statement.execute()
     }
 }

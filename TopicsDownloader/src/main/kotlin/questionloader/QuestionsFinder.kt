@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.IOException
 import java.lang.Exception
+import kotlin.random.Random
 
 object QuestionsFinder {
     fun getAllQuestionsByAnswerTag(tag: String): List<Question> {
@@ -18,7 +19,7 @@ object QuestionsFinder {
             for (i in 1..10) {
                 try {
                     doc = Jsoup
-                        .connect("https://db.chgk.info/search/questions/$tag/types1/AZC/limit1000?page=$page")
+                        .connect("https://db.chgk.info/search/questions/$tag/types1/AZC/limit999?page=$page")
                         .get()
                     break
                 } catch (e: IOException) {
