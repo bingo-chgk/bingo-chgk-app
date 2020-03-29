@@ -343,6 +343,7 @@ object Database {
                 |WHERE id NOT IN (SELECT question_id FROM QuestionAsked)
             """.trimMargin()
         )
+        database.setTransactionSuccessful()
         database.endTransaction()
         Logger.d("insert ${questions.size} new questions")
     }
@@ -395,7 +396,11 @@ object Database {
     }
 
     fun getTopicQuestion(topic: Topic): Question? {
-        return getRandomQuestionByTopicUnsafe(topic.databaseId)
+        database.beginTransaction()
+        val question = getRandomQuestionByTopicUnsafe(topic.databaseId)
+        database.setTransactionSuccessful()
+        database.endTransaction()
+        return question
     }
 
     fun getRandomQuestion(): Question? {
