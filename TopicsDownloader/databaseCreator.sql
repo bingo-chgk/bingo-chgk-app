@@ -1,9 +1,11 @@
 DROP VIEW IF EXISTS TopicPercentage;
+DROP VIEW IF EXISTS TopicWithQuestions;
 DROP TABLE IF EXISTS SavedQuestion;
 DROP TABLE IF EXISTS CollectionTopic;
 DROP TABLE IF EXISTS Collection;
 DROP TABLE IF EXISTS SeenQuestion;
 DROP TABLE IF EXISTS SearchInfo;
+DROP TABLE IF EXISTS QuestionAsked;
 DROP TABLE IF EXISTS Question;
 DROP TABLE IF EXISTS Handout;
 DROP TABLE IF EXISTS Topic;
@@ -27,7 +29,7 @@ CREATE TABLE Question(
 	topic_id INTEGER NOT NULL REFERENCES Topic(id),
 	dbchgkinfo_id TEXT NOT NULL,
 	text TEXT NOT NULL,
-	handout_id INT REFERENCES Handout(id),
+	handout_id INTEGER REFERENCES Handout(id),
 	comment_text TEXT,
 	author TEXT,
 	sources TEXT,
@@ -35,6 +37,11 @@ CREATE TABLE Question(
 	wrong_answers TEXT,
 	answer TEXT NOT NULL,
 	UNIQUE(dbchgkinfo_id, topic_id)
+);
+
+CREATE TABLE QuestionAsked(
+	question_id INTEGER UNIQUE NOT NULL,
+	counter INTEGER NOT NULL
 );
 
 CREATE TABLE SearchInfo(
@@ -73,4 +80,10 @@ AS
 	LEFT JOIN Question ON Topic.id = Question.topic_id
 	LEFT JOIN SeenQuestion ON Question.id = SeenQuestion.question_id 
 	GROUP BY Topic.id, Topic.name, Topic.read;
+
+CREATE VIEW TopicWithQuestions
+AS
+	SELECT DISTINCT Topic.id AS id
+	FROM Topic
+	JOIN Question ON Topic.id = Question.topic_id;
 
