@@ -61,6 +61,31 @@ object TopicsDownloader {
         val file = File(javaClass.classLoader.getResource("service_token.txt")!!.file)
         return FileReader(file).readLines()[0]
     }
-}
 
-fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
+    private val hardcodedCapitalization = mapOf(
+        "БАДЕН-БАДЕН" to "Баден-Баден",
+        "БЕГУЩИЙ ПО ЛЕЗВИЮ" to "Бегущий по Лезвию",
+        "БЫКИ И МЕДВЕДИ" to "Быки и Медведи",
+        "ВЕРНИСЬ В СОРРЕНТО" to "Вернись в Сорренто",
+        "ВСТРЕЧА НА ЭЛЬБЕ" to "Встреча на Эльбе",
+        "ГЕНЗЕЛЬ И ГРЕТЕЛЬ" to "Гензель и Гретель",
+        "ЗОЛОТЫЕ ПЛАСТИНКИ «ВОЯДЖЕРА»" to "Золотые Пластинки «Вояджера»",
+        "ИНДЕКС БИГ-МАКА" to "Индекс Биг-Мака",
+        "КЛУБ «ДИОГЕН»" to "Клуб «Диоген»",
+        "КОТ-Д'ИВУАР" to "Кот-д'Ивуар",
+        "КРОВЬ, ПОТ И СЛЁЗЫ" to "Кровь, Пот и Слёзы",
+        "КРУГИ НА ПОЛЯХ" to "Круги на Полях",
+        "МЕТОД МОНТЕ-КАРЛО" to "Метод Монте-Карло",
+        "МИФ О ПЕЩЕРЕ" to "Миф о Пещере",
+        "ОХОТА НА СНАРКА" to "Охота на Снарка",
+        "ПЕТЯ И ВОЛК" to "Петя и Волк",
+        "СПАГЕТТИ-ВЕСТЕРН" to "Спагетти-Вестерн",
+        "ФОНЕТИЧЕСКИЙ АЛФАВИТ ICAO" to "Фонетический Алфавит ICAO",
+        "ШАЛТАЙ-БОЛТАЙ" to "Шалтай-Болтай"
+    )
+
+    private fun String.capitalizeWords(): String {
+        return hardcodedCapitalization[this] ?: split(" ")
+            .joinToString(" ") { it.toLowerCase().capitalize() }
+    }
+}
