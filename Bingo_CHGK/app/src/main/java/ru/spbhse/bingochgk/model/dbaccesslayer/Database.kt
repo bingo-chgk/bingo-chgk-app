@@ -16,7 +16,7 @@ object Database {
     private lateinit var database: SQLiteDatabase
     private lateinit var manager: DatabaseManager
 
-    fun init(context: Context, name: String = "db", version: Int = 4, force: Boolean = false) {
+    fun init(context: Context, name: String = "db", version: Int = 5, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
         manager = DatabaseManager(context, name, version)
         manager.readableDatabase
