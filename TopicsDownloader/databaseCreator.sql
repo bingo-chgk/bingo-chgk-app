@@ -1,4 +1,5 @@
 DROP VIEW IF EXISTS TopicPercentage;
+DROP VIEW IF EXISTS TopicWithQuestions;
 DROP TABLE IF EXISTS SavedQuestion;
 DROP TABLE IF EXISTS CollectionTopic;
 DROP TABLE IF EXISTS Collection;
@@ -79,4 +80,10 @@ AS
 	LEFT JOIN Question ON Topic.id = Question.topic_id
 	LEFT JOIN SeenQuestion ON Question.id = SeenQuestion.question_id 
 	GROUP BY Topic.id, Topic.name, Topic.read;
+
+CREATE VIEW TopicWithQuestions
+AS
+	SELECT DISTINCT Topic.id AS id
+	FROM Topic
+	JOIN Question ON Topic.id = Question.topic_id;
 

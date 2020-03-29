@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.core.database.getStringOrNull
-import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.StoredCollection
 import ru.spbhse.bingochgk.model.Topic
@@ -181,34 +180,28 @@ object Database {
     }
 
     fun getCollectionQuestion(collection: StoredCollection): Question? {
+        database.beginTransaction()
         val cursor = database.rawQuery(
-            """SELECT 
-                |q.id, 
-                |q.topic_id, 
-                |q.dbchgkinfo_id,
-                |q.text, 
-                |q.handout_id, 
-                |q.comment_text,
-                |q.author,
-                |q.sources,
-                |q.additional_answers,
-                |q.wrong_answers,
-                |q.answer
-                |FROM Question q
-                |JOIN CollectionTopic c
-                |ON q.topic_id = c.topic_id
-                |WHERE c.collection_id = ?
+            """SELECT CollectionTopic.topic_id
+                |FROM CollectionTopic
+                |JOIN TopicWithQuestions ON TopicWithQuestions.id = CollectionTopic.topic_id
+                |WHERE CollectionTopic.collection_id = ?
                 |ORDER BY RANDOM()
                 |LIMIT 1
-                |""".trimMargin(),
+            """.trimMargin(),
             arrayOf(collection.databaseId.toString())
         )
         if (cursor.isAfterLast) {
+            database.endTransaction()
             return null
         }
-
         cursor.moveToFirst()
-        return collectQuestionFromCursor(cursor).also { cursor.close() }
+        val topicId = cursor.getInt(0)
+        cursor.close()
+        val question = getRandomQuestionByTopicUnsafe(topicId)
+        database.setTransactionSuccessful()
+        database.endTransaction()
+        return question
     }
 
     fun setTopicReadStatus(topic: Topic) {
@@ -354,9 +347,15 @@ object Database {
         Logger.d("insert ${questions.size} new questions")
     }
 
-    fun getTopicQuestion(topic: Topic): Question? {
+    private fun getRandomQuestionByTopicUnsafe(topicId: Int): Question? {
         val cursor = database.rawQuery(
-            """SELECT 
+            """WITH MinFromTopic AS(
+                |   SELECT MIN(counter)
+                |   FROM QuestionAsked
+                |   JOIN Question ON QuestionAsked.question_id = Question.id
+                |   WHERE Question.topic_id = ?
+                |)
+                |SELECT 
                 |id, 
                 |topic_id, 
                 |dbchgkinfo_id,
@@ -369,44 +368,58 @@ object Database {
                 |wrong_answers,
                 |answer
                 |FROM Question
-                |WHERE topic_id = ?
+                |JOIN QuestionAsked ON Question.id = QuestionAsked.question_id
+                |WHERE topic_id = ? AND counter = (SELECT * FROM MinFromTopic)
                 |ORDER BY RANDOM()
                 |LIMIT 1
-                |""".trimMargin(),
-            arrayOf("${topic.databaseId}")
+            """.trimMargin(),
+            arrayOf(topicId.toString(), topicId.toString())
         )
         if (cursor.isAfterLast) {
             return null
         }
         cursor.moveToFirst()
-        return collectQuestionFromCursor(cursor).also { cursor.close() }
+
+        val question = collectQuestionFromCursor(cursor)
+        cursor.close()
+
+        database.execSQL(
+            """UPDATE QuestionAsked
+                |SET counter = counter + 1
+                |WHERE question_id = ?
+            """.trimMargin(),
+            arrayOf(question.databaseId.toString())
+        )
+
+        return question
+    }
+
+    fun getTopicQuestion(topic: Topic): Question? {
+        return getRandomQuestionByTopicUnsafe(topic.databaseId)
     }
 
     fun getRandomQuestion(): Question? {
+        database.beginTransaction()
         val cursor = database.rawQuery(
-            """SELECT 
-                |id, 
-                |topic_id, 
-                |dbchgkinfo_id,
-                |text, 
-                |handout_id, 
-                |comment_text,
-                |author,
-                |sources,
-                |additional_answers,
-                |wrong_answers,
-                |answer
-                |FROM Question
+            """SELECT id
+                |FROM TopicWithQuestions
                 |ORDER BY RANDOM()
                 |LIMIT 1
-                |""".trimMargin(),
-            emptyArray()
+            """.trimMargin(),
+            arrayOf()
         )
         if (cursor.isAfterLast) {
+            database.endTransaction()
             return null
         }
         cursor.moveToFirst()
-        return collectQuestionFromCursor(cursor).also { cursor.close() }
+        val topicId = cursor.getInt(0)
+        Logger.d("IDDDD $topicId")
+        cursor.close()
+        val question = getRandomQuestionByTopicUnsafe(topicId)
+        database.setTransactionSuccessful()
+        database.endTransaction()
+        return question
     }
 
     fun getRandomQuestionByReadArticle(): Question? {
@@ -418,32 +431,28 @@ object Database {
     }
 
     private fun getRandomQuestionByArticleRead(isRead: Boolean): Question? {
+        database.beginTransaction()
         val cursor = database.rawQuery(
-            """SELECT 
-                |Question.id, 
-                |Question.topic_id, 
-                |Question.dbchgkinfo_id,
-                |Question.text, 
-                |Question.handout_id, 
-                |Question.comment_text,
-                |Question.author,
-                |Question.sources,
-                |Question.additional_answers,
-                |Question.wrong_answers,
-                |Question.answer
-                |FROM Question
-                |JOIN Topic ON Question.topic_id = Topic.id
+            """SELECT Topic.id
+                |FROM Topic
+                |JOIN TopicWithQuestions ON TopicWithQuestions.id = Topic.id
                 |WHERE Topic.read = ?
                 |ORDER BY RANDOM()
                 |LIMIT 1
-                |""".trimMargin(),
+            """.trimMargin(),
             arrayOf(if (isRead) "1" else "0")
         )
         if (cursor.isAfterLast) {
+            database.endTransaction()
             return null
         }
         cursor.moveToFirst()
-        return collectQuestionFromCursor(cursor).also { cursor.close() }
+        val topicId = cursor.getInt(0)
+        cursor.close()
+        val question = getRandomQuestionByTopicUnsafe(topicId)
+        database.setTransactionSuccessful()
+        database.endTransaction()
+        return question
     }
 
     fun deleteTopic(topic: Topic) {
@@ -509,7 +518,7 @@ object Database {
                 |FROM Question
                 |WHERE id = ?
                 |LIMIT 1
-                |""".trimMargin(),
+            """.trimMargin(),
             arrayOf("$id")
         )
         if (cursor.isAfterLast) {
@@ -565,7 +574,7 @@ object Database {
                 |answer
                 |FROM Question
                 |WHERE id in SavedQuestion
-                |""".trimMargin(),
+            """.trimMargin(),
             emptyArray()
         )
 
