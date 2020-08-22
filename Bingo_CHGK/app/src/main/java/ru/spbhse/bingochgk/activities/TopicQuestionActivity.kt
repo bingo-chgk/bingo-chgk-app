@@ -13,7 +13,9 @@ class TopicQuestionActivity : QuestionActivity() {
 
         val topic = intent.extras!!.getSerializable("topic")!! as Topic
 
-        controller.requestTopicQuestion(topic)
+        if (savedInstanceState == null) {
+            controller.requestTopicQuestion(topic)
+        }
 
         toNextQuestionButton.setOnClickListener {
             startActivity(intent)

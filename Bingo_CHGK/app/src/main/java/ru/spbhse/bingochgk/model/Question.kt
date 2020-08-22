@@ -1,6 +1,8 @@
 package ru.spbhse.bingochgk.model
 
-class Question(val text: String,
+import java.io.Serializable
+
+data class Question(val text: String,
                val answer: String,
                val additionalAnswers: String?,
                val wrongAnswers: String?,
@@ -9,4 +11,4 @@ class Question(val text: String,
                val author: String?,
                val dbChgkInfoId: String,
                val databaseId: Int = 0,
-               val topicId: Int = 0)
+               val topicId: Int = 0) : Serializable

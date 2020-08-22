@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_question.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.QuestionController
@@ -16,6 +15,7 @@ import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
 
 open class QuestionActivity : BingoChgkActivity() {
+    private val questionId = "QUESTION"
 
     protected var question: Question? = null
     private lateinit var youAreCorrect: String
@@ -40,6 +40,15 @@ open class QuestionActivity : BingoChgkActivity() {
         rejectAnswerButton.setOnClickListener {
             markAnswerWrong()
         }
+
+        if (savedInstanceState != null) {
+            onQuestionIsReady(savedInstanceState.get(questionId) as Question?)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(questionId, question)
     }
 
     fun onQuestionIsReady(question: Question?) {

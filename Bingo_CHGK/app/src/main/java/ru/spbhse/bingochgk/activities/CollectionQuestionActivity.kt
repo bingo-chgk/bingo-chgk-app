@@ -16,10 +16,12 @@ class CollectionQuestionActivity : QuestionActivity() {
         toolbar.title = "Вопрос по подборке \"${collection?.name}\""
 
 
-        if (collection == null) {
-            onQuestionIsReady(null)
-        } else {
-            controller.requestQuestion(collection)
+        if (savedInstanceState == null) {
+            if (collection == null) {
+                onQuestionIsReady(null)
+            } else {
+                controller.requestQuestion(collection)
+            }
         }
 
         toNextQuestionButton.setOnClickListener {

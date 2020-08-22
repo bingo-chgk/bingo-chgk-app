@@ -15,7 +15,9 @@ class RandomQuestionActivity : QuestionActivity() {
 
         toolbar.title = getString(R.string.randomQuestion)
 
-        controller.requestRandomQuestion()
+        if (savedInstanceState == null) {
+            controller.requestRandomQuestion()
+        }
 
         additionalLayout.visibility = View.GONE
 
