@@ -18,7 +18,7 @@ import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.model.TopicNavigator
 
 
-class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
+class AllTopicsActivity : BingoChgkActivity(), OnTopicClickListener,
     TopicsConsumer {
 
     private lateinit var controller: AllTopicsController
@@ -73,7 +73,7 @@ class AllTopicsActivity : AppCompatActivity(), OnTopicClickListener,
             false
         }
 
-        cat_progress_bar.visibility = View.GONE
+        cat_progress_bar.visibility = GONE
     }
 
     override fun onItemClick(position: Int) {

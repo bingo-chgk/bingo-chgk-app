@@ -9,7 +9,7 @@ import android.text.method.LinkMovementMethod
 import kotlinx.android.synthetic.main.activity_reference.*
 import ru.spbhse.bingochgk.R
 
-class ReferenceActivity : AppCompatActivity() {
+class ReferenceActivity : BingoChgkActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reference)
@@ -24,7 +24,7 @@ class ReferenceActivity : AppCompatActivity() {
 
         referenceText.text = getTextFromHtml(license)
 
-        referenceText.movementMethod = android.text.method.LinkMovementMethod.getInstance()
+        referenceText.movementMethod = LinkMovementMethod.getInstance()
 
         licenseButton.setOnClickListener {
             referenceText.text = licenseText
@@ -32,7 +32,7 @@ class ReferenceActivity : AppCompatActivity() {
 
         authorsBuutton.setOnClickListener {
             referenceText.text = authorsText
-            referenceText.movementMethod = LinkMovementMethod.getInstance();
+            referenceText.movementMethod = LinkMovementMethod.getInstance()
 
         }
 

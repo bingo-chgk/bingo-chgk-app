@@ -12,7 +12,7 @@ import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.CollectionsController
 import ru.spbhse.bingochgk.model.Collection
 
-class CollectionsActivity : AppCompatActivity(), CollectionsListActionsProvider {
+class CollectionsActivity : BingoChgkActivity(), CollectionsListActionsProvider {
     private lateinit var collections: MutableList<Collection>
     private lateinit var adapter: CollectionsListAdapter
     val controller = CollectionsController(this)

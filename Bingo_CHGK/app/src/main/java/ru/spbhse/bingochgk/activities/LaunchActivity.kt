@@ -1,6 +1,5 @@
 package ru.spbhse.bingochgk.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.spbhse.bingochgk.R
@@ -16,8 +15,6 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     fun onDatabaseInitialized() {
-        val intent = Intent(this, MainMenuActivity::class.java)
-        startActivity(intent)
         finish()
     }
 }

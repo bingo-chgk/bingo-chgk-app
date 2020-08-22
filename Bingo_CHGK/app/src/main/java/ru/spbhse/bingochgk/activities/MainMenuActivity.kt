@@ -1,13 +1,11 @@
 package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main_menu.*
 import ru.spbhse.bingochgk.R
-import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 
-class MainMenuActivity : AppCompatActivity() {
+class MainMenuActivity : BingoChgkActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

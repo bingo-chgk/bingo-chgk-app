@@ -13,7 +13,7 @@ import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
 import ru.spbhse.bingochgk.model.TopicNavigator
 
-class CreateCollectionActivity : AppCompatActivity(), NewCollectionListActionsProvider,
+class CreateCollectionActivity : BingoChgkActivity(), NewCollectionListActionsProvider,
     TopicsConsumer {
     private var availableTopics = listOf<Topic>()
     private val controller = CreateCollectionController()

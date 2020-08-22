@@ -13,7 +13,7 @@ import ru.spbhse.bingochgk.model.Question
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
 
-class SavedQuestionsChoiceActivity : AppCompatActivity(), SavedQuestionActionsProvider {
+class SavedQuestionsChoiceActivity : BingoChgkActivity(), SavedQuestionActionsProvider {
     private lateinit var questions: MutableList<Question>
     private lateinit var questionAdapter: SavedQuestionAdapter
     private lateinit var controller: SavedQuestionsController

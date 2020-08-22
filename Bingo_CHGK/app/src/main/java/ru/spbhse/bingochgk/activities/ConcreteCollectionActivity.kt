@@ -14,7 +14,7 @@ import ru.spbhse.bingochgk.controller.ConcreteCollectionController
 import ru.spbhse.bingochgk.model.Collection
 import ru.spbhse.bingochgk.model.Topic
 
-class ConcreteCollectionActivity : AppCompatActivity(), OnTopicClickListener {
+class ConcreteCollectionActivity : BingoChgkActivity(), OnTopicClickListener {
     private var topics = listOf<Topic>()
     private lateinit var topicAdapter: TopicAdapter
     private lateinit var controller: ConcreteCollectionController

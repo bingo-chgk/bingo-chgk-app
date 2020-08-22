@@ -15,7 +15,7 @@ import ru.spbhse.bingochgk.model.TopicNavigator
 import ru.spbhse.bingochgk.model.dbaccesslayer.Database
 import ru.spbhse.bingochgk.utils.Logger
 
-open class QuestionActivity : AppCompatActivity() {
+open class QuestionActivity : BingoChgkActivity() {
 
     protected var question: Question? = null
     private lateinit var youAreCorrect: String

@@ -38,14 +38,10 @@ object QuestionsFinder {
                 if (question.className() != "question") {
                     continue
                 }
-                val builder =
-                    QuestionBuilder()
+                val builder = QuestionBuilder()
                 builder.dbChgkInfoId = question.id()
 
-                val classToLine =
-                    classesMap(
-                        question
-                    )
+                val classToLine = classesMap(question)
 
                 if (classToLine == null) {
                     continue
@@ -72,6 +68,9 @@ object QuestionsFinder {
     // doesn't work with multiple line questions
     private fun classesMap(question: Element): Map<String, String>? {
         val classToLine = mutableMapOf<String, String>()
+        println()
+        println(question.html())
+        println()
         for (line in question.html().lines()) {
             if (line.startsWith("<p> <strong class=\"")) {
                 val clazz = Regex("\"[^\"]*\"").find(line)!!.value
@@ -103,3 +102,7 @@ private class QuestionBuilder {
 }
 
 class QuestionDownloadException(message: String) : Exception(message)
+
+fun main() {
+    QuestionsFinder.getAllQuestionsByAnswerTag("Burning Man")
+}

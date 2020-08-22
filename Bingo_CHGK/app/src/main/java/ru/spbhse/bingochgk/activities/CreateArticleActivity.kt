@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_create_article.*
 import ru.spbhse.bingochgk.controller.CreateArticleController
 import ru.spbhse.bingochgk.model.Topic
 
-class CreateArticleActivity : AppCompatActivity() {
+class CreateArticleActivity : BingoChgkActivity() {
 
     private lateinit var controller: CreateArticleController
     private var status = ArticleCreationStatus.NOT_READY

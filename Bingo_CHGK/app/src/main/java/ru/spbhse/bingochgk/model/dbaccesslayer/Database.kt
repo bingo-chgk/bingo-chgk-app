@@ -14,6 +14,8 @@ import kotlin.collections.ArrayList
 object Database {
     private lateinit var database: SQLiteDatabase
     private lateinit var manager: DatabaseManager
+    var isInitialized = false
+        private set
 
     fun init(context: Context, name: String = "db", version: Int = 6, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
@@ -24,6 +26,7 @@ object Database {
         val openHelper = OpenHelper(context, name, version)
         database = openHelper.writableDatabase
         Logger.d("Database initialized")
+        isInitialized = true
     }
 
     fun getTopicText(topic: Topic): String {

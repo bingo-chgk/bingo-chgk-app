@@ -21,7 +21,7 @@ import ru.spbhse.bingochgk.utils.Logger
 import ru.spbhse.bingochgk.utils.articleToHTML
 
 
-class ArticleActivity : AppCompatActivity() {
+class ArticleActivity : BingoChgkActivity() {
 
     private lateinit var controller: ArticleController
     private lateinit var topic: Topic
