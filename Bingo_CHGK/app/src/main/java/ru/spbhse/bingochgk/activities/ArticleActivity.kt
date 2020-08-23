@@ -9,11 +9,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_article.*
-import kotlinx.android.synthetic.main.activity_article.cat_progress_bar
-import kotlinx.android.synthetic.main.activity_article.scroll
-import kotlinx.android.synthetic.main.activity_article.toolbar
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.articlecontroller.ArticleController
 import ru.spbhse.bingochgk.model.Topic
@@ -88,11 +84,11 @@ class ArticleActivity : BingoChgkActivity() {
     }
 
     private fun setArticleText(text: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            article_text.text = Html.fromHtml(articleToHTML(text), Html.FROM_HTML_MODE_LEGACY)
+        article_text.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(articleToHTML(text), Html.FROM_HTML_MODE_LEGACY)
         } else {
             @Suppress("DEPRECATION")
-            article_text.text = Html.fromHtml(articleToHTML(text))
+            Html.fromHtml(articleToHTML(text))
         }
 
         article_text.movementMethod = LinkMovementMethod.getInstance()

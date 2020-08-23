@@ -17,7 +17,7 @@ object Database {
     var isInitialized = false
         private set
 
-    fun init(context: Context, name: String = "db", version: Int = 6, force: Boolean = false) {
+    fun init(context: Context, name: String = "db", version: Int = 7, force: Boolean = false) {
         // Magic! Consult with Igor if you want change something here
         manager = DatabaseManager(context, name, version)
         manager.readableDatabase

@@ -3,7 +3,9 @@ package ru.spbhse.bingochgk.activities
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
 import kotlinx.android.synthetic.main.activity_question.*
@@ -64,26 +66,28 @@ open class QuestionActivity : BingoChgkActivity() {
             return
         }
 
-        questionText.text = question.text.replace(Regex("Вопрос [0-9]+: "), "")
+        questionText.text = question.text
 
         correctAnswer.text = question.answer
         var comment = ""
         if (question.additionalAnswers != null) {
-            comment += question.additionalAnswers + "\n"
+            comment += "<p><b>Зачёт:</b> ${question.additionalAnswers}</p>\n"
         }
         if (question.comment != null) {
-            comment += question.comment + "\n"
+            comment += "<p><b>Комментарий:</b> ${question.comment}</p>\n"
         }
         if (question.sources != null) {
-            comment += question.sources + "\n"
+            comment += "<p><b>Источник(и):</b> ${question.sources}</p>\n"
         }
         if (question.author != null) {
-            comment += question.author + "\n"
+            comment += "<p><b>Автор(ы):</b> ${question.author}</p>\n"
         }
-        if (comment.endsWith("!\n")) {
-            comment = comment.substring(0 until comment.lastIndex - 2)
+        commentText.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(comment, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(comment)
         }
-        commentText.text = comment
 
         answerButton.setOnClickListener {
             val userAnswer = answerInputField.text.toString()

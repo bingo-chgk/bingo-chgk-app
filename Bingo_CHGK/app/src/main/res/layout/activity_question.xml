@@ -163,13 +163,6 @@
                     android:layout_height="20sp"/>
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/comment"
-                    android:layout_marginStart="10dp"
-                    android:textSize="24sp"/>
-
-                <TextView
                     android:id="@+id/commentText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -178,10 +171,6 @@
                     android:layout_marginRight="10dp"
                     android:textSize="18sp"
                     android:visibility="gone"/>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="20sp"/>
 
                 <TextView
                     android:id="@+id/userAnswerText"
