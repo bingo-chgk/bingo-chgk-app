@@ -27,10 +27,10 @@ class DatabaseManager(
 
     override fun onOpen(db: SQLiteDatabase?) {
         super.onOpen(db)
-        if (db != null) {
-            path = db.path
+        path = if (db != null) {
+            db.path
         } else {
-            path = ""
+            ""
         }
     }
 
@@ -64,8 +64,11 @@ class DatabaseManager(
     }
 }
 
-class OpenHelper(context: Context, dbName: String, dbVersion: Int)
-    : SQLiteOpenHelper(context, dbName, null, dbVersion) {
+class OpenHelper(
+    context: Context,
+    dbName: String,
+    dbVersion: Int
+) : SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
     init {
         writableDatabase.disableWriteAheadLogging()
