@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:fontFamily="monospace"
-            android:text="БиНгО ЧгК"
+            android:text="ЧГК Бинго"
             android:textColor="#2F4F4F"
             android:textSize="40sp"
             android:textStyle="bold" />

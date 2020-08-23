@@ -39,14 +39,14 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <android.widget.SearchView
+                <androidx.appcompat.widget.SearchView
                     android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_weight="1"
                     android:ems="10"
                     android:iconifiedByDefault="true"
-                    android:theme="@style/AppTheme.WhiteToolbar" />
+                    app:theme="@style/AppSearchView"/>
 
             </androidx.appcompat.widget.Toolbar>
 

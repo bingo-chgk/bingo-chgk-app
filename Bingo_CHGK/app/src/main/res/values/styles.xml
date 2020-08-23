@@ -21,5 +21,16 @@
         <item name="android:editTextColor">#EEEEEE</item>
     </style>
 
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
+        <!-- Text Size -->
+        <item name="android:textSize">14sp</item>
+        <!-- Query Text Color -->
+        <item name="android:textColorPrimary">#EEEEEE</item>
+        <!-- Hint Color -->
+        <item name="android:textColorHint">#EEEEEE</item>
+        <!-- Icon Color -->
+        <item name="android:tint">#EEEEEE</item>
+    </style>
+
 
 </resources>

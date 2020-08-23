@@ -2,20 +2,18 @@ package ru.spbhse.bingochgk.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.WindowManager
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_all_topics.*
 import ru.spbhse.bingochgk.R
 import ru.spbhse.bingochgk.controller.AllTopicsController
 import ru.spbhse.bingochgk.controller.TopicsConsumer
 import ru.spbhse.bingochgk.model.Topic
-import ru.spbhse.bingochgk.model.TopicNavigator
 
 
 class AllTopicsActivity : BingoChgkActivity(), OnTopicClickListener,
@@ -54,7 +52,7 @@ class AllTopicsActivity : BingoChgkActivity(), OnTopicClickListener,
         topicAdapter.filter.filter(search.query)
 
         search.isSubmitButtonEnabled = true
-        search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 search.clearFocus()
                 search.visibility = GONE
