@@ -8,10 +8,11 @@ import java.io.File
 import java.io.FileOutputStream
 
 // SHOULD NOT BE CREATED FROM MAIN THREAD
-class DatabaseManager(private val context: Context, private val dbName: String,
-                      private val dbVersion: Int)
-    : SQLiteOpenHelper(context, dbName, null, dbVersion) {
-
+class DatabaseManager(
+    private val context: Context,
+    private val dbName: String,
+    private val dbVersion: Int
+) : SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
     private var shouldCreate = false
     private var shouldUpdate = false
