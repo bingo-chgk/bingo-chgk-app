@@ -91,7 +91,7 @@ open class QuestionActivity : BingoChgkActivity() {
 
         answerButton.setOnClickListener {
             val userAnswer = answerInputField.text.toString()
-            val yourAnswerView = getString(R.string.yourAnswer) + userAnswer
+            val yourAnswerView = "${getString(R.string.yourAnswer)}  $userAnswer"
             userAnswerText.text = yourAnswerView
             goToArticleButton.text = getString(R.string.toArticle)
             inputAnswerLayout.visibility = View.GONE
